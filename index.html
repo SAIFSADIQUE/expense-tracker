@@ -30,8 +30,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .sg{display:flex;gap:7px;flex-wrap:wrap}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
 
-/* OFFLINE BAR */
-.offline-bar{background:var(--warn);color:#fff;text-align:center;padding:6px;font-size:.78rem;font-weight:700;display:none}
+/* OFFLINE ALERT */
+.offline-bar{
+  background:var(--warn);color:#fff;text-align:center;padding:6px;
+  font-size:.78rem;font-weight:700;display:none
+}
 .offline-bar.show{display:block}
 
 /* HEADER */
@@ -61,7 +64,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .main{padding:18px;max-width:1080px;margin:0 auto}
 .tp{display:none}.tp.active{display:block}
 
-/* LOADING */
+/* LOADING OVERLAY */
 .loading-overlay{
   position:fixed;inset:0;background:rgba(255,255,255,.92);z-index:2000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px
@@ -95,14 +98,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 textarea.fc2{resize:vertical;min-height:70px}
 .frf{grid-column:1/-1}
 
-/* PAYMENT MODE BUTTONS */
-.pm-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.pm-btn{padding:6px 14px;border:2px solid var(--bdr);border-radius:20px;font-size:.76rem;font-weight:700;
-  cursor:pointer;background:var(--bg);color:var(--muted);transition:all .2s;white-space:nowrap}
-.pm-btn.active{background:var(--p);border-color:var(--p);color:#fff}
-.pm-btn:hover:not(.active){border-color:var(--p);color:var(--p)}
-
-/* SEARCHABLE DROPDOWN — FIX 1+2: use data-val, no escQ in onclick */
+/* SEARCHABLE DROPDOWN */
 .cdw{position:relative}
 .csd{padding:9px 13px;border:2px solid var(--bdr);border-radius:var(--rs);font-size:.87rem;
   background:var(--bg);cursor:pointer;display:flex;align-items:center;justify-content:space-between;
@@ -170,7 +166,6 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .ab{display:flex;gap:4px}
 .es{text-align:center;padding:45px 20px;color:var(--muted)}
 .es .ei{font-size:2.8rem;margin-bottom:10px}
-.pm-badge{background:#e0f2fe;color:#0369a1;padding:2px 7px;border-radius:10px;font-size:.67rem;font-weight:700;white-space:nowrap}
 
 /* PAGINATION */
 .pag{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-top:2px solid var(--bdr);flex-wrap:wrap;gap:7px}
@@ -182,14 +177,17 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .pb.active{background:var(--p);border-color:var(--p);color:#fff}
 .pb:disabled{opacity:.35;cursor:not-allowed}
 
-/* ANALYTICS — FIX 5: explicit bar colors via inline style only */
+/* ANALYTICS */
 .ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:20px}
-.ac{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}
+.ac{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:0}
 .ac h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
 .br{display:flex;align-items:center;gap:9px;margin-bottom:10px;font-size:.79rem}
 .bl{flex:1;color:var(--txt);font-weight:500;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bt{flex:2;height:8px;background:var(--bdr);border-radius:10px;overflow:hidden}
 .bf{height:100%;border-radius:10px;transition:width .5s ease}
+.bf-p{background:linear-gradient(90deg,var(--p),var(--acc))}
+.bf-ok{background:linear-gradient(90deg,var(--ok),#86efac)}
+.bf-w{background:linear-gradient(90deg,var(--warn),#fcd34d)}
 .bamt{font-weight:700;color:var(--err);min-width:80px;text-align:right;font-size:.77rem}
 
 /* ANALYTICS SUB-TABS */
@@ -207,12 +205,42 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .pct-row{display:flex;align-items:center;gap:9px;margin-bottom:10px}
 .pct-label{min-width:88px;font-weight:600;color:var(--txt);font-size:.77rem}
 .pct-track{flex:1;height:20px;background:var(--bdr);border-radius:6px;overflow:hidden}
-.pct-fill{height:100%;border-radius:6px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}
-.pct-fill span{font-size:.6rem;color:#fff;font-weight:700}
-.pct-amt{font-weight:700;color:var(--err);font-size:.77rem;min-width:70px;text-align:right}
+.pct-fill{height:100%;border-radius:6px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
+.pct-fill span{font-size:.68rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.pct-amt{font-weight:700;color:var(--err);min-width:83px;text-align:right;font-size:.75rem}
 
-/* CATEGORIES */
-.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
+/* 3-PERIOD COMPARE */
+.cmp3-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
+.cmp3-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
+.cmp3-periods{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
+.period-box{border:2px solid var(--bdr);border-radius:var(--rs);padding:13px}
+.period-box.pa{border-color:var(--p)}.period-box.pb2x{border-color:var(--acc)}.period-box.pc{border-color:var(--ok)}
+.period-label{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.pa .period-label{color:var(--p)}.pb2x .period-label{color:var(--acc)}.pc .period-label{color:var(--ok)}
+.period-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sum-bar{background:var(--sec);border-radius:var(--rs);padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sb-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px}
+.sb-val{font-size:.95rem;font-weight:800;color:var(--p)}
+.sb-val.acc{color:var(--acc)}.sb-val.ok2{color:var(--ok)}.sb-val.err{color:var(--err)}
+.sb-lbl{font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;text-align:center}
+.sb-div{width:1px;height:34px;background:var(--bdr)}
+.cmp3-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:16px}
+.cmp3-card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
+.cmp3-card.pa{border-top:3px solid var(--p)}.cmp3-card.pb2x{border-top:3px solid var(--acc)}.cmp3-card.pc{border-top:3px solid var(--ok)}
+.cmp3-diff{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
+.winner-badge{font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:5px}
+.w-a{background:var(--pl);color:var(--p)}.w-b{background:#ffe4ec;color:#be185d}.w-c{background:#dcfce7;color:#15803d}
+.chg-up{color:var(--err);font-weight:700}.chg-down{color:var(--ok);font-weight:700}.chg-eq{color:var(--muted)}
+
+/* CATEGORY × MONTH */
+.catmon-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
+.catmon-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
+.catmon-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.heatmap-cell{display:inline-block;padding:6px 8px;border-radius:var(--rxs);font-size:.74rem;font-weight:700;text-align:center;min-width:70px;transition:all .2s;cursor:default}
+.heatmap-cell:hover{transform:scale(1.08);box-shadow:var(--sh)}
+
+/* CATEGORY MGR */
+.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin-bottom:20px}
 .cstat{background:var(--card);border-radius:var(--rs);padding:14px;box-shadow:var(--sh);text-align:center}
 .cstat .cv{font-size:1.55rem;font-weight:800;color:var(--p)}
 .cstat .cl{font-size:.71rem;color:var(--muted);margin-top:3px}
@@ -220,8 +248,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .cat-item{background:var(--card);border-radius:var(--rs);padding:12px 14px;box-shadow:var(--sh);
   display:flex;align-items:center;gap:9px;border-left:3px solid var(--p);transition:all .2s}
 .cat-item:hover{transform:translateY(-1px);box-shadow:var(--shl)}
-.cn{flex:1;font-size:.83rem;font-weight:600}
-.cc{font-size:.66rem;background:var(--pl);color:var(--p);padding:2px 7px;border-radius:10px;font-weight:700}
+.cn{flex:1;font-size:.83rem;font-weight:600}.cc{font-size:.66rem;background:var(--pl);color:var(--p);padding:2px 7px;border-radius:10px;font-weight:700}
 .cact{display:flex;gap:4px;flex-shrink:0}
 .cat-add-row{display:flex;gap:10px;margin-bottom:18px;align-items:flex-end}
 
@@ -229,13 +256,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .hist-filter{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
 .hist-item{background:var(--card);border-radius:var(--rs);padding:13px 16px;box-shadow:var(--sh);
   margin-bottom:9px;border-left:4px solid var(--p);display:flex;align-items:flex-start;gap:12px;transition:all .2s}
-.hist-item.create{border-left-color:var(--ok)}
-.hist-item.update{border-left-color:var(--warn)}
-.hist-item.delete{border-left-color:var(--err)}
-.hist-item.cat_add,.hist-item.cat_edit,.hist-item.cat_delete{border-left-color:var(--info)}
-.hist-item.bulk_delete{border-left-color:#7c3aed}
-.hist-item.import{border-left-color:#0891b2}
-.hist-item.security{border-left-color:#be185d}
+.hist-item.create{border-left-color:var(--ok)}.hist-item.update{border-left-color:var(--warn)}
+.hist-item.delete{border-left-color:var(--err)}.hist-item.cat_add,.hist-item.cat_edit,.hist-item.cat_delete{border-left-color:var(--info)}
 .hico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
 .hbody{flex:1;min-width:0}
 .hact{font-size:.81rem;font-weight:700}
@@ -244,11 +266,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .hbadge{display:inline-block;font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;margin-right:4px}
 .hb-c{background:#dcfce7;color:#16a34a}.hb-u{background:#fef9c3;color:#92400e}
 .hb-d{background:#fee2e2;color:#dc2626}.hb-cat{background:#dbeafe;color:#1d4ed8}
-.hb-bulk{background:#ede9fe;color:#7c3aed}.hb-imp{background:#cffafe;color:#0891b2}
-.hb-sec{background:#fce7f3;color:#be185d}
 .hdiff{background:var(--sec);border-radius:var(--rxs);padding:6px 9px;margin-top:5px;font-size:.74rem;font-family:'Courier New',monospace}
-.hdiff .old{color:var(--err);text-decoration:line-through}
-.hdiff .new{color:var(--ok)}
+.hdiff .old{color:var(--err);text-decoration:line-through}.hdiff .new{color:var(--ok)}
 
 /* EXPORT */
 .ex-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:20px}
@@ -272,36 +291,6 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .confirm-box{background:var(--sec);border-radius:var(--rs);padding:13px;margin:11px 0;font-size:.83rem}
 .confirm-box .impact{color:var(--err);font-weight:700;margin-bottom:5px}
 
-/* PASSWORD MODAL */
-.pw-mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;display:flex;
-  align-items:center;justify-content:center;padding:20px}
-.pw-md{background:var(--card);border-radius:var(--r);padding:32px;max-width:380px;width:100%;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
-.pw-md h2{font-size:1.1rem;font-weight:800;color:var(--p);margin-bottom:8px}
-.pw-md p{font-size:.82rem;color:var(--muted);margin-bottom:20px}
-.pw-input{width:100%;padding:12px 16px;border:2px solid var(--bdr);border-radius:var(--rs);
-  font-size:1.1rem;text-align:center;letter-spacing:5px;font-family:var(--font);background:var(--bg);color:var(--txt)}
-.pw-input:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(108,99,255,.12)}
-.pw-err{color:var(--err);font-size:.78rem;font-weight:700;margin-top:8px;min-height:18px}
-.pw-btn{width:100%;margin-top:14px;padding:11px;background:var(--p);color:#fff;border:none;
-  border-radius:var(--rs);font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
-.pw-btn:hover{background:var(--pd)}
-
-/* LAST VISIT BANNER */
-.lv-banner{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;
-  border-radius:var(--rs);padding:10px 16px;margin-bottom:16px;font-size:.78rem;color:#065f46;
-  display:flex;align-items:center;gap:8px;font-weight:600}
-
-/* SETTINGS */
-.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
-
-/* THEME SWATCHES */
-.theme-grid{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.theme-swatch{width:36px;height:36px;border-radius:50%;cursor:pointer;border:3px solid transparent;
-  transition:transform .2s,border-color .2s;flex-shrink:0}
-.theme-swatch:hover{transform:scale(1.15)}
-.theme-swatch.active{border-color:var(--txt)!important;transform:scale(1.15)}
-
 /* TOAST */
 .tc2{position:fixed;bottom:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:7px;max-width:300px}
 .toast{background:#1e1e2e;color:#fff;padding:11px 16px;border-radius:var(--rs);font-size:.82rem;font-weight:600;
@@ -313,14 +302,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 
 @media(max-width:600px){
   .main{padding:11px}.fg{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}
-  .sg2{grid-template-columns:1fr 1fr}
-  .sync-banner{flex-direction:row;flex-wrap:nowrap;align-items:center;overflow-x:auto;gap:5px;padding:5px 10px}
-  .sg{flex-wrap:nowrap;gap:5px}
-  .si{padding:2px 7px;font-size:.65rem;white-space:nowrap;flex-shrink:0}
-  .app-header{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
-  .hb h1{font-size:.95rem}
-  .ha{flex-wrap:nowrap}
-  .ib{padding:6px 10px;font-size:.72rem}
+  .sg2{grid-template-columns:1fr 1fr}.app-header{flex-direction:column;align-items:flex-start;gap:8px}
   thead{display:none}
   tbody tr{display:block;padding:9px;border-bottom:2px solid var(--bdr)}
   td{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 3px;border:none;font-size:.79rem}
@@ -332,19 +314,6 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 </head>
 <body>
 
-<!-- PASSWORD MODAL -->
-<div class="pw-mo" id="pw-mo" style="display:none">
-  <div class="pw-md">
-    <div style="font-size:2rem;margin-bottom:8px">🔒</div>
-    <h2 id="pw-title">Authentication Required</h2>
-    <p id="pw-subtitle">Enter your password to continue.</p>
-    <input class="pw-input" type="password" id="pw-input" placeholder="••••" maxlength="30"
-      onkeydown="if(event.key==='Enter')submitPw()"/>
-    <div class="pw-err" id="pw-err"></div>
-    <button class="pw-btn" onclick="submitPw()">Unlock 🔓</button>
-  </div>
-</div>
-
 <!-- LOADING -->
 <div class="loading-overlay" id="loading-overlay">
   <div class="spinner"></div>
@@ -352,14 +321,14 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 </div>
 
 <!-- OFFLINE BAR -->
-<div class="offline-bar" id="offline-bar">⚠️ You are offline — changes will sync when reconnected</div>
+<div class="offline-bar" id="offline-bar">⚠️ You are offline — changes will sync automatically when reconnected</div>
 
 <!-- SYNC BANNER -->
 <div class="sync-banner">
   <div class="sg">
     <div class="si"><span class="dot dot-yellow" id="sync-dot"></span><span id="sync-status">Connecting…</span></div>
-    <div class="si">📊 <strong id="rec-disp">0</strong></div>
-    <div class="si">📂 <strong id="cat-disp">0</strong></div>
+    <div class="si">📊 Records: <strong id="rec-disp">0</strong></div>
+    <div class="si">📂 Categories: <strong id="cat-disp">0</strong></div>
   </div>
   <div class="sg"><div class="si">📅 <strong id="hdr-date">—</strong></div></div>
 </div>
@@ -378,14 +347,12 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <button class="tb" data-tab="categories" onclick="switchTab('categories',this)">🏷️ Categories</button>
   <button class="tb" data-tab="history"    onclick="switchTab('history',this)">🕓 History</button>
   <button class="tb" data-tab="export"     onclick="switchTab('export',this)">💾 Export</button>
-  <button class="tb" data-tab="settings"   onclick="switchTab('settings',this)">⚙️ Settings</button>
 </nav>
 
 <main class="main">
 
 <!-- DASHBOARD -->
 <section id="tab-dashboard" class="tp active">
-  <div id="lv-banner-container"></div>
   <div class="sg2">
     <div class="sc t"><div class="lbl">Today</div><div class="amt" id="s-today">₹0.00</div><div class="sub" id="s-today-c">0 entries</div></div>
     <div class="sc m"><div class="lbl">This Month</div><div class="amt" id="s-month">₹0.00</div><div class="sub" id="s-month-c">0 entries</div></div>
@@ -393,7 +360,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
     <div class="sc"><div class="lbl">All Time</div><div class="amt" id="s-total">₹0.00</div><div class="sub" id="s-total-c">0 entries</div></div>
   </div>
   <div class="fc">
-    <div class="fct">➕ Add New Expense</div>
+    <div class="fct">➕ Add Expense</div>
     <div class="fg">
       <div class="fg2"><label>Date</label><input type="date" id="f-date" class="fc2"/></div>
       <div class="fg2"><label>Amount (₹)</label><input type="number" id="f-amount" class="fc2" min="0" step="0.01" placeholder="0.00"/></div>
@@ -409,18 +376,6 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
           <input type="hidden" id="f-cat"/>
         </div>
       </div>
-      <!-- NEW FEATURE: Payment Mode -->
-      <div class="fg2 frf">
-        <label>Payment Mode</label>
-        <div class="pm-group" id="pm-group">
-  	<button type="button" class="pm-btn active" data-pm="UPI"           onclick="selectPM(this)">💸 UPI</button>
-	<button type="button" class="pm-btn"        data-pm="Bank Transfer" onclick="selectPM(this)">🏛️ Bank Transfer</button>
- 	<button type="button" class="pm-btn"        data-pm="Cash"          onclick="selectPM(this)">💵 Cash</button>
-  	<button type="button" class="pm-btn"        data-pm="Credit Card"   onclick="selectPM(this)">🏦 Credit Card</button>
-  	<button type="button" class="pm-btn"        data-pm="Debit Card"    onclick="selectPM(this)">💳 Debit Card</button>  
-	</div>
-        <input type="hidden" id="f-pm" value="UPI"/>
-      </div>
       <div class="fg2 frf"><label>Note</label><textarea id="f-note" class="fc2" placeholder="Optional note…"></textarea></div>
     </div>
     <div class="ba">
@@ -432,7 +387,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
     <div class="th2"><h3>🕐 Recent Expenses</h3><span class="rb" id="rec-badge">0 of 0</span></div>
     <div class="tw"><table>
       <thead><tr>
-        <th>#</th><th>Date</th><th>Category</th><th>Amount</th><th>Mode</th><th>Note</th><th>Actions</th>
+        <th>#</th><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th>
       </tr></thead>
       <tbody id="rec-tbody"></tbody>
     </table></div>
@@ -461,7 +416,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
       <div class="fg2"><label>Category</label>
         <div class="cdw" id="cdw-filter">
           <div class="csd" id="csd-filter" onclick="toggleDrop('filter')" style="min-height:39px">
-            <span id="ct-filter">All Categories</span><span class="ca">▼</span>
+            <span id="ct-filter" class="ph">All Categories</span><span class="ca">▼</span>
           </div>
           <div class="cdp" id="cdp-filter">
             <div class="csb"><input class="csi" id="cs-filter" placeholder="🔎 Search…" oninput="filterOpts('filter')" autocomplete="off"/></div>
@@ -472,10 +427,10 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
       </div>
     </div>
     <div class="ff">
-  <button class="btn bp bsm" onclick="applyFilters()">🔎 Search</button>
-  <button class="btn bg2 bsm" onclick="clearFilters()">✕ Clear</button>
-  <span class="fs2" id="f-summary"></span>
-</div>
+      <button class="btn bp bsm" onclick="applyFilters()">Apply</button>
+      <button class="btn bg2 bsm" onclick="clearFilters()">✕ Clear</button>
+      <span class="fs2" id="f-summary"></span>
+    </div>
   </div>
   <div class="tc">
     <div class="th2"><h3>📋 All Records</h3><span class="rb" id="all-badge">0</span></div>
@@ -485,7 +440,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
         <th onclick="doSort('date')">Date ↕</th>
         <th onclick="doSort('category')">Category ↕</th>
         <th onclick="doSort('amount')">Amount ↕</th>
-        <th>Mode</th><th>Note</th><th>Actions</th>
+        <th>Note</th><th>Actions</th>
       </tr></thead>
       <tbody id="all-tbody"></tbody>
     </table></div>
@@ -502,6 +457,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
     <button class="at" onclick="switchAnTab('compare3',this)">⚖️ 3-Period</button>
     <button class="at" onclick="switchAnTab('catmon',this)">🏷️ Cat × Month</button>
   </div>
+
   <div id="an-overview" class="an-panel active">
     <div class="fb">
       <div class="fbt">⚙️ Filter Period</div>
@@ -524,70 +480,83 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
       <div class="ac"><h3>📆 Top Days</h3><div id="ac-day"></div></div>
     </div>
   </div>
+
   <div id="an-yearwise" class="an-panel">
     <div class="pct-card" style="margin-bottom:18px"><h3>📅 Year-wise Breakdown</h3><div id="yw-breakdown"></div></div>
     <div class="ac"><div id="yw-table"></div></div>
   </div>
+
   <div id="an-monthwise" class="an-panel">
-    <div class="fb">
+    <div class="fb" style="margin-bottom:18px">
       <div class="fbt">📅 Select Year</div>
-      <select id="mw-year" class="fc2" style="max-width:150px" onchange="renderMonthWise()"><option value="">All Years</option></select>
+      <select id="mw-year" class="fc2" style="max-width:160px" onchange="renderMonthWise()"><option value="">All Years</option></select>
     </div>
     <div class="pct-card" style="margin-bottom:18px"><h3>🗓️ Month-wise Breakdown</h3><div id="mw-breakdown"></div></div>
     <div class="ac"><div id="mw-table"></div></div>
   </div>
+
   <div id="an-compare3" class="an-panel">
-    <div class="pct-grid" id="cmp3-grid"></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:18px">
-      <div class="fb">
-        <div class="fbt" style="color:var(--p)">Period A</div>
-        <div class="fg2"><label>Year</label><select id="cya" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
-        <div class="fg2" style="margin-top:8px"><label>Month</label>
-          <select id="cma" class="fc2" onchange="renderCompare3()">
-            <option value="">Full Year</option>
-            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-          </select></div>
+    <div class="cmp3-setup">
+      <h3>⚖️ Compare 3 Periods</h3>
+      <div class="cmp3-periods">
+        <div class="period-box pa">
+          <div class="period-label">📘 Period A</div>
+          <div class="period-ctrl">
+            <div class="fg2"><label>Year</label><select id="cya" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
+            <div class="fg2"><label>Month</label>
+              <select id="cma" class="fc2" onchange="renderCompare3()">
+                <option value="">All</option>
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="period-box pb2x">
+          <div class="period-label">📙 Period B</div>
+          <div class="period-ctrl">
+            <div class="fg2"><label>Year</label><select id="cyb" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
+            <div class="fg2"><label>Month</label>
+              <select id="cmb" class="fc2" onchange="renderCompare3()">
+                <option value="">All</option>
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select></div>
+          </div>
+        </div>
+        <div class="period-box pc">
+          <div class="period-label">📗 Period C</div>
+          <div class="period-ctrl">
+            <div class="fg2"><label>Year</label><select id="cyc" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
+            <div class="fg2"><label>Month</label>
+              <select id="cmc" class="fc2" onchange="renderCompare3()">
+                <option value="">All</option>
+                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+              </select></div>
+          </div>
+        </div>
       </div>
-      <div class="fb">
-        <div class="fbt" style="color:var(--acc)">Period B</div>
-        <div class="fg2"><label>Year</label><select id="cyb" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
-        <div class="fg2" style="margin-top:8px"><label>Month</label>
-          <select id="cmb" class="fc2" onchange="renderCompare3()">
-            <option value="">Full Year</option>
-            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-          </select></div>
-      </div>
-      <div class="fb">
-        <div class="fbt" style="color:var(--ok)">Period C</div>
-        <div class="fg2"><label>Year</label><select id="cyc" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
-        <div class="fg2" style="margin-top:8px"><label>Month</label>
-          <select id="cmc" class="fc2" onchange="renderCompare3()">
-            <option value="">Full Year</option>
-            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-          </select></div>
-      </div>
+      <button class="btn bp bsm" onclick="renderCompare3()">⚖️ Compare</button>
     </div>
-    <div id="cmp3-table"></div>
+    <div id="cmp3-result"></div>
   </div>
+
   <div id="an-catmon" class="an-panel">
-    <div class="fb" style="margin-bottom:18px">
-      <div class="fbt">🏷️ Category × Month</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px">
-        <div class="fg2"><label>Year</label>
+    <div class="catmon-setup">
+      <h3>🏷️ Category × Month Comparison</h3>
+      <div class="catmon-controls">
+        <div class="fg2"><label>Year *</label>
           <select id="cm-year" class="fc2" onchange="renderCatMon()"><option value="">Select Year</option></select></div>
-        <div class="fg2"><label>Category</label>
+        <div class="fg2"><label>Category (optional)</label>
           <div class="cdw" id="cdw-catmon">
-            <div class="csd" id="csd-catmon" onclick="toggleDrop('catmon')">
-              <span id="ct-catmon">All Categories</span><span class="ca">▼</span>
+            <div class="csd" id="csd-catmon" onclick="toggleDrop('catmon')" style="min-height:39px">
+              <span id="ct-catmon" class="ph">All Categories</span><span class="ca">▼</span>
             </div>
             <div class="cdp" id="cdp-catmon">
               <div class="csb"><input class="csi" id="cs-catmon" placeholder="🔎 Search…" oninput="filterOpts('catmon')" autocomplete="off"/></div>
@@ -596,9 +565,12 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
             <input type="hidden" id="cm-cat"/>
           </div>
         </div>
+        <div class="fg2" style="align-self:end">
+          <button class="btn bp bsm" onclick="renderCatMon()">🔄 Refresh</button>
+        </div>
       </div>
     </div>
-    <div id="catmon-out"></div>
+    <div id="catmon-result"></div>
   </div>
 </section>
 
@@ -633,12 +605,9 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
         <option value="create">➕ Created</option>
         <option value="update">✏️ Updated</option>
         <option value="delete">🗑️ Deleted</option>
-        <option value="bulk_delete">🗑️ Bulk Delete</option>
-        <option value="import">📥 Import</option>
         <option value="cat_add">🏷️ Cat Added</option>
         <option value="cat_edit">🏷️ Cat Edited</option>
         <option value="cat_delete">🏷️ Cat Deleted</option>
-        <option value="security">🔒 Security</option>
       </select>
       <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear History</button>
       <span class="fs2" id="hist-count-lbl" style="margin-left:auto"></span>
@@ -652,53 +621,17 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 <section id="tab-export" class="tp">
   <div class="fc">
     <div class="fct">💾 Export & Backup</div>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Your data is safely stored in Firebase. Export a local backup anytime.</p>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Your data is safely stored in Firebase. Export as a local backup anytime.</p>
     <div class="ex-grid">
-      <div class="ex-card" onclick="doExportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div>
-      <div class="ex-card" onclick="triggerImport()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div>
+      <div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div>
+      <div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div>
     </div>
-    <input type="file" id="imp-file" accept=".json" style="display:none" onchange="doImportJSON(this)"/>
+    <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
   </div>
   <div class="fc">
     <div class="fct" style="color:var(--err)">⚠️ Danger Zone</div>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Permanently erase ALL expense data from Firebase.</p>
-    <button class="btn bd" onclick="doDeleteAll()">🗑️ Delete All Data</button>
-  </div>
-</section>
-
-<!-- SETTINGS -->
-<section id="tab-settings" class="tp">
-  <div class="settings-grid">
-    <!-- Change Password -->
-    <div class="fc">
-      <div class="fct">🔑 Change Password</div>
-      <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Update your application access password.</p>
-      <div class="fg2" style="margin-bottom:14px"><label>Current Password</label>
-        <input type="password" id="s-cur-pw" class="fc2" placeholder="Enter current password"/></div>
-      <div class="fg2" style="margin-bottom:14px"><label>New Password</label>
-        <input type="password" id="s-new-pw" class="fc2" placeholder="Enter new password"/></div>
-      <div class="fg2" style="margin-bottom:18px"><label>Confirm New Password</label>
-        <input type="password" id="s-conf-pw" class="fc2" placeholder="Confirm new password"/></div>
-      <button class="btn bp" onclick="changePassword()">🔑 Update Password</button>
-    </div>
-    <!-- Theme Customization — NEW FEATURE -->
-    <div class="fc">
-      <div class="fct">🎨 Theme Color</div>
-      <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Choose your preferred accent color.</p>
-      <div class="theme-grid" id="theme-grid"></div>
-      <p style="font-size:.74rem;color:var(--muted);margin-top:12px" id="theme-lbl">Current: Default Purple</p>
-    </div>
-    <!-- App Info -->
-    <div class="fc">
-      <div class="fct">ℹ️ App Info</div>
-      <p style="font-size:.83rem;color:var(--muted);line-height:1.8">
-        <strong>💰 Expense Tracker</strong><br/>
-        Version: 2.1.0<br/>
-        Database: Firebase Firestore<br/>
-        Session timeout: 1 hour inactivity<br/>
-        Password-protected sensitive operations.
-      </p>
-    </div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Permanently erase ALL data from Firebase.</p>
+    <button class="btn bd" onclick="confirmDeleteAll()">🗑️ Delete All Data</button>
   </div>
 </section>
 
@@ -722,16 +655,6 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
           </div>
           <input type="hidden" id="m-cat"/>
         </div>
-      </div>
-      <div class="fg2" style="grid-column:1/-1"><label>Payment Mode</label>
-        <div class="pm-group" id="pm-group-edit">
-        <button type="button" class="pm-btn active" data-pm="UPI"         onclick="selectPMEdit(this)">💸 UPI</button>
-	<button type="button" class="pm-btn"        data-pm="Bank Transfer" onclick="selectPMEdit(this)">🏛️ Bank Transfer</button>
- 	<button type="button" class="pm-btn"        data-pm="Cash"        onclick="selectPMEdit(this)">💵 Cash</button>
-	<button type="button" class="pm-btn"        data-pm="Credit Card" onclick="selectPMEdit(this)">🏦 Credit Card</button>
-        <button type="button" class="pm-btn"        data-pm="Debit Card"  onclick="selectPMEdit(this)">💳 Debit Card</button>
-        </div>
-        <input type="hidden" id="m-pm" value="UPI"/>
       </div>
       <div class="fg2" style="grid-column:1/-1"><label>Note</label>
         <textarea id="m-note" class="fc2"></textarea></div>
@@ -759,11 +682,14 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 <div class="tc2" id="toast-c"></div>
 
 <script type="module">
-import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import {
-  getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
+  getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
   onSnapshot, query, orderBy, writeBatch, getDocs
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+console.log("✅ SDK imports OK");
 
 const firebaseConfig = {
   apiKey:            "AIzaSyByVVcCmoZlACdbY_N8nJ3_fQM83ZzOM6E",
@@ -776,6 +702,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
+console.log("✅ Firebase ready");
 
 const EXPENSE_COL  = "expenses";
 const CATEGORY_COL = "categories";
@@ -784,14 +711,8 @@ const HISTORY_COL  = "history";
 const MF=['','January','February','March','April','May','June',
           'July','August','September','October','November','December'];
 const MS=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-
-/* FIX 5: Explicit COLORS array — used only as inline style values, never as CSS class names */
-const COLORS=[
-  '#6c63ff','#ff6584','#22c55e','#f59e0b','#3b82f6','#a855f7',
-  '#ec4899','#14b8a6','#f97316','#06b6d4','#84cc16','#ef4444',
-  '#8b5cf6','#10b981','#f43f5e','#0ea5e9','#d97706','#7c3aed'
-];
-
+const COLORS=['#6c63ff','#ff6584','#22c55e','#f59e0b','#3b82f6','#a855f7',
+              '#ec4899','#14b8a6','#f97316','#06b6d4','#84cc16','#ef4444'];
 const DEFAULT_CATS=[
   "Cash Withdraw","Cycle Expenses","Home Fitra","Home Fruits","Home Rations","Home Snacks",
   "Home Travel","Home Vegetables","Home Other Expenses","Miscellaneous",
@@ -808,298 +729,202 @@ let expenses=[], categories=[], history=[];
 let filtered=[], curPage=1;
 const PG=25;
 let sField='date', sDir='desc';
-/* FIX 1+2+3: catVals stores plain string values; dropdown items use data-val attribute
-   instead of injecting values into onclick strings — eliminates the $$…$$ bug entirely */
 let catVals={add:'',edit:'',filter:'',catmon:''};
 let histPage=1; const HPG=20;
 let curAnTab='overview';
-
-/* ══════════════════════════════════════════════
-   PASSWORD SYSTEM
-══════════════════════════════════════════════ */
-const PW_KEY='et_pw', PW_AUTH_KEY='et_auth_ts', PW_DEFAULT='1432';
-const INACTIVITY_MS=60*60*1000;
-function getStoredPW(){ return localStorage.getItem(PW_KEY)||PW_DEFAULT; }
-function isAuthenticated(){ const ts=parseInt(localStorage.getItem(PW_AUTH_KEY)||'0'); return ts&&(Date.now()-ts<INACTIVITY_MS); }
-function markAuthenticated(){ localStorage.setItem(PW_AUTH_KEY,Date.now().toString()); }
-function resetAuth(){ localStorage.removeItem(PW_AUTH_KEY); }
-let _pwResolve=null, _inactivityTimer=null;
-
-function resetInactivityTimer(){
-  clearTimeout(_inactivityTimer);
-  _inactivityTimer=setTimeout(()=>resetAuth(), INACTIVITY_MS);
-}
-['click','keydown','mousemove','touchstart'].forEach(ev=>{
-  document.addEventListener(ev,()=>{ if(isAuthenticated()) resetInactivityTimer(); },{passive:true});
-});
-
-function showPasswordModal(context=''){
-  document.getElementById('pw-title').textContent = context?`Password Required`:`Authentication Required`;
-  document.getElementById('pw-subtitle').textContent = context?`Enter password to: ${context}`:`Enter your password to access the app.`;
-  document.getElementById('pw-input').value='';
-  document.getElementById('pw-err').textContent='';
-  document.getElementById('pw-mo').style.display='flex';
-  setTimeout(()=>document.getElementById('pw-input').focus(),80);
-  logHistory(ACT.SECURITY,{event:'Password prompt shown',context:context||'App Access'});
-  return new Promise(res=>{ _pwResolve=res; });
-}
-window.submitPw=function(){
-  const val=document.getElementById('pw-input').value;
-  if(val===getStoredPW()){
-    document.getElementById('pw-mo').style.display='none';
-    markAuthenticated(); resetInactivityTimer();
-    logHistory(ACT.SECURITY,{event:'Password authenticated'});
-    if(_pwResolve){ _pwResolve(true); _pwResolve=null; }
-  } else {
-    document.getElementById('pw-err').textContent='❌ Incorrect password. Try again.';
-    document.getElementById('pw-input').value='';
-    document.getElementById('pw-input').focus();
-  }
-};
-async function requireAuth(ctx=''){
-  if(isAuthenticated()) return true;
-  return await showPasswordModal(ctx);
-}
-window.changePassword=function(){
-  const cur=document.getElementById('s-cur-pw').value;
-  const nw=document.getElementById('s-new-pw').value;
-  const cf=document.getElementById('s-conf-pw').value;
-  if(cur!==getStoredPW()){ toast('❌ Current password incorrect.','error'); return; }
-  if(!nw){ toast('❌ New password cannot be empty.','error'); return; }
-  if(nw!==cf){ toast('❌ Passwords do not match.','error'); return; }
-  localStorage.setItem(PW_KEY,nw);
-  ['s-cur-pw','s-new-pw','s-conf-pw'].forEach(id=>document.getElementById(id).value='');
-  toast('✅ Password updated!','success');
-  logHistory(ACT.SECURITY,{event:'Password changed'});
-};
-
-/* ══════════════════════════════════════════════
-   THEME CUSTOMISATION — NEW FEATURE
-══════════════════════════════════════════════ */
-const THEMES=[
-  {name:'Purple',    p:'#6c63ff',pd:'#5046e5',pl:'#ede9ff',sec:'#f0f0ff'},
-  {name:'Blue',      p:'#3b82f6',pd:'#2563eb',pl:'#dbeafe',sec:'#eff6ff'},
-  {name:'Teal',      p:'#14b8a6',pd:'#0d9488',pl:'#ccfbf1',sec:'#f0fdfa'},
-  {name:'Green',     p:'#22c55e',pd:'#16a34a',pl:'#dcfce7',sec:'#f0fdf4'},
-  {name:'Rose',      p:'#f43f5e',pd:'#e11d48',pl:'#ffe4e6',sec:'#fff1f2'},
-  {name:'Orange',    p:'#f97316',pd:'#ea580c',pl:'#ffedd5',sec:'#fff7ed'},
-  {name:'Violet',    p:'#8b5cf6',pd:'#7c3aed',pl:'#ede9fe',sec:'#f5f3ff'},
-  {name:'Indigo',    p:'#6366f1',pd:'#4f46e5',pl:'#e0e7ff',sec:'#eef2ff'},
-  {name:'Pink',      p:'#ec4899',pd:'#db2777',pl:'#fce7f3',sec:'#fdf2f8'},
-  {name:'Cyan',      p:'#06b6d4',pd:'#0891b2',pl:'#cffafe',sec:'#ecfeff'},
-];
-const THEME_KEY='et_theme';
-
-function applyTheme(t){
-  const root=document.documentElement;
-  root.style.setProperty('--p',  t.p);
-  root.style.setProperty('--pd', t.pd);
-  root.style.setProperty('--pl', t.pl);
-  root.style.setProperty('--sec',t.sec);
-}
-
-function buildThemeGrid(){
-  const saved=localStorage.getItem(THEME_KEY)||'Purple';
-  const grid=document.getElementById('theme-grid');
-  grid.innerHTML=THEMES.map(t=>`
-    <div class="theme-swatch ${t.name===saved?'active':''}"
-      title="${t.name}"
-      style="background:${t.p}"
-      onclick="pickTheme('${t.name}')"></div>`).join('');
-  document.getElementById('theme-lbl').textContent=`Current: ${saved}`;
-  const cur=THEMES.find(t=>t.name===saved)||THEMES[0];
-  applyTheme(cur);
-}
-
-window.pickTheme=function(name){
-  const t=THEMES.find(x=>x.name===name);
-  if(!t) return;
-  applyTheme(t);
-  localStorage.setItem(THEME_KEY,name);
-  document.querySelectorAll('.theme-swatch').forEach(el=>el.classList.toggle('active',el.title===name));
-  document.getElementById('theme-lbl').textContent=`Current: ${name}`;
-  toast(`🎨 Theme changed to ${name}!`,'success');
-};
-
-/* ══════════════════════════════════════════════
-   LAST VISIT
-══════════════════════════════════════════════ */
-const LV_KEY='et_last_visit';
-function showLastVisit(){
-  const lv=localStorage.getItem(LV_KEY);
-  const el=document.getElementById('lv-banner-container');
-  if(lv&&el) el.innerHTML=`<div class="lv-banner">🕐 Last visit: <strong>${lv}</strong></div>`;
-  localStorage.setItem(LV_KEY,new Date().toLocaleString('en-IN',{
-    weekday:'short',day:'2-digit',month:'short',year:'numeric',
-    hour:'2-digit',minute:'2-digit',second:'2-digit'
-  }));
-}
+let unsubExpenses=null, unsubCategories=null, unsubHistory=null;
 
 function localDateStr(d){
   const dt=d||new Date();
   return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
 }
 
-window.addEventListener('online', ()=>{ document.getElementById('offline-bar').classList.remove('show'); toast('🌐 Back online','success'); });
-window.addEventListener('offline',()=>{ document.getElementById('offline-bar').classList.add('show');    toast('⚠️ You are offline','warning'); });
+window.addEventListener('online', ()=>{
+  document.getElementById('offline-bar').classList.remove('show');
+  toast('🌐 Back online — syncing…','success');
+});
+window.addEventListener('offline', ()=>{
+  document.getElementById('offline-bar').classList.add('show');
+  toast('⚠️ You are offline','warning');
+});
 
 /* ══════════════════════════════════════════════
-   PAYMENT MODE
-══════════════════════════════════════════════ */
-window.selectPM=function(btn){
-  document.querySelectorAll('#pm-group .pm-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('f-pm').value=btn.dataset.pm;
-};
-window.selectPMEdit=function(btn){
-  document.querySelectorAll('#pm-group-edit .pm-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('m-pm').value=btn.dataset.pm;
-};
-function setPMEdit(val){
-  document.querySelectorAll('#pm-group-edit .pm-btn').forEach(b=>{
-    b.classList.toggle('active', b.dataset.pm===val);
-  });
-  document.getElementById('m-pm').value=val||'UPI';
-}
-
-/* ══════════════════════════════════════════════
-   BOOT
+   BOOT — FIXED VERSION
 ══════════════════════════════════════════════ */
 async function init(){
-  buildThemeGrid();
-  await requireAuth('Access App');
-
-  document.getElementById('hdr-date').textContent=
+  console.log("🚀 init() called");
+  setMsg('Connecting to Firebase…');
+  document.getElementById('hdr-date').textContent =
     new Date().toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
   setToday();
-  showLastVisit();
-  setMsg('Connecting to Firebase…');
 
-  const safetyTimer=setTimeout(()=>{ hideLoading(); setSyncStatus('live'); },10000);
+  const safetyTimer = setTimeout(()=>{
+    console.warn('⚠️ Safety timeout — force hiding loader');
+    hideLoading();
+    setSyncStatus('live');
+  }, 10000);
 
   try{
-    const catSnap=await getDocs(collection(db,CATEGORY_COL));
+    console.log("📡 Checking categories…");
+    const catSnap = await getDocs(collection(db, CATEGORY_COL));
+    console.log("📂 Categories found:", catSnap.size);
+
     if(catSnap.empty){
       setMsg('Setting up categories…');
-      const batch=writeBatch(db);
+      const batch = writeBatch(db);
       DEFAULT_CATS.forEach(name=>{
-        const ref=doc(collection(db,CATEGORY_COL));
-        batch.set(ref,{name,createdAt:new Date().toISOString()});
+        const ref = doc(collection(db, CATEGORY_COL));
+        batch.set(ref,{name, createdAt: new Date().toISOString()});
       });
       await batch.commit();
+      console.log("✅ Default categories seeded");
     }
-    setMsg('Loading data…');
-    listenExpenses();
+
+    setMsg('Loading expenses…');
+    console.log("📡 Starting expense listener…");
+
+    await new Promise((resolve)=>{
+      let done = false;
+      const q = query(collection(db, EXPENSE_COL), orderBy('date','desc'));
+      unsubExpenses = onSnapshot(q, snap=>{
+        console.log("✅ Expenses snapshot received:", snap.size, "docs");
+        expenses = snap.docs.map(d=>({id:d.id,...d.data()}));
+        populateYears();
+        buildAllDropdowns();
+        renderDashboard();
+        renderRecords();
+        if(curAnTab!=='compare3') renderAnTab(curAnTab);
+        updateStatusBar();
+        if(!done){
+          done = true;
+          clearTimeout(safetyTimer);
+          setSyncStatus('live');
+          hideLoading();
+          console.log("✅ Loader hidden — app ready!");
+          resolve();
+        }
+      }, err=>{
+        console.error("❌ Expense listener error:", err);
+        toast('Sync error: '+err.message,'error');
+        if(!done){
+          done = true;
+          clearTimeout(safetyTimer);
+          setSyncStatus('error');
+          hideLoading();
+          resolve();
+        }
+      });
+    });
+
     listenCategories();
     listenHistory();
+
+  }catch(err){
     clearTimeout(safetyTimer);
-  } catch(err){
-    clearTimeout(safetyTimer);
-    hideLoading(); setSyncStatus('error');
-    toast('❌ Connection error: '+err.message,'error');
+    console.error("❌ init() error:", err);
+    setMsg('❌ Firebase connection failed: '+err.message);
+    setSyncStatus('error');
+    hideLoading();
   }
 }
 
 /* ══════════════════════════════════════════════
-   LISTENERS
+   REAL-TIME LISTENERS
 ══════════════════════════════════════════════ */
-function listenExpenses(){
-  const q=query(collection(db,EXPENSE_COL),orderBy('date','desc'));
-  onSnapshot(q, snap=>{
-    expenses=snap.docs.map(d=>({id:d.id,...d.data()}));
-    renderDashboard(); applyFilters(); updateStatusBar(); hideLoading(); setSyncStatus('live');
-  }, err=>{ setSyncStatus('error'); hideLoading(); toast('❌ '+err.message,'error'); });
-}
 function listenCategories(){
-  onSnapshot(collection(db,CATEGORY_COL), snap=>{
-    categories=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>a.name.localeCompare(b.name));
-    buildAllDropdowns(); renderCatMgr(); updateStatusBar();
+  unsubCategories = onSnapshot(collection(db, CATEGORY_COL), snap=>{
+    categories = snap.docs.map(d=>({id:d.id,...d.data()}))
+                  .sort((a,b)=>a.name.localeCompare(b.name));
+    buildAllDropdowns();
+    renderCatMgr();
+    updateStatusBar();
   });
 }
+
 function listenHistory(){
-  const q=query(collection(db,HISTORY_COL),orderBy('timestamp','desc'));
-  onSnapshot(q, snap=>{ history=snap.docs.map(d=>({id:d.id,...d.data()})); renderHistory(); });
+  const q = query(collection(db, HISTORY_COL), orderBy('timestamp','desc'));
+  unsubHistory = onSnapshot(q, snap=>{
+    history = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderHistory();
+  });
 }
 
 /* ══════════════════════════════════════════════
-   STATUS / UI HELPERS
+   STATUS
 ══════════════════════════════════════════════ */
-function setSyncStatus(s){
-  const dot=document.getElementById('sync-dot'),txt=document.getElementById('sync-status');
-  if(s==='live')  { dot.className='dot dot-green'; txt.textContent='Live Sync ✓'; }
-  if(s==='saving'){ dot.className='dot dot-yellow';txt.textContent='Saving…'; }
-  if(s==='error') { dot.className='dot dot-red';   txt.textContent='Sync Error'; }
+function setSyncStatus(state){
+  const dot=document.getElementById('sync-dot');
+  const txt=document.getElementById('sync-status');
+  if(state==='live'){dot.className='dot dot-green';txt.textContent='Live Sync ✓';}
+  else if(state==='saving'){dot.className='dot dot-yellow';txt.textContent='Saving…';}
+  else if(state==='error'){dot.className='dot dot-red';txt.textContent='Sync Error';}
 }
 function updateStatusBar(){
   document.getElementById('rec-disp').textContent=expenses.length.toLocaleString();
   document.getElementById('cat-disp').textContent=categories.length.toLocaleString();
 }
-function setMsg(m){ document.getElementById('loading-msg').textContent=m; }
-function hideLoading(){ document.getElementById('loading-overlay').style.display='none'; }
+function setMsg(m){document.getElementById('loading-msg').textContent=m;}
+function hideLoading(){document.getElementById('loading-overlay').style.display='none';}
 
 /* ══════════════════════════════════════════════
    AUDIT HISTORY
 ══════════════════════════════════════════════ */
 const ACT={
-  CREATE:     {key:'create',     icon:'➕',label:'Expense Created', badge:'hb-c'},
-  UPDATE:     {key:'update',     icon:'✏️',label:'Expense Updated', badge:'hb-u'},
-  DELETE:     {key:'delete',     icon:'🗑️',label:'Expense Deleted', badge:'hb-d'},
-  CAT_ADD:    {key:'cat_add',    icon:'🏷️',label:'Category Added',  badge:'hb-cat'},
-  CAT_EDIT:   {key:'cat_edit',   icon:'✏️',label:'Category Renamed',badge:'hb-u'},
-  CAT_DELETE: {key:'cat_delete', icon:'🗑️',label:'Category Deleted',badge:'hb-d'},
-  BULK_DELETE:{key:'bulk_delete',icon:'🗑️',label:'All Data Deleted',badge:'hb-bulk'},
-  IMPORT:     {key:'import',     icon:'📥',label:'JSON Imported',   badge:'hb-imp'},
-  EXPORT:     {key:'security',   icon:'🗂️',label:'Data Exported',  badge:'hb-sec'},
-  SECURITY:   {key:'security',   icon:'🔒',label:'Security Event',  badge:'hb-sec'},
+  CREATE:    {key:'create',    icon:'➕',label:'Expense Created', badge:'hb-c'},
+  UPDATE:    {key:'update',    icon:'✏️',label:'Expense Updated', badge:'hb-u'},
+  DELETE:    {key:'delete',    icon:'🗑️',label:'Expense Deleted', badge:'hb-d'},
+  CAT_ADD:   {key:'cat_add',   icon:'🏷️',label:'Category Added',  badge:'hb-cat'},
+  CAT_EDIT:  {key:'cat_edit',  icon:'✏️',label:'Category Renamed',badge:'hb-u'},
+  CAT_DELETE:{key:'cat_delete',icon:'🗑️',label:'Category Deleted',badge:'hb-d'},
 };
-async function logHistory(act,data){
+async function logHistory(act, data){
   try{
-    await addDoc(collection(db,HISTORY_COL),{
-      action:act.key,icon:act.icon,label:act.label,badge:act.badge,
-      data,timestamp:new Date().toISOString()
+    await addDoc(collection(db, HISTORY_COL),{
+      action: act.key, icon: act.icon, label: act.label, badge: act.badge,
+      data, timestamp: new Date().toISOString()
     });
-  }catch(e){ console.warn('logHistory failed:',e); }
+  }catch(e){ console.warn('History log failed:',e); }
 }
 
 /* ══════════════════════════════════════════════
    TOAST
 ══════════════════════════════════════════════ */
-function toast(msg,type='info'){
+function toast(msg, type='info'){
   const c=document.getElementById('toast-c');
   const t=document.createElement('div');
-  t.className=`toast ${type}`; t.textContent=msg; c.appendChild(t);
-  setTimeout(()=>{ t.style.animation='tout .3s ease forwards'; setTimeout(()=>t.remove(),300); },3000);
+  t.className=`toast ${type}`;
+  t.textContent=msg;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.animation='tout .3s ease forwards';setTimeout(()=>t.remove(),300);},3000);
 }
 
 /* ══════════════════════════════════════════════
    HELPERS
 ══════════════════════════════════════════════ */
-function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function fmtDate(d){ if(!d) return '—'; const p=d.split('-'); return `${p[2]}/${p[1]}/${p[0]}`; }
-function fmtAmt(v){ return Number(v||0).toLocaleString('en-IN',{minimumFractionDigits:2}); }
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function escQ(s){return String(s||'').replace(/'/g,"\\'");}
+function fmtDate(d){if(!d) return '—'; const p=d.split('-'); return `${p[2]}/${p[1]}/${p[0]}`;}
+function fmtAmt(v){return Number(v||0).toLocaleString('en-IN',{minimumFractionDigits:2});}
 
 /* ══════════════════════════════════════════════
-   MODAL / MISC
+   MODAL & MISC
 ══════════════════════════════════════════════ */
-function showConfirm(title,body,okLabel,onOk,okClass='bd'){
+function showConfirm(title,bodyHtml,okLabel,onOk,okClass='bd'){
   document.getElementById('confirm-title').innerHTML=title;
-  document.getElementById('confirm-body').innerHTML=body;
+  document.getElementById('confirm-body').innerHTML=bodyHtml;
   const btn=document.getElementById('confirm-ok-btn');
-  btn.textContent=okLabel; btn.className=`btn ${okClass}`; btn.onclick=onOk;
+  btn.textContent=okLabel;btn.className=`btn ${okClass}`;btn.onclick=onOk;
   document.getElementById('confirm-mo').classList.add('open');
 }
 window.closeMo=function(id,evt){
   if(!evt||evt.target===document.getElementById(id))
     document.getElementById(id).classList.remove('open');
 };
-function setToday(){ document.getElementById('f-date').value=localDateStr(); }
+function setToday(){document.getElementById('f-date').value=localDateStr();}
 window.clearForm=function(){
   document.getElementById('f-amount').value='';
   document.getElementById('f-note').value='';
-  setCat('add',''); setToday();
-  document.querySelectorAll('#pm-group .pm-btn').forEach(b=>b.classList.toggle('active',b.dataset.pm==='UPI'));
-  document.getElementById('f-pm').value='UPI';
+  setCat('add','');setToday();
 };
 window.focusAdd=function(){
   switchTab('dashboard',document.querySelector('[data-tab="dashboard"]'));
@@ -1109,29 +934,28 @@ window.switchTab=function(id,btn){
   document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tb').forEach(b=>b.classList.remove('active'));
   document.getElementById(`tab-${id}`).classList.add('active');
-  const b=btn||document.querySelector(`[data-tab="${id}"]`); if(b) b.classList.add('active');
+  const b=btn||document.querySelector(`[data-tab="${id}"]`);if(b) b.classList.add('active');
   if(id==='analytics') renderAnTab(curAnTab);
-  if(id==='records')   renderRecords();
+  if(id==='records') renderRecords();
   if(id==='categories') renderCatMgr();
-  if(id==='history')   { histPage=1; renderHistory(); }
+  if(id==='history'){histPage=1;renderHistory();}
 };
 function populateYears(){
   const yrs=[...new Set(expenses.map(e=>new Date(e.date+'T00:00:00').getFullYear()))].sort((a,b)=>b-a);
-  const cy=new Date().getFullYear(); if(!yrs.includes(cy)) yrs.unshift(cy);
+  const cy=new Date().getFullYear();if(!yrs.includes(cy)) yrs.unshift(cy);
   ['r-year','a-year','cya','cyb','cyc','mw-year','cm-year'].forEach(id=>{
-    const el=document.getElementById(id); if(!el) return;
+    const el=document.getElementById(id);if(!el) return;
     const v=el.value;
-    el.innerHTML=id==='mw-year'?'<option value="">All Years</option>':
-                 id==='cm-year'?'<option value="">Select Year</option>':'<option value="">All Years</option>';
-    yrs.forEach(y=>{ const o=document.createElement('option'); o.value=y; o.textContent=y; el.appendChild(o); });
+    el.innerHTML=id==='mw-year'?'<option value="">All Years</option>':id==='cm-year'?'<option value="">Select Year</option>':'<option value="">All Years</option>';
+    yrs.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;el.appendChild(o);});
     if(v) el.value=v;
   });
 }
 function mkSummaryTable(headers,rows,footer){
   return `<table style="width:100%;border-collapse:collapse;font-size:.78rem">
     <thead><tr style="background:var(--sec)">${headers.map((h,i)=>`<th style="padding:8px 10px;text-align:${i===0?'left':'right'};font-size:.69rem;color:var(--p);text-transform:uppercase">${h}</th>`).join('')}</tr></thead>
-    <tbody>$${rows.map(r=>`<tr style="border-bottom:1px solid var(--bdr)">${r.map((c,i)=>`<td style="padding:8px 10px;text-align:$${i===0?'left':'right'};$${i===1?'font-weight:700;color:var(--err)':''}">$${c}</td>`).join('')}</tr>`).join('')}</tbody>
-    $${footer?`<tfoot><tr style="background:var(--sec);font-weight:800">${footer.map((c,i)=>`<td style="padding:8px 10px;text-align:$${i===0?'left':'right'}">${c}</td>`).join('')}</tr></tfoot>`:''}
+    <tbody>${rows.map(r=>`<tr style="border-bottom:1px solid var(--bdr)">${r.map((c,i)=>`<td style="padding:8px 10px;text-align:${i===0?'left':'right'};${i===1?'font-weight:700;color:var(--err)':''}">${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    ${footer?`<tfoot><tr style="background:var(--sec);font-weight:800">${footer.map((c,i)=>`<td style="padding:8px 10px;text-align:${i===0?'left':'right'}">${c}</td>`).join('')}</tr></tfoot>`:''}
   </table>`;
 }
 
@@ -1143,16 +967,15 @@ window.saveExp=async function(){
   const amount=parseFloat(document.getElementById('f-amount').value);
   const cat=document.getElementById('f-cat').value;
   const note=document.getElementById('f-note').value.trim();
-  const pm=document.getElementById('f-pm').value||'UPI';
-  if(!date){ toast('Select a date.','error'); return; }
-  if(!cat){ toast('Select a category.','error'); return; }
-  if(isNaN(amount)||amount<0){ toast('Enter a valid amount.','error'); return; }
+  if(!date){toast('Select a date.','error');return;}
+  if(!cat){toast('Select a category.','error');return;}
+  if(isNaN(amount)||amount<0){toast('Enter a valid amount.','error');return;}
   setSyncStatus('saving');
   try{
-    const ref=await addDoc(collection(db,EXPENSE_COL),{date,amount,category:cat,note,paymentMode:pm,createdAt:new Date().toISOString()});
-    await logHistory(ACT.CREATE,{id:ref.id,date,amount,category:cat,note,paymentMode:pm});
-    clearForm(); toast('✅ Expense saved!','success');
-  } catch(e){ toast('❌ Save failed: '+e.message,'error'); }
+    const ref=await addDoc(collection(db,EXPENSE_COL),{date,amount,category:cat,note,createdAt:new Date().toISOString()});
+    await logHistory(ACT.CREATE,{id:ref.id,date,amount,category:cat,note});
+    clearForm();toast('✅ Expense saved & synced!','success');
+  }catch(e){toast('❌ Save failed: '+e.message,'error');}
   setSyncStatus('live');
 };
 
@@ -1162,85 +985,54 @@ window.updateExp=async function(){
   const amount=parseFloat(document.getElementById('m-amount').value);
   const cat=document.getElementById('m-cat').value;
   const note=document.getElementById('m-note').value.trim();
-  const pm=document.getElementById('m-pm').value||'UPI';
-  if(!date||!cat||isNaN(amount)||amount<0){ toast('Fill all required fields.','error'); return; }
-  const old=expenses.find(e=>e.id===id); if(!old) return;
+  if(!date||!cat||isNaN(amount)||amount<0){toast('Fill all required fields.','error');return;}
+  const old=expenses.find(e=>e.id===id);
+  if(!old) return;
   const changes=[];
-  if(old.date!==date)             changes.push({field:'Date',    from:fmtDate(old.date),        to:fmtDate(date)});
-  if(old.amount!==amount)         changes.push({field:'Amount',  from:`₹${fmtAmt(old.amount)}`, to:`₹${fmtAmt(amount)}`});
-  if(old.category!==cat)          changes.push({field:'Category',from:old.category,              to:cat});
-  if((old.note||'')!==note)       changes.push({field:'Note',    from:old.note||'(none)',        to:note||'(none)'});
-  if((old.paymentMode||'UPI')!==pm) changes.push({field:'Mode',  from:old.paymentMode||'UPI',   to:pm});
+  if(old.date!==date)       changes.push({field:'Date',   from:fmtDate(old.date),       to:fmtDate(date)});
+  if(old.amount!==amount)   changes.push({field:'Amount', from:`₹${fmtAmt(old.amount)}`,to:`₹${fmtAmt(amount)}`});
+  if(old.category!==cat)    changes.push({field:'Category',from:old.category,            to:cat});
+  if((old.note||'')!==note) changes.push({field:'Note',   from:old.note||'(none)',        to:note||'(none)'});
   setSyncStatus('saving');
   try{
-    await updateDoc(doc(db,EXPENSE_COL,id),{date,amount,category:cat,note,paymentMode:pm});
+    await updateDoc(doc(db,EXPENSE_COL,id),{date,amount,category:cat,note});
     if(changes.length) await logHistory(ACT.UPDATE,{id,changes});
-    closeMo('edit-mo'); toast('✅ Updated!','success');
-  } catch(e){ toast('❌ Update failed: '+e.message,'error'); }
+    closeMo('edit-mo');toast('✅ Updated & synced!','success');
+  }catch(e){toast('❌ Update failed: '+e.message,'error');}
   setSyncStatus('live');
 };
 
-window.deleteExp = async function(id){
-  const rec = expenses.find(e=>e.id===id);
-  if(!rec) return;
-  /* Step 1: password gate */
-  const ok = await requireAuth('Delete Record');
-  if(!ok) return;
-  /* Step 2: confirm */
-  if(!confirm(
-    `Delete this record?\n\n📅 ${fmtDate(rec.date)}\n🏷️ ${rec.category}\n₹${fmtAmt(rec.amount)}`
-  )) return;
+window.deleteExp=async function(id){
+  const rec=expenses.find(e=>e.id===id);if(!rec) return;
+  if(!confirm(`Delete?\n\n${fmtDate(rec.date)} | ${rec.category} | ₹${fmtAmt(rec.amount)}`)) return;
   setSyncStatus('saving');
   try{
-    await deleteDoc(doc(db, EXPENSE_COL, id));
-    await logHistory(ACT.DELETE,{
-      id: rec.id, date: rec.date,
-      amount: rec.amount, category: rec.category
-    });
-    toast('🗑️ Record deleted.','info');
-  } catch(e){
-    toast('❌ Delete failed: '+e.message,'error');
-  }
+    await deleteDoc(doc(db,EXPENSE_COL,id));
+    await logHistory(ACT.DELETE,{id:rec.id,date:rec.date,amount:rec.amount,category:rec.category});
+    toast('🗑️ Deleted & synced.','info');
+  }catch(e){toast('❌ Delete failed: '+e.message,'error');}
   setSyncStatus('live');
 };
-
 
 window.openEditMo=function(id){
-  const e=expenses.find(x=>x.id===id); if(!e) return;
+  const e=expenses.find(x=>x.id===id);if(!e) return;
   document.getElementById('m-id').value=id;
   document.getElementById('m-date').value=e.date;
   document.getElementById('m-amount').value=e.amount;
   document.getElementById('m-note').value=e.note||'';
   setCat('edit',e.category);
-  setPMEdit(e.paymentMode||'UPI');
   document.getElementById('edit-mo').classList.add('open');
 };
 
-/* FIX 6: Delete All now requires password */
-window.doDeleteAll = async function(){
-  /* Step 1 – password gate */
-  const ok = await requireAuth('Delete All Data');
-  if(!ok) return;
-
-  /* Step 2 – double confirm */
-  if(!confirm('⚠️ This will PERMANENTLY delete ALL expense records from Firebase.\n\nThis action CANNOT be undone!')) return;
-  if(!confirm('Final confirmation: Are you absolutely sure you want to delete everything?')) return;
-
-  const count = expenses.length;
-  setSyncStatus('saving');
-  try{
-    const snap  = await getDocs(collection(db, EXPENSE_COL));
-    const batch = writeBatch(db);
-    snap.docs.forEach(d => batch.delete(d.ref));
-    await batch.commit();
-    await logHistory(ACT.BULK_DELETE, { count, deletedAt: new Date().toISOString() });
-    toast('🗑️ All ' + count + ' records deleted.', 'info');
-  } catch(err){
-    toast('❌ Delete failed: ' + err.message, 'error');
-  }
-  setSyncStatus('live');
+window.confirmDeleteAll=async function(){
+  if(!confirm('⚠️ Delete ALL data from Firebase permanently?')) return;
+  if(!confirm('This CANNOT be undone. Absolutely sure?')) return;
+  const snap=await getDocs(collection(db,EXPENSE_COL));
+  const batch=writeBatch(db);
+  snap.docs.forEach(d=>batch.delete(d.ref));
+  await batch.commit();
+  toast('All expense data deleted.','info');
 };
-
 
 /* ══════════════════════════════════════════════
    DASHBOARD
@@ -1251,7 +1043,7 @@ function renderDashboard(){
   const sum=a=>a.reduce((s,e)=>s+e.amount,0);
   const fmt=v=>'₹'+v.toLocaleString('en-IN',{minimumFractionDigits:2});
   const tE=expenses.filter(e=>e.date===today);
-  const mE=expenses.filter(e=>{ const d=new Date(e.date+'T00:00:00'); return d.getMonth()+1===tm&&d.getFullYear()===ty; });
+  const mE=expenses.filter(e=>{const d=new Date(e.date+'T00:00:00');return d.getMonth()+1===tm&&d.getFullYear()===ty;});
   const yE=expenses.filter(e=>new Date(e.date+'T00:00:00').getFullYear()===ty);
   document.getElementById('s-today').textContent=fmt(sum(tE));
   document.getElementById('s-month').textContent=fmt(sum(mE));
@@ -1263,348 +1055,175 @@ function renderDashboard(){
   document.getElementById('s-total-c').textContent=`${expenses.length} entries`;
   const recent=[...expenses].sort((a,b)=>new Date(b.date+'T00:00:00')-new Date(a.date+'T00:00:00')).slice(0,10);
   document.getElementById('rec-badge').textContent=`${recent.length} of ${expenses.length}`;
-  renderTbl('rec-tbody',recent,0,true);
-  populateYears();
+  renderTbl('rec-tbody',recent,0);
 }
 
 /* ══════════════════════════════════════════════
-   RECORDS — FIX 3: search works with All Categories
-   (reads catVals['filter'] directly, not the hidden input)
+   RECORDS
 ══════════════════════════════════════════════ */
 function applyFilters(){
   const q=document.getElementById('r-search').value.toLowerCase().trim();
   const yr=document.getElementById('r-year').value;
   const mon=document.getElementById('r-month').value;
   const day=document.getElementById('r-day').value;
-  const cat=catVals['filter']; // ← FIX 3: use catVals, empty string = All Categories
+  const cat=document.getElementById('r-cat').value;
   filtered=expenses.filter(e=>{
     const d=new Date(e.date+'T00:00:00');
     if(yr&&d.getFullYear()!==parseInt(yr)) return false;
     if(mon&&d.getMonth()+1!==parseInt(mon)) return false;
     if(day&&e.date!==day) return false;
-    if(cat&&e.category!==cat) return false; // only filter if cat is non-empty
-    if(q){
-      const hay=`${e.date} ${e.category} ${e.amount} ${e.note||''} ${e.paymentMode||''}`.toLowerCase();
-      if(!hay.includes(q)) return false;
-    }
+    if(cat&&e.category!==cat) return false;
+    if(q){const hay=`${e.date} ${e.category} ${e.amount} ${e.note||''}`.toLowerCase();if(!hay.includes(q)) return false;}
     return true;
   });
   filtered.sort((a,b)=>{
     let va=a[sField],vb=b[sField];
-    if(sField==='date'){ va=new Date(va+'T00:00:00'); vb=new Date(vb+'T00:00:00'); }
-    if(sField==='amount'){ va=+va; vb=+vb; }
+    if(sField==='date'){va=new Date(va+'T00:00:00');vb=new Date(vb+'T00:00:00');}
+    if(sField==='amount'){va=+va;vb=+vb;}
     return(va<vb?-1:va>vb?1:0)*(sDir==='asc'?1:-1);
   });
   const total=filtered.reduce((s,e)=>s+e.amount,0);
-  document.getElementById('f-summary').textContent=
-    `${filtered.length} records | ₹${total.toLocaleString('en-IN',{minimumFractionDigits:2})}`;
-  curPage=1; renderRecPage();
+  document.getElementById('f-summary').textContent=`${filtered.length} records | ₹${total.toLocaleString('en-IN',{minimumFractionDigits:2})}`;
+  curPage=1;renderRecPage();
 }
 window.applyFilters=applyFilters;
-window.doSort=function(f){ sDir=sField===f?(sDir==='asc'?'desc':'asc'):'desc'; sField=f; applyFilters(); };
+window.doSort=function(f){sDir=sField===f?(sDir==='asc'?'desc':'asc'):'desc';sField=f;applyFilters();};
 window.clearFilters=function(){
-  document.getElementById('r-search').value='';
-  document.getElementById('r-day').value='';
+  document.getElementById('r-search').value='';document.getElementById('r-day').value='';
   ['r-year','r-month'].forEach(id=>document.getElementById(id).value='');
-  setCat('filter',''); applyFilters();
+  setCat('filter','');applyFilters();
 };
-function renderRecords(){ applyFilters(); }
+function renderRecords(){applyFilters();}
 function renderRecPage(){
   const total=filtered.length,pages=Math.ceil(total/PG)||1;
   if(curPage>pages) curPage=pages;
   const start=(curPage-1)*PG;
   document.getElementById('all-badge').textContent=`${total} records`;
-  renderTbl('all-tbody',filtered.slice(start,start+PG),start,false);
+  renderTbl('all-tbody',filtered.slice(start,start+PG),start);
   renderPag(pages,total);
 }
-
-/* FIX 1: renderTbl uses textContent / createElement — no escQ injection into onclick */
-function renderTbl(tbId,rows,off,compact=false){
+function renderTbl(tbId,rows,off){
   const tb=document.getElementById(tbId);
-  const cols=compact?7:7;
-  if(!rows.length){
-    tb.innerHTML=`<tr><td colspan="${cols}"><div class="es"><div class="ei">📭</div><p>No records found.</p></div></td></tr>`;
-    return;
-  }
-  tb.innerHTML='';
-  rows.forEach((e,i)=>{
-    const tr=document.createElement('tr');
-    const pm=e.paymentMode||'';
-    tr.innerHTML=`
-      <td data-label="#">${off+i+1}</td>
-      <td data-label="Date" class="dc">${fmtDate(e.date)}</td>
-      <td data-label="Category"><span class="cb">${esc(e.category)}</span></td>
-      <td data-label="Amount" class="amc">₹${fmtAmt(e.amount)}</td>
-      <td data-label="Mode">${pm?`<span class="pm-badge">${esc(pm)}</span>`:''}</td>
-      <td data-label="Note" class="nc">${esc(e.note||'—')}</td>
-      <td data-label="Actions"><div class="ab">
-        <button class="btn bo bxs" data-id="${esc(e.id)}">✏️</button>
-        <button class="btn bd bxs" data-id="${esc(e.id)}">🗑️</button>
-      </div></td>`;
-    /* Attach events safely — no string injection */
-    const btns=tr.querySelectorAll('button');
-    btns[0].addEventListener('click',()=>openEditMo(e.id));
-    btns[1].addEventListener('click',()=>deleteExp(e.id));
-    tb.appendChild(tr);
-  });
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="6"><div class="es"><div class="ei">📭</div><p>No records found.</p></div></td></tr>`;return;}
+  tb.innerHTML=rows.map((e,i)=>`<tr>
+    <td data-label="#">${off+i+1}</td>
+    <td data-label="Date" class="dc">${fmtDate(e.date)}</td>
+    <td data-label="Category"><span class="cb">${esc(e.category)}</span></td>
+    <td data-label="Amount" class="amc">₹${fmtAmt(e.amount)}</td>
+    <td data-label="Note" class="nc">${esc(e.note||'—')}</td>
+    <td data-label="Actions"><div class="ab">
+      <button class="btn bo bxs" onclick="openEditMo('${e.id}')">✏️</button>
+      <button class="btn bd bxs" onclick="deleteExp('${e.id}')">🗑️</button>
+    </div></td>
+  </tr>`).join('');
 }
-
-function renderPag(pages, total){
-  const el = document.getElementById('pagination');
-  if(pages <= 1){ el.innerHTML = ''; return; }
-  const s = (curPage-1)*PG + 1;
-  const e = Math.min(curPage*PG, total);
-  let btns = '';
-  for(let i=1; i<=pages; i++){
-    if(i===1 || i===pages || Math.abs(i-curPage)<=1)
-      btns += `<button class="pb ${i===curPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-    else if(Math.abs(i-curPage)===2)
-      btns += `<span style="padding:4px 2px;color:var(--muted)">…</span>`;
+function renderPag(pages,total){
+  const el=document.getElementById('pagination');
+  if(pages<=1){el.innerHTML='';return;}
+  const s=(curPage-1)*PG+1,e=Math.min(curPage*PG,total);
+  let btns='';
+  for(let i=1;i<=pages;i++){
+    if(i===1||i===pages||Math.abs(i-curPage)<=1) btns+=`<button class="pb ${i===curPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    else if(Math.abs(i-curPage)===2) btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
   }
-  el.innerHTML =
-    `<span class="pi">Showing ${s}–${e} of ${total}</span>
-     <div class="pb2">
-       <button class="pb" onclick="goPage(${curPage-1})" ${curPage===1?'disabled':''}>◀</button>
-       ${btns}
-       <button class="pb" onclick="goPage(${curPage+1})" ${curPage===pages?'disabled':''}>▶</button>
-     </div>`;
+  el.innerHTML=`<span class="pi">Showing ${s}–${e} of ${total}</span>
+    <div class="pb2"><button class="pb" onclick="goPage(${curPage-1})" ${curPage===1?'disabled':''}>◀</button>
+    ${btns}<button class="pb" onclick="goPage(${curPage+1})" ${curPage===pages?'disabled':''}>▶</button></div>`;
 }
-
-window.goPage=function(p){ const pages=Math.ceil(filtered.length/PG)||1; if(p<1||p>pages) return; curPage=p; renderRecPage(); };
+window.goPage=function(p){const pages=Math.ceil(filtered.length/PG)||1;if(p<1||p>pages) return;curPage=p;renderRecPage();};
 
 /* ══════════════════════════════════════════════
-   ANALYTICS — FIX 5: bars use inline style background, not CSS class
+   ANALYTICS
 ══════════════════════════════════════════════ */
 function renderOverview(){
   populateYears();
-  const yr  = document.getElementById('a-year').value;
-  const mon = document.getElementById('a-month').value;
-  const data = expenses.filter(e=>{
-    const d = new Date(e.date+'T00:00:00');
-    if(yr  && d.getFullYear()  !== parseInt(yr))  return false;
-    if(mon && d.getMonth()+1   !== parseInt(mon)) return false;
+  const yr=document.getElementById('a-year').value;
+  const mon=document.getElementById('a-month').value;
+  const data=expenses.filter(e=>{
+    const d=new Date(e.date+'T00:00:00');
+    if(yr&&d.getFullYear()!==parseInt(yr)) return false;
+    if(mon&&d.getMonth()+1!==parseInt(mon)) return false;
     return true;
   });
-  const grand = data.reduce((s,e)=>s+e.amount, 0);
-
-  /* Safe DOM-based bar builder — no template literal $$ corruption */
-    const grand = data.reduce((s,e)=>s+e.amount, 0);
-  const bld = (map, elId) => {
-    const sorted = Object.entries(map).sort((a,b)=>b[1]-a[1]);
-    const mx  = sorted[0]?.[1] || 1;
-    const el  = document.getElementById(elId);
-    if(!sorted.length){
-      el.innerHTML = '<p style="color:var(--muted);font-size:.82rem">No data.</p>';
-      return;
-    }
-    el.innerHTML = '';
-    sorted.forEach(([k,v],i)=>{
-      const pct   = grand>0 ? ((v/grand)*100).toFixed(1) : '0.0';
-      const barW  = ((v/mx)*100).toFixed(1);
-      const color = COLORS[i % COLORS.length];
-      const row   = document.createElement('div');
-      row.className = 'br';
-      const lbl = document.createElement('span');
-      lbl.className   = 'bl';
-      lbl.title       = k;
-      lbl.textContent = k;
-      const track = document.createElement('div');
-      track.className = 'bt';
-      const fill = document.createElement('div');
-      fill.className = 'bf';
-      fill.style.cssText = `width:${barW}%;background:${color};position:relative;overflow:visible`;
-      const pctSpan = document.createElement('span');
-      pctSpan.style.cssText =
-        'font-size:.59rem;color:#fff;font-weight:700;white-space:nowrap;' +
-        'position:absolute;right:4px;top:50%;transform:translateY(-50%);pointer-events:none';
-      pctSpan.textContent = pct + '%';
-      fill.appendChild(pctSpan);
-      track.appendChild(fill);
-      const amt = document.createElement('span');
-      amt.className   = 'bamt';
-      amt.textContent = '₹' + fmtAmt(v);
-      row.appendChild(lbl);
-      row.appendChild(track);
-      row.appendChild(amt);
-      el.appendChild(row);
-    });
+  const bld=(map,id,cls)=>{
+    const sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]);
+    const mx=sorted[0]?.[1]||1;
+    document.getElementById(id).innerHTML=sorted.length
+      ?sorted.map(([k,v])=>`<div class="br">
+          <span class="bl" title="${esc(k)}">${esc(k)}</span>
+          <div class="bt"><div class="bf ${cls}" style="width:${(v/mx*100).toFixed(1)}%"></div></div>
+          <span class="bamt">₹${fmtAmt(v)}</span></div>`).join('')
+      :'<p style="color:var(--muted);font-size:.82rem">No data.</p>';
   };
-
-  const cm={}, mm={}, dm={};
+  const cm={},mm={},dm={};
   data.forEach(e=>{
-    cm[e.category] = (cm[e.category]||0) + e.amount;
-    const d  = new Date(e.date+'T00:00:00');
-    const mk = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
-    mm[mk]     = (mm[mk]||0)     + e.amount;
-    dm[e.date] = (dm[e.date]||0) + e.amount;
+    cm[e.category]=(cm[e.category]||0)+e.amount;
+    const d=new Date(e.date+'T00:00:00');
+    const mk=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+    mm[mk]=(mm[mk]||0)+e.amount;
+    dm[e.date]=(dm[e.date]||0)+e.amount;
   });
-  bld(cm, 'ac-cat');
-  bld(mm, 'ac-mon');
-  bld(Object.fromEntries(Object.entries(dm).sort((a,b)=>b[1]-a[1]).slice(0,10)), 'ac-day');
+  bld(cm,'ac-cat','bf-p');bld(mm,'ac-mon','bf-ok');
+  bld(Object.fromEntries(Object.entries(dm).sort((a,b)=>b[1]-a[1]).slice(0,10)),'ac-day','bf-w');
 }
 
-window.renderCompare3 = function(){
-  const getV = (yId,mId)=>{
-    const yr  = document.getElementById(yId).value;
-    const mon = document.getElementById(mId).value;
-    if(!yr) return {label:'—',data:{},total:0};
-    const label = mon ? `${MS[parseInt(mon)]} ${yr}` : String(yr);
-    const data  = expenses.filter(e=>{
-      const d = new Date(e.date+'T00:00:00');
-      if(d.getFullYear() !== parseInt(yr)) return false;
-      if(mon && d.getMonth()+1 !== parseInt(mon)) return false;
-      return true;
-    });
-    const map = {};
-    data.forEach(e=>map[e.category]=(map[e.category]||0)+e.amount);
-    return {label, data:map, total:data.reduce((s,e)=>s+e.amount,0)};
-  };
-  const A=getV('cya','cma'), B=getV('cyb','cmb'), C=getV('cyc','cmc');
-  const allCats=[...new Set([
-    ...Object.keys(A.data),...Object.keys(B.data),...Object.keys(C.data)
-  ])].sort();
-
-  /* Safe mini-bar using string concatenation — no $$ */
-    const miniBar = (map, maxV, col) =>
-    Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>{
-      const w = maxV ? ((v/maxV)*100).toFixed(1) : 0;
-      return `<div class="br">
-        <span class="bl">${esc(cat)}</span>
-        <div class="bt">
-          <div class="bf" style="width:${w}%;background:${col}"></div>
-        </div>
-        <span class="bamt">₹${fmtAmt(v)}</span>
-      </div>`;
-    }).join('');
-
-  const mxA = Math.max(...Object.values(A.data),1);
-  const mxB = Math.max(...Object.values(B.data),1);
-  const mxC = Math.max(...Object.values(C.data),1);
-
-  document.getElementById('cmp3-grid').innerHTML =
-    [{label:A.label,data:A.data,total:A.total,col:COLORS[0],mx:mxA},
-     {label:B.label,data:B.data,total:B.total,col:COLORS[1],mx:mxB},
-     {label:C.label,data:C.data,total:C.total,col:COLORS[2],mx:mxC}]
-    .map(p=>`<div class="pct-card">
-      <h3>${p.label==='—'?'Not Selected':esc(p.label)} — ₹${fmtAmt(p.total)}</h3>
-      ${Object.keys(p.data).length
-        ? miniBar(p.data,p.mx,p.col)
-        : '<p style="color:var(--muted);font-size:.82rem">No data.</p>'}
-    </div>`).join('');
-
-  if(!allCats.length){ document.getElementById('cmp3-table').innerHTML=''; return; }
-  document.getElementById('cmp3-table').innerHTML = mkSummaryTable(
-    ['Category', A.label||'A', B.label||'B', C.label||'C'],
-    allCats.map(cat=>[
-      esc(cat),
-      A.data[cat] ? '₹'+fmtAmt(A.data[cat]) : '—',
-      B.data[cat] ? '₹'+fmtAmt(B.data[cat]) : '—',
-      C.data[cat] ? '₹'+fmtAmt(C.data[cat]) : '—'
-    ])
-  );
-};
-
-
-
 function renderYearWise(){
-  const grand = expenses.reduce((s,e)=>s+e.amount, 0);
-  const yrMap = {};
+  const grand=expenses.reduce((s,e)=>s+e.amount,0);
+  const yrMap={};
   expenses.forEach(e=>{
-    const y = new Date(e.date+'T00:00:00').getFullYear();
+    const y=new Date(e.date+'T00:00:00').getFullYear();
     if(!yrMap[y]) yrMap[y]={total:0,count:0};
-    yrMap[y].total += e.amount;
-    yrMap[y].count++;
+    yrMap[y].total+=e.amount;yrMap[y].count++;
   });
-  const sorted = Object.entries(yrMap).sort((a,b)=>b[0]-a[0]);
-  const maxV   = sorted[0]?.[1].total || 1;
-  const brkEl  = document.getElementById('yw-breakdown');
-  if(!sorted.length){
-    brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';
-    document.getElementById('yw-table').innerHTML='';
-    return;
-  }
-  /* ── bar breakdown: DOM-based, zero $$ corruption ── */
-  brkEl.innerHTML = '';
-  sorted.forEach(([y,{total}],i)=>{
-    const pct   = grand>0 ? ((total/grand)*100).toFixed(2) : '0.00';
-    const barW  = ((total/maxV)*100).toFixed(1);
-    const color = COLORS[i % COLORS.length];
-    const row   = document.createElement('div');
-    row.className = 'pct-row';
-    row.innerHTML =
-      `<span class="pct-label">${y}</span>
-       <div class="pct-track">
-         <div class="pct-fill" style="width:${barW}%;background:${color}">
-           <span>${pct}%</span>
-         </div>
-       </div>
-       <span class="pct-amt">₹${fmtAmt(total)}</span>`;
-    brkEl.appendChild(row);
-  });
-  const ywRows = sorted.map(([y,{total,count}])=>{
-    const pct = grand>0 ? ((total/grand)*100).toFixed(2) : '0.00';
-    return [ String(y), '₹'+fmtAmt(total), String(count), pct+'%' ];
-  });
-  document.getElementById('yw-table').innerHTML = mkSummaryTable(
+  const sorted=Object.entries(yrMap).sort((a,b)=>b[0]-a[0]);
+  const maxV=sorted[0]?.[1].total||1;
+  const brkEl=document.getElementById('yw-breakdown');
+  if(!sorted.length){brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';document.getElementById('yw-table').innerHTML='';return;}
+  brkEl.innerHTML=sorted.map(([yr,{total}],i)=>{
+    const pct=grand>0?((total/grand)*100).toFixed(2):0;
+    const col=COLORS[i%COLORS.length];
+    return `<div class="pct-row">
+      <span class="pct-label">${yr}</span>
+      <div class="pct-track"><div class="pct-fill" style="width:${((total/maxV)*100).toFixed(1)}%;background:${col}">
+        <span>${pct}%</span></div></div>
+      <span class="pct-amt">₹${fmtAmt(total)}</span></div>`;
+  }).join('');
+  document.getElementById('yw-table').innerHTML=mkSummaryTable(
     ['Year','Total','Records','% Share'],
-    ywRows,
-    ['Total', '₹'+fmtAmt(grand), String(expenses.length), '100%']
+    sorted.map(([yr,{total,count}])=>[yr,`₹${fmtAmt(total)}`,count,`${grand>0?((total/grand)*100).toFixed(2):0}%`]),
+    ['All Time',`₹${fmtAmt(grand)}`,expenses.length,'100%']
   );
-
+}
 
 function renderMonthWise(){
   populateYears();
-  const yr   = document.getElementById('mw-year').value;
-  const data = yr
-    ? expenses.filter(e=>new Date(e.date+'T00:00:00').getFullYear()===parseInt(yr))
-    : expenses;
-  const grand  = data.reduce((s,e)=>s+e.amount, 0);
-  const monMap = {};
+  const selYr=document.getElementById('mw-year').value;
+  const data=selYr?expenses.filter(e=>new Date(e.date+'T00:00:00').getFullYear()===parseInt(selYr)):expenses;
+  const grand=data.reduce((s,e)=>s+e.amount,0);
+  const monMap={};
   data.forEach(e=>{
-    const m = new Date(e.date+'T00:00:00').getMonth()+1;
+    const m=new Date(e.date+'T00:00:00').getMonth()+1;
     if(!monMap[m]) monMap[m]={total:0,count:0};
-    monMap[m].total += e.amount;
-    monMap[m].count++;
+    monMap[m].total+=e.amount;monMap[m].count++;
   });
-  const sorted = Object.entries(monMap).sort((a,b)=>b[1].total-a[1].total);
-  const maxV   = sorted[0]?.[1].total || 1;
-  const brkEl  = document.getElementById('mw-breakdown');
-  if(!sorted.length){
-    brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';
-    document.getElementById('mw-table').innerHTML='';
-    return;
-  }
-  /* ── bar breakdown: DOM-based ── */
-    brkEl.innerHTML = '';
-  sorted.forEach(([m,{total}],i)=>{
-    const pct   = grand>0 ? ((total/grand)*100).toFixed(2) : '0.00';
-    const barW  = ((total/maxV)*100).toFixed(1);
-    const color = COLORS[i % COLORS.length];
-    const row   = document.createElement('div');
-    row.className = 'pct-row';
-    row.innerHTML =
-      `<span class="pct-label">${MS[parseInt(m)]}</span>
-       <div class="pct-track">
-         <div class="pct-fill" style="width:${barW}%;background:${color}">
-           <span>${pct}%</span>
-         </div>
-       </div>
-       <span class="pct-amt">₹${fmtAmt(total)}</span>`;
-    brkEl.appendChild(row);
-  });
-  /* ── summary table ── */
-  const tableRows = sorted.map(([m,{total,count}])=>{
-    const pct = grand>0 ? ((total/grand)*100).toFixed(2) : '0.00';
-    return [ MF[parseInt(m)], '₹'+fmtAmt(total), String(count), pct+'%' ];
-  });
-  document.getElementById('mw-table').innerHTML =
-    mkSummaryTable(
-      ['Month','Total','Records','% Share'],
-      tableRows,
-      ['Total','₹'+fmtAmt(grand), String(data.length),'100%']
-    );
+  const sorted=Object.entries(monMap).sort((a,b)=>b[1].total-a[1].total);
+  const maxV=sorted[0]?.[1].total||1;
+  const brkEl=document.getElementById('mw-breakdown');
+  if(!sorted.length){brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';document.getElementById('mw-table').innerHTML='';return;}
+  brkEl.innerHTML=sorted.map(([m,{total}],i)=>{
+    const pct=grand>0?((total/grand)*100).toFixed(2):0;
+    return `<div class="pct-row">
+      <span class="pct-label">${MS[parseInt(m)]}</span>
+      <div class="pct-track"><div class="pct-fill" style="width:${((total/maxV)*100).toFixed(1)}%;background:${COLORS[i%COLORS.length]}">
+        <span>${pct}%</span></div></div>
+      <span class="pct-amt">₹${fmtAmt(total)}</span></div>`;
+  }).join('');
+  document.getElementById('mw-table').innerHTML=mkSummaryTable(
+    ['Month','Total','Records','% Share'],
+    sorted.map(([m,{total,count}])=>[MF[parseInt(m)],`₹${fmtAmt(total)}`,count,`${grand>0?((total/grand)*100).toFixed(2):0}%`]),
+    ['Total',`₹${fmtAmt(grand)}`,data.length,'100%']
+  );
 }
-
 
 window.renderCompare3=function(){
   const getV=(yId,mId)=>{
@@ -1618,112 +1237,156 @@ window.renderCompare3=function(){
       if(mon&&d.getMonth()+1!==parseInt(mon)) return false;
       return true;
     });
-    const map={};
-    data.forEach(e=>map[e.category]=(map[e.category]||0)+e.amount);
+    const map={};data.forEach(e=>map[e.category]=(map[e.category]||0)+e.amount);
     return {label,data:map,total:data.reduce((s,e)=>s+e.amount,0)};
   };
   const A=getV('cya','cma'),B=getV('cyb','cmb'),C=getV('cyc','cmc');
-  const allCats=[...new Set([...Object.keys(A.data),...Object.keys(B.data),...Object.keys(C.data)])].sort();
-     const miniBar = (map, maxV, col) =>
-    Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>{
-      const w = maxV ? ((v/maxV)*100).toFixed(1) : 0;
-      return `<div class="br">
-        <span class="bl">${esc(cat)}</span>
-        <div class="bt">
-          <div class="bf" style="width:${w}%;background:${col}"></div>
-        </div>
-        <span class="bamt">₹${fmtAmt(v)}</span>
-      </div>`;
-    }).join('');
-  const mxA=Math.max(...Object.values(A.data),1);
-  const mxB=Math.max(...Object.values(B.data),1);
-  const mxC=Math.max(...Object.values(C.data),1);
-  document.getElementById('cmp3-grid').innerHTML=[
-    {label:A.label,data:A.data,total:A.total,col:COLORS[0],mx:mxA},
-    {label:B.label,data:B.data,total:B.total,col:COLORS[1],mx:mxB},
-    {label:C.label,data:C.data,total:C.total,col:COLORS[2],mx:mxC}
-  ].map(p=>`<div class="pct-card">
-    <h3>$${p.label==='—'?'Not Selected':esc(p.label)} — ₹$${fmtAmt(p.total)}</h3>
-    ${Object.keys(p.data).length?miniBar(p.data,p.mx,p.col):'<p style="color:var(--muted);font-size:.82rem">No data.</p>'}
-  </div>`).join('');
-  if(!allCats.length){ document.getElementById('cmp3-table').innerHTML=''; return; }
-  document.getElementById('cmp3-table').innerHTML=mkSummaryTable(
-    ['Category',A.label||'A',B.label||'B',C.label||'C'],
-    allCats.map(cat=>[esc(cat),
-      A.data[cat]?`₹${fmtAmt(A.data[cat])}`:'—',
-      B.data[cat]?`₹${fmtAmt(B.data[cat])}`:'—',
-      C.data[cat]?`₹${fmtAmt(C.data[cat])}`:'—'])
-  );
+  const {label:lA,data:cA,total:tA}=A,{label:lB,data:cB,total:tB}=B,{label:lC,data:cC,total:tC}=C;
+  const allCats=[...new Set([...Object.keys(cA),...Object.keys(cB),...Object.keys(cC)])].sort();
+  const miniBar=(map,maxV,col)=>Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>`
+    <div class="br"><span class="bl">${esc(cat)}</span>
+    <div class="bt"><div class="bf" style="width:${((v/maxV)*100).toFixed(1)}%;background:${col}"></div></div>
+    <span class="bamt">₹${fmtAmt(v)}</span></div>`).join('')||'<p style="color:var(--muted)">No data.</p>';
+  const chg=(from,to)=>{
+    if(from===0&&to===0) return {txt:'—',cls:'chg-eq'};
+    if(from===0) return {txt:'New',cls:'chg-up'};
+    const p=(((to-from)/from)*100).toFixed(1);
+    return {txt:`${p>0?'+':''}${p}%`,cls:p>0?'chg-up':p<0?'chg-down':'chg-eq'};
+  };
+  const el=document.getElementById('cmp3-result');
+  const diff=(a,b)=>a-b;
+  el.innerHTML=`
+  <div class="sum-bar">
+    <div class="sb-item"><div class="sb-val">₹${fmtAmt(tA)}</div><div class="sb-lbl">A — ${lA}</div></div>
+    <div class="sb-div"></div>
+    <div class="sb-item"><div class="sb-val acc">₹${fmtAmt(tB)}</div><div class="sb-lbl">B — ${lB}</div></div>
+    <div class="sb-div"></div>
+    <div class="sb-item"><div class="sb-val ok2">₹${fmtAmt(tC)}</div><div class="sb-lbl">C — ${lC}</div></div>
+    <div class="sb-div"></div>
+    <div class="sb-item"><div class="sb-val ${diff(tA,tB)>0?'err':'ok2'}">${diff(tA,tB)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tA,tB)))}</div><div class="sb-lbl">A vs B</div></div>
+    <div class="sb-div"></div>
+    <div class="sb-item"><div class="sb-val ${diff(tA,tC)>0?'err':'ok2'}">${diff(tA,tC)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tA,tC)))}</div><div class="sb-lbl">A vs C</div></div>
+    <div class="sb-div"></div>
+    <div class="sb-item"><div class="sb-val ${diff(tB,tC)>0?'err':'ok2'}">${diff(tB,tC)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tB,tC)))}</div><div class="sb-lbl">B vs C</div></div>
+  </div>
+  <div class="cmp3-cards">
+    <div class="cmp3-card pa"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:.83rem;font-weight:700;color:var(--p)">📘 A — ${esc(lA)}</span>
+      <span style="font-size:1.1rem;font-weight:800;color:var(--p)">₹${fmtAmt(tA)}</span></div>
+      ${miniBar(cA,Math.max(tA,1),'#6c63ff')}</div>
+    <div class="cmp3-card pb2x"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:.83rem;font-weight:700;color:var(--acc)">📙 B — ${esc(lB)}</span>
+      <span style="font-size:1.1rem;font-weight:800;color:var(--acc)">₹${fmtAmt(tB)}</span></div>
+      ${miniBar(cB,Math.max(tB,1),'#ff6584')}</div>
+    <div class="cmp3-card pc"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span style="font-size:.83rem;font-weight:700;color:var(--ok)">📗 C — ${esc(lC)}</span>
+      <span style="font-size:1.1rem;font-weight:800;color:var(--ok)">₹${fmtAmt(tC)}</span></div>
+      ${miniBar(cC,Math.max(tC,1),'#22c55e')}</div>
+  </div>
+  <div class="cmp3-diff"><h3>📊 Category Comparison — A vs B vs C</h3>
+  <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
+    <thead><tr style="background:var(--sec)">
+      <th style="padding:9px 11px;text-align:left;font-size:.69rem;color:var(--p);text-transform:uppercase">Category</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--p);text-transform:uppercase">A</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--acc);text-transform:uppercase">B</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--ok);text-transform:uppercase">C</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">A vs B</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">A vs C</th>
+      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">Best</th>
+    </tr></thead><tbody>
+    ${allCats.map(cat=>{
+      const vA=cA[cat]||0,vB=cB[cat]||0,vC=cC[cat]||0;
+      const abChg=chg(vB,vA),acChg=chg(vC,vA);
+      const best=vA<=vB&&vA<=vC?'<span class="winner-badge w-a">A</span>':vB<=vA&&vB<=vC?'<span class="winner-badge w-b">B</span>':'<span class="winner-badge w-c">C</span>';
+      return `<tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:9px 11px;font-weight:600">${esc(cat)}</td>
+        <td style="padding:9px 11px;text-align:right;color:var(--p);font-weight:700">${vA>0?'₹'+fmtAmt(vA):'—'}</td>
+        <td style="padding:9px 11px;text-align:right;color:var(--acc);font-weight:700">${vB>0?'₹'+fmtAmt(vB):'—'}</td>
+        <td style="padding:9px 11px;text-align:right;color:var(--ok);font-weight:700">${vC>0?'₹'+fmtAmt(vC):'—'}</td>
+        <td style="padding:9px 11px;text-align:right"><span class="${abChg.cls}">${abChg.txt}</span></td>
+        <td style="padding:9px 11px;text-align:right"><span class="${acChg.cls}">${acChg.txt}</span></td>
+        <td style="padding:9px 11px;text-align:right">${best}</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table></div></div>`;
 };
 
-window.renderCatMon=function(){
-  populateYears();
+function renderCatMon(){
   const yr=document.getElementById('cm-year').value;
-  const cat=catVals['catmon'];
-  if(!yr){ document.getElementById('catmon-out').innerHTML='<p style="color:var(--muted)">Select a year.</p>'; return; }
+  const catFilter=document.getElementById('cm-cat').value;
+  const el=document.getElementById('catmon-result');
+  if(!yr){el.innerHTML=`<div class="es"><div class="ei">📅</div><p>Select a year.</p></div>`;return;}
   const data=expenses.filter(e=>{
     if(new Date(e.date+'T00:00:00').getFullYear()!==parseInt(yr)) return false;
-    if(cat&&e.category!==cat) return false;
+    if(catFilter&&e.category!==catFilter) return false;
     return true;
   });
-  if(!data.length){ document.getElementById('catmon-out').innerHTML='<p style="color:var(--muted)">No data.</p>'; return; }
-  const usedMonths=[...new Set(data.map(e=>new Date(e.date+'T00:00:00').getMonth()+1))].sort((a,b)=>a-b);
+  if(!data.length){el.innerHTML=`<div class="es"><div class="ei">📭</div><p>No data.</p></div>`;return;}
   const usedCats=[...new Set(data.map(e=>e.category))].sort();
+  const usedMonths=[...new Set(data.map(e=>new Date(e.date+'T00:00:00').getMonth()+1))].sort((a,b)=>a-b);
   const map={};
-  usedCats.forEach(c=>{ map[c]={}; usedMonths.forEach(m=>{ map[c][m]=0; }); });
-  data.forEach(e=>{ const m=new Date(e.date+'T00:00:00').getMonth()+1; map[e.category][m]=(map[e.category][m]||0)+e.amount; });
-  const monTotals={}; usedMonths.forEach(m=>{ monTotals[m]=usedCats.reduce((s,c)=>s+(map[c][m]||0),0); });
-  const grand=Object.values(monTotals).reduce((a,b)=>a+b,0);
-  document.getElementById('catmon-out').innerHTML=`
-  <div class="ac" style="margin-bottom:18px">
-    <div class="tw"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
-      <thead><tr style="background:var(--sec)">
-        <th style="padding:8px 10px;text-align:left;font-size:.69rem;color:var(--p)">Category</th>
-        ${usedMonths.map(m=>`<th style="padding:8px 10px;text-align:right;font-size:.69rem;color:var(--p)">${MS[m]}</th>`).join('')}
-        <th style="padding:8px 10px;text-align:right;font-size:.69rem;color:var(--p)">Total</th>
-      </tr></thead>
-      <tbody>${usedCats.map(c=>{
-        const rowTotal=usedMonths.reduce((s,m)=>s+(map[c][m]||0),0);
-        return `<tr style="border-bottom:1px solid var(--bdr)">
-          <td style="padding:8px 10px">${esc(c)}</td>
-          $${usedMonths.map(m=>`<td style="padding:8px 10px;text-align:right">${map[c][m]?`₹$${fmtAmt(map[c][m])}`:'—'}</td>`).join('')}
-          <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--err)">₹${fmtAmt(rowTotal)}</td>
-        </tr>`;
-      }).join('')}</tbody>
-      <tfoot><tr style="background:var(--sec);font-weight:800">
-        <td style="padding:8px 10px">Total</td>
-        ${usedMonths.map(m=>`<td style="padding:8px 10px;text-align:right">₹${fmtAmt(monTotals[m])}</td>`).join('')}
-        <td style="padding:8px 10px;text-align:right">₹${fmtAmt(grand)}</td>
-      </tr></tfoot>
-    </table></div>
-  </div>
+  usedCats.forEach(c=>{map[c]={};});
+  data.forEach(e=>{
+    const m=new Date(e.date+'T00:00:00').getMonth()+1;
+    map[e.category][m]=(map[e.category][m]||0)+e.amount;
+  });
+  let grandMax=0;
+  usedCats.forEach(c=>usedMonths.forEach(m=>{if((map[c][m]||0)>grandMax) grandMax=map[c][m]||0;}));
+  const rowTotals={};usedCats.forEach(c=>rowTotals[c]=usedMonths.reduce((s,m)=>s+(map[c][m]||0),0));
+  const monTotals={};usedMonths.forEach(m=>monTotals[m]=usedCats.reduce((s,c)=>s+(map[c][m]||0),0));
+  const grandTotal=usedCats.reduce((s,c)=>s+rowTotals[c],0);
+  const cellBg=(val)=>{
+    if(!val) return 'background:#f8f8ff;color:#ccc';
+    return `background:rgba(108,99,255,${(val/grandMax*.7+.08).toFixed(2)});color:${val/grandMax>.5?'#fff':'#1e1e2e'}`;
+  };
+  el.innerHTML=`<div style="overflow-x:auto;margin-bottom:18px">
+  <table style="width:100%;border-collapse:collapse;font-size:.76rem;min-width:600px">
+    <thead><tr style="background:var(--sec)">
+      <th style="padding:9px 12px;text-align:left;font-size:.69rem;color:var(--p);text-transform:uppercase">Category</th>
+      ${usedMonths.map(m=>`<th style="padding:9px 10px;text-align:center;font-size:.69rem;color:var(--p);text-transform:uppercase">${MS[m]}</th>`).join('')}
+      <th style="padding:9px 10px;text-align:right;font-size:.69rem;color:var(--p);text-transform:uppercase">Total</th>
+    </tr></thead>
+    <tbody>${usedCats.map(cat=>`<tr style="border-bottom:1px solid var(--bdr)">
+      <td style="padding:8px 12px;font-weight:600;white-space:nowrap">${esc(cat)}</td>
+      ${usedMonths.map(m=>{
+        const v=map[cat][m]||0;
+        return `<td style="padding:6px 8px;text-align:center">
+          ${v>0?`<span class="heatmap-cell" style="${cellBg(v)}">₹${fmtAmt(v)}</span>`:`<span style="color:#ddd">—</span>`}
+        </td>`;
+      }).join('')}
+      <td style="padding:8px 10px;text-align:right;font-weight:800;color:var(--err)">₹${fmtAmt(rowTotals[cat])}</td>
+    </tr>`).join('')}</tbody>
+    <tfoot><tr style="background:var(--sec);font-weight:800">
+      <td style="padding:9px 12px">Monthly Total</td>
+      ${usedMonths.map(m=>`<td style="padding:9px 10px;text-align:center;color:var(--p)">₹${fmtAmt(monTotals[m])}</td>`).join('')}
+      <td style="padding:9px 10px;text-align:right;color:var(--err)">₹${fmtAmt(grandTotal)}</td>
+    </tr></tfoot>
+  </table></div>
   <div class="ac"><h3>📊 Category Share per Month — ${yr}</h3>
     ${usedMonths.map(m=>{
-      const mt=monTotals[m]; if(!mt) return '';
+      const mt=monTotals[m];if(!mt) return '';
       return `<div style="margin-bottom:14px">
-                <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:7px">${MF[m]} — ₹${fmtAmt(mt)}</div>
-        ${usedCats.filter(c=>map[c][m]).map((c,i)=>{
-          const v=map[c][m]||0,pct=((v/mt)*100).toFixed(1);
+        <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:7px">${MF[m]} — ₹${fmtAmt(mt)}</div>
+        ${usedCats.filter(c=>map[c][m]).map((cat,i)=>{
+          const v=map[cat][m]||0,pct=((v/mt)*100).toFixed(1);
           return `<div class="pct-row">
-            <span class="pct-label" style="min-width:140px;font-size:.74rem">${esc(c)}</span>
-            <div class="pct-track">
-              <div class="pct-track"><div class="pct-fill" style="width:${pct}%;background:${COLORS[i%COLORS.length]}">
-                <span>${pct}%</span>
-              </div>
-            </div>
-            <span class="pct-amt">₹${fmtAmt(v)}</span>
-          </div>`;
-        }).join('')}
-      </div>`;
+            <span class="pct-label" style="min-width:140px;font-size:.74rem">${esc(cat)}</span>
+            <div class="pct-track"><div class="pct-fill" style="width:${pct}%;background:${COLORS[i%COLORS.length]}">
+              <span>${pct}%</span></div></div>
+            <span class="pct-amt">₹${fmtAmt(v)}</span></div>`;
+        }).join('')}</div>`;
     }).join('')}
   </div>`;
-};
+}
 
+/* ══════════════════════════════════════════════
+   ANALYTICS TAB SWITCH
+══════════════════════════════════════════════ */
 function renderAnTab(id){
-  if(id==='overview')  renderOverview();
-  if(id==='yearwise')  renderYearWise();
-  if(id==='monthwise') renderMonthWise();
-  if(id==='catmon')    renderCatMon();
+  if(id==='overview') renderOverview();
+  else if(id==='yearwise') renderYearWise();
+  else if(id==='monthwise') renderMonthWise();
+  else if(id==='catmon') renderCatMon();
 }
 window.switchAnTab=function(id,btn){
   curAnTab=id;
@@ -1737,21 +1400,15 @@ window.switchAnTab=function(id,btn){
 /* ══════════════════════════════════════════════
    EXPORT / IMPORT
 ══════════════════════════════════════════════ */
-window.doExportJSON=async function(){
-  const ok=await requireAuth('Export JSON'); if(!ok) return;
-  if(!expenses.length){ toast('No data to export.','error'); return; }
+window.exportJSON=function(){
+  if(!expenses.length){toast('No data.','error');return;}
   const catNames=categories.map(c=>c.name);
   download(`expenses-${localDateStr()}.json`,
     JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2),'application/json');
-  await logHistory(ACT.EXPORT,{count:expenses.length,exportedAt:new Date().toISOString()});
   toast('🗂️ JSON exported!','success');
 };
-window.triggerImport=async function(){
-  const ok=await requireAuth('Import JSON'); if(!ok) return;
-  document.getElementById('imp-file').click();
-};
-window.doImportJSON=async function(input){
-  const file=input.files[0]; if(!file) return;
+window.importJSON=async function(input){
+  const file=input.files[0];if(!file) return;
   const r=new FileReader();
   r.onload=async e=>{
     try{
@@ -1764,33 +1421,31 @@ window.doImportJSON=async function(input){
       const batch=writeBatch(db);
       fresh.forEach(exp=>{
         const ref=doc(collection(db,EXPENSE_COL));
-        batch.set(ref,{date:exp.date,amount:exp.amount,category:exp.category,
-          note:exp.note||'',paymentMode:exp.paymentMode||'UPI',
-          createdAt:exp.createdAt||new Date().toISOString()});
+        batch.set(ref,{date:exp.date,amount:exp.amount,category:exp.category,note:exp.note||'',createdAt:exp.createdAt||new Date().toISOString()});
       });
       await batch.commit();
       if(d.categories&&Array.isArray(d.categories)){
-        const existingNames=new Set(categories.map(c=>c.name));
-        const cb=writeBatch(db);
+        const existingCatNames=new Set(categories.map(c=>c.name));
+        const catBatch=writeBatch(db);
         d.categories.forEach(name=>{
-          if(!existingNames.has(name)){
+          if(!existingCatNames.has(name)){
             const ref=doc(collection(db,CATEGORY_COL));
-            cb.set(ref,{name,createdAt:new Date().toISOString()});
+            catBatch.set(ref,{name,createdAt:new Date().toISOString()});
           }
         });
-        await cb.commit();
+        await catBatch.commit();
       }
-      await logHistory(ACT.IMPORT,{imported:fresh.length,fileName:file.name,importedAt:new Date().toISOString()});
-      toast(`✅ Imported ${fresh.length} records!`,'success');
+      toast(`✅ Imported ${fresh.length} records to Firebase!`,'success');
       setSyncStatus('live');
-    } catch{ toast('❌ Invalid JSON file.','error'); }
+    }catch{toast('❌ Invalid file.','error');}
   };
-  r.readAsText(file); input.value='';
+  r.readAsText(file);input.value='';
 };
+
 function download(fn,content,mime){
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob([content],{type:mime}));
-  a.download=fn; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 
 /* ══════════════════════════════════════════════
@@ -1806,45 +1461,39 @@ function renderCatMgr(){
     <div class="cstat"><div class="cv">${used.size}</div><div class="cl">Used</div></div>
     <div class="cstat"><div class="cv">${categories.length-used.size}</div><div class="cl">Unused</div></div>
     <div class="cstat"><div class="cv">${expenses.length}</div><div class="cl">Records</div></div>`;
-  if(!list.length){ document.getElementById('cat-grid').innerHTML='<div style="color:var(--muted);font-size:.83rem;padding:10px">No categories found.</div>'; return; }
-  const grid=document.getElementById('cat-grid');
-  grid.innerHTML='';
-  list.forEach(cat=>{
+  if(!list.length){document.getElementById('cat-grid').innerHTML=`<div style="color:var(--muted);font-size:.83rem;padding:10px">No categories found.</div>`;return;}
+  document.getElementById('cat-grid').innerHTML=list.map(cat=>{
     const count=expenses.filter(e=>e.category===cat.name).length;
-    const div=document.createElement('div');
-    div.className='cat-item';
-    div.innerHTML=`
+    return `<div class="cat-item">
       <div class="cn">${esc(cat.name)}</div>
       <div class="cc">${count} rec</div>
       <div class="cact">
-        <button class="btn bo bxs">✏️</button>
-        <button class="btn bd bxs">🗑️</button>
-      </div>`;
-    div.querySelectorAll('button')[0].addEventListener('click',()=>promptEditCat(cat.id,cat.name));
-    div.querySelectorAll('button')[1].addEventListener('click',()=>promptDeleteCat(cat.id,cat.name));
-    grid.appendChild(div);
-  });
+        <button class="btn bo bxs" onclick="promptEditCat('${escQ(cat.id)}','${escQ(cat.name)}')">✏️</button>
+        <button class="btn bd bxs" onclick="promptDeleteCat('${escQ(cat.id)}','${escQ(cat.name)}')">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 window.addCategory=async function(){
   const name=document.getElementById('new-cat-name').value.trim();
-  if(!name){ toast('Enter a category name.','error'); return; }
-  if(categories.find(c=>c.name.toLowerCase()===name.toLowerCase())){ toast('Already exists.','warning'); return; }
+  if(!name){toast('Enter a category name.','error');return;}
+  if(categories.find(c=>c.name.toLowerCase()===name.toLowerCase())){toast('Already exists.','warning');return;}
   await addDoc(collection(db,CATEGORY_COL),{name,createdAt:new Date().toISOString()});
   document.getElementById('new-cat-name').value='';
   await logHistory(ACT.CAT_ADD,{name});
   toast(`✅ Category "${name}" added!`,'success');
 };
-function promptEditCat(id,name){
+window.promptEditCat=function(id,name){
   const affected=expenses.filter(e=>e.category===name).length;
-  showConfirm('✏️ Rename Category',
+  showConfirm(`✏️ Rename Category`,
     `<p style="font-size:.83rem;margin-bottom:11px">Rename: <strong>${esc(name)}</strong></p>
-    <div class="confirm-box"><div class="impact">⚠️ ${affected} record(s) will be updated</div></div>
+    <div class="confirm-box"><div class="impact">⚠️ ${affected} record(s) will be affected</div></div>
     <div class="fg2" style="margin-top:11px"><label>New Name</label>
     <input type="text" id="edit-cat-input" class="fc2" value="${esc(name)}" maxlength="60"/></div>`,
     'Rename',async()=>{
       const newName=document.getElementById('edit-cat-input').value.trim();
-      if(!newName){ toast('Name cannot be empty.','error'); return; }
-      if(newName===name){ closeMo('confirm-mo'); return; }
+      if(!newName){toast('Name cannot be empty.','error');return;}
+      if(newName===name){closeMo('confirm-mo');return;}
       await updateDoc(doc(db,CATEGORY_COL,id),{name:newName});
       const toUpdate=expenses.filter(e=>e.category===name);
       if(toUpdate.length){
@@ -1853,279 +1502,153 @@ function promptEditCat(id,name){
         await batch.commit();
       }
       await logHistory(ACT.CAT_EDIT,{from:name,to:newName,affected});
-      closeMo('confirm-mo'); toast(`✅ Renamed. ${affected} record(s) updated.`,'success');
+      closeMo('confirm-mo');toast(`✅ Renamed. ${affected} record(s) updated.`,'success');
     },'bp');
-}
-function promptDeleteCat(id,name){
+};
+window.promptDeleteCat=function(id,name){
   const affected=expenses.filter(e=>e.category===name).length;
-  showConfirm('🗑️ Delete Category',
+  showConfirm(`🗑️ Delete Category`,
     `<p style="font-size:.83rem;margin-bottom:11px">Delete: <strong>${esc(name)}</strong></p>
     <div class="confirm-box"><div class="impact">⚠️ ${affected} record(s) use this category. Records are NOT deleted.</div></div>`,
     'Delete',async()=>{
       await deleteDoc(doc(db,CATEGORY_COL,id));
       await logHistory(ACT.CAT_DELETE,{name,affected});
-      closeMo('confirm-mo'); toast('🗑️ Category deleted.','info');
+      closeMo('confirm-mo');toast(`🗑️ Deleted.`,'info');
     },'bd');
-}
+};
 
 /* ══════════════════════════════════════════════
-   DROPDOWN ENGINE — FIX 1+2: uses data-val on
-   each .co element; selectCat reads dataset.val
-   so NO escQ injection into onclick strings
+   DROPDOWN ENGINE
 ══════════════════════════════════════════════ */
-function buildAllDropdowns(){ ['add','edit','filter','catmon'].forEach(ctx=>buildOpts(ctx)); }
-
+function buildAllDropdowns(){['add','edit','filter','catmon'].forEach(ctx=>buildOpts(ctx));}
 function buildOpts(ctx,q=''){
-  const el=document.getElementById(`cl-${ctx}`); if(!el) return;
+  const el=document.getElementById(`cl-${ctx}`);if(!el) return;
   const ql=q.toLowerCase().trim();
   const src=ql?categories.filter(c=>c.name.toLowerCase().includes(ql)):[...categories];
-  el.innerHTML='';
-
-  /* "All Categories" option for filter/catmon */
-  if(ctx==='filter'||ctx==='catmon'){
-    const allDiv=document.createElement('div');
-    allDiv.className=`co${catVals[ctx]===''?' sel':''}`;
-    allDiv.dataset.val='';
-    allDiv.innerHTML=`All Categories <span class="cob">${expenses.length}</span>`;
-    allDiv.addEventListener('click',()=>selectCat(ctx,'','All Categories'));
-    el.appendChild(allDiv);
-  }
-
-  if(!src.length){
-    const nr=document.createElement('div');
-    nr.className='co nr'; nr.textContent='No results';
-    el.appendChild(nr); return;
-  }
-
+  let html='';
+  if(ctx==='filter'||ctx==='catmon')
+    html+=`<div class="co ${catVals[ctx]===''?'sel':''}" onclick="selectCat('${ctx}','','All Categories')">All Categories <span class="cob">${expenses.length}</span></div>`;
+  if(!src.length){el.innerHTML=html+'<div class="co nr">No results</div>';return;}
   src.forEach(cat=>{
     const cnt=expenses.filter(e=>e.category===cat.name).length;
-    const div=document.createElement('div');
-    div.className=`co${catVals[ctx]===cat.name?' sel':''}`;
-    div.dataset.val=cat.name;
-    /* Use textContent for the name — no HTML injection */
-    const nameSpan=document.createElement('span');
-    nameSpan.style.flex='1';
-    nameSpan.textContent=cat.name;
-    div.appendChild(nameSpan);
-    if(cnt>0){
-      const badge=document.createElement('span');
-      badge.className='cob'; badge.textContent=cnt;
-      div.appendChild(badge);
-    }
-    div.addEventListener('click',()=>selectCat(ctx,cat.name,cat.name));
-    el.appendChild(div);
+    html+=`<div class="co ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">
+      ${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}
+    </div>`;
   });
+  el.innerHTML=html;
 }
-
-window.filterOpts=function(ctx){ buildOpts(ctx,document.getElementById(`cs-${ctx}`).value||''); };
-
+function filterOpts(ctx){buildOpts(ctx,document.getElementById(`cs-${ctx}`).value);}
+window.filterOpts=filterOpts;
 function toggleDrop(ctx){
   const panel=document.getElementById(`cdp-${ctx}`);
   const disp=document.getElementById(`csd-${ctx}`);
   if(!panel||!disp) return;
   const isOpen=panel.classList.contains('open');
   ['add','edit','filter','catmon'].forEach(c=>{
-    const p=document.getElementById(`cdp-${c}`);
-        const d=document.getElementById(`csd-${c}`);
-    if(p) p.classList.remove('open');
-    if(d) d.classList.remove('open');
+    const p=document.getElementById(`cdp-${c}`);const d=document.getElementById(`csd-${c}`);
+    if(p) p.classList.remove('open');if(d) d.classList.remove('open');
   });
   if(!isOpen){
-    panel.classList.add('open');
-    disp.classList.add('open');
-    buildOpts(ctx,'');
-    const si=document.getElementById(`cs-${ctx}`);
-    if(si){ si.value=''; setTimeout(()=>si.focus(),40); }
+    panel.classList.add('open');disp.classList.add('open');
+    buildOpts(ctx,'');const si=document.getElementById(`cs-${ctx}`);
+    if(si){si.value='';setTimeout(()=>si.focus(),40);}
   }
 }
 window.toggleDrop=toggleDrop;
-
 function closeDrop(ctx){
-  const p=document.getElementById(`cdp-${ctx}`);
-  const d=document.getElementById(`csd-${ctx}`);
-  if(p) p.classList.remove('open');
-  if(d) d.classList.remove('open');
+  const p=document.getElementById(`cdp-${ctx}`);const d=document.getElementById(`csd-${ctx}`);
+  if(p) p.classList.remove('open');if(d) d.classList.remove('open');
 }
-
 function selectCat(ctx,val,label){
   catVals[ctx]=val;
   const txt=document.getElementById(`ct-${ctx}`);
-  if(txt){
-    txt.textContent=label;
-    txt.classList.toggle('ph',!val&&ctx!=='filter'&&ctx!=='catmon');
-  }
+  if(txt){txt.textContent=label;txt.classList.toggle('ph',!val&&ctx!=='filter'&&ctx!=='catmon');}
   const hidId=ctx==='add'?'f-cat':ctx==='edit'?'m-cat':ctx==='catmon'?'cm-cat':'r-cat';
-  const hid=document.getElementById(hidId);
-  if(hid) hid.value=val;
+  const hid=document.getElementById(hidId);if(hid) hid.value=val;
   closeDrop(ctx);
   if(ctx==='filter') applyFilters();
   if(ctx==='catmon') renderCatMon();
 }
 window.selectCat=selectCat;
-
 function setCat(ctx,val){
   catVals[ctx]=val;
   const txt=document.getElementById(`ct-${ctx}`);
   if(txt){
-    if(val){ txt.textContent=val; txt.classList.remove('ph'); }
-    else{
-      txt.textContent=(ctx==='filter'||ctx==='catmon')?'All Categories':'Select Category';
-      txt.classList.add('ph');
-    }
+    if(val){txt.textContent=val;txt.classList.remove('ph');}
+    else{txt.textContent=(ctx==='filter'||ctx==='catmon')?'All Categories':'Select Category';txt.classList.add('ph');}
   }
   const hidId=ctx==='add'?'f-cat':ctx==='edit'?'m-cat':ctx==='catmon'?'cm-cat':'r-cat';
-  const hid=document.getElementById(hidId);
-  if(hid) hid.value=val;
+  const hid=document.getElementById(hidId);if(hid) hid.value=val;
 }
 
 /* ══════════════════════════════════════════════
-   HISTORY — RENDER
+   HISTORY
 ══════════════════════════════════════════════ */
 function renderHistory(){
   const tf=document.getElementById('hist-type').value;
-  const all=tf?history.filter(h=>h.action===tf):history;
-  const total=all.length;
+  const items=(tf?history.filter(h=>h.action===tf):history)
+    .slice((histPage-1)*HPG, histPage*HPG);
+  const total=(tf?history.filter(h=>h.action===tf):history).length;
   const tp=Math.ceil(total/HPG)||1;
-  const items=all.slice((histPage-1)*HPG, histPage*HPG);
   document.getElementById('hist-count-lbl').textContent=`${total} entries`;
-  if(!items.length){
-    document.getElementById('hist-list').innerHTML=
-      `<div class="es"><div class="ei">📭</div><p>No history found.</p></div>`;
-    renderHistPag(tp,total);
-    return;
-  }
+  if(!items.length){document.getElementById('hist-list').innerHTML=`<div class="es"><div class="ei">📭</div><p>No history.</p></div>`;renderHistPag(tp,total);return;}
   document.getElementById('hist-list').innerHTML=items.map(h=>{
     const d=h.data||{};
-    const timeStr=h.timestamp
-      ?new Date(h.timestamp).toLocaleString('en-IN',{
-          day:'2-digit',month:'short',year:'numeric',
-          hour:'2-digit',minute:'2-digit'})
-      :'—';
-    let detail='', diff='';
-    if(h.action==='create')
-      detail=`${fmtDate(d.date||'')} | <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}${d.paymentMode?` | <span class="pm-badge">${esc(d.paymentMode)}</span>`:''}`;
+    const timeStr=h.timestamp?new Date(h.timestamp).toLocaleString('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+    let detail='',diff='';
+    if(h.action==='create') detail=`${fmtDate(d.date||'')} | <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
     else if(h.action==='update'){
-      detail=`ID: ${esc(d.id||'')}`;
-      if(d.changes&&d.changes.length)
-        diff=`<div class="hdiff">${d.changes.map(c=>
-          `<div><span class="old">${esc(c.field)}: ${esc(String(c.from))}</span> → <span class="new">${esc(String(c.to))}</span></div>`
-        ).join('')}</div>`;
+      detail=`ID: ${d.id||''}`;
+      if(d.changes&&d.changes.length) diff=`<div class="hdiff">${d.changes.map(c=>`<div><span class="old">${esc(c.field)}: ${esc(String(c.from))}</span> → <span class="new">${esc(String(c.to))}</span></div>`).join('')}</div>`;
     }
-    else if(h.action==='delete')
-      detail=`Cat: <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
-    else if(h.action==='bulk_delete')
-      detail=`<strong>${d.count||0}</strong> records permanently deleted`;
-    else if(h.action==='import')
-      detail=`Imported <strong>${d.imported||0}</strong> records from <em>${esc(d.fileName||'file')}</em>`;
-    else if(h.action==='cat_add')
-      detail=`New: <strong>${esc(d.name||'')}</strong>`;
-    else if(h.action==='cat_edit')
-      detail=`<strong>${esc(d.from||'')}</strong> → <strong>${esc(d.to||'')}</strong> (${d.affected||0} records updated)`;
-    else if(h.action==='cat_delete')
-      detail=`Deleted: <strong>${esc(d.name||'')}</strong> (${d.affected||0} records)`;
-    else if(h.action==='security')
-      detail=`${esc(d.event||'')}${d.context?` — <em>${esc(d.context)}</em>`:''}`;
-    return `<div class="hist-item ${esc(h.action)}">
-      <div class="hico">${h.icon||'📝'}</div>
-      <div class="hbody">
-        <div class="hact"><span class="hbadge ${esc(h.badge||'hb-c')}">${esc(h.label||h.action)}</span></div>
-        <div class="hdet">${detail}${diff}</div>
-      </div>
+    else if(h.action==='delete') detail=`Cat: <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
+    else if(h.action==='cat_add') detail=`New: <strong>${esc(d.name||'')}</strong>`;
+    else if(h.action==='cat_edit') detail=`<strong>${esc(d.from||'')}</strong> → <strong>${esc(d.to||'')}</strong>`;
+    else if(h.action==='cat_delete') detail=`Deleted: <strong>${esc(d.name||'')}</strong>`;
+    return `<div class="hist-item ${h.action}">
+      <div class="hico">${h.icon}</div>
+      <div class="hbody"><div class="hact"><span class="hbadge ${h.badge}">${h.label}</span></div>
+        <div class="hdet">${detail}</div>${diff}</div>
       <div class="htime">${timeStr}</div>
     </div>`;
   }).join('');
   renderHistPag(tp,total);
 }
-
 function renderHistPag(tp,total){
   const el=document.getElementById('hist-pag');
-  if(tp<=1){ el.innerHTML=''; return; }
-  const s=(histPage-1)*HPG+1;
-  const e=Math.min(histPage*HPG,total);
+  if(tp<=1){el.innerHTML='';return;}
+  const s=(histPage-1)*HPG+1,e2=Math.min(histPage*HPG,total);
   let btns='';
   for(let i=1;i<=tp;i++){
-    if(i===1||i===tp||Math.abs(i-histPage)<=1)
-      btns+=`<button class="pb ${i===histPage?'active':''}" onclick="goHistPage(${i})">${i}</button>`;
-    else if(Math.abs(i-histPage)===2)
-      btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
+    if(i===1||i===tp||Math.abs(i-histPage)<=1) btns+=`<button class="pb ${i===histPage?'active':''}" onclick="goHistPage(${i})">${i}</button>`;
+    else if(Math.abs(i-histPage)===2) btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
   }
-  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;padding:8px 0">
-    <span class="pi">Showing ${s}–${e} of ${total}</span>
-    <div class="pb2">
-      <button class="pb" onclick="goHistPage(${histPage-1})" ${histPage===1?'disabled':''}>◀</button>
-      ${btns}
-      <button class="pb" onclick="goHistPage(${histPage+1})" ${histPage===tp?'disabled':''}>▶</button>
-    </div>
-  </div>`;
+  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px">
+    <span class="pi">Showing ${s}–${e2} of ${total}</span>
+    <div class="pb2"><button class="pb" onclick="goHistPage(${histPage-1})" ${histPage===1?'disabled':''}>◀</button>
+    ${btns}<button class="pb" onclick="goHistPage(${histPage+1})" ${histPage===tp?'disabled':''}>▶</button></div></div>`;
 }
-
 window.goHistPage=function(p){
   const tf=document.getElementById('hist-type').value;
   const total=(tf?history.filter(h=>h.action===tf):history).length;
   const tp=Math.ceil(total/HPG)||1;
   if(p<1||p>tp) return;
-  histPage=p;
-  renderHistory();
+  histPage=p;renderHistory();
 };
-
 window.clearHistory=async function(){
-  const ok=await requireAuth('Clear History');
-  if(!ok) return;
-  if(!confirm('Clear ALL history records from Firebase? This cannot be undone.')) return;
-  try{
-    const snap=await getDocs(collection(db,HISTORY_COL));
-    const batch=writeBatch(db);
-    snap.docs.forEach(d=>batch.delete(d.ref));
-    await batch.commit();
-    toast('🗑️ History cleared.','info');
-  } catch(err){
-    toast('❌ Failed: '+err.message,'error');
-  }
+  if(!confirm('Clear all history from Firebase?')) return;
+  const snap=await getDocs(collection(db,HISTORY_COL));
+  const batch=writeBatch(db);
+  snap.docs.forEach(d=>batch.delete(d.ref));
+  await batch.commit();
+  toast('History cleared.','info');
 };
 
 /* ══════════════════════════════════════════════
-   CLOSE DROPDOWNS ON OUTSIDE CLICK
-══════════════════════════════════════════════ */
-document.addEventListener('click',function(e){
-  ['add','edit','filter','catmon'].forEach(ctx=>{
-    const wrap=document.getElementById(`cdw-${ctx}`);
-    const panel=document.getElementById(`cdp-${ctx}`);
-    const disp=document.getElementById(`csd-${ctx}`);
-    if(wrap&&!wrap.contains(e.target)){
-      if(panel) panel.classList.remove('open');
-      if(disp)  disp.classList.remove('open');
-    }
-  });
-});
-
-/* ══════════════════════════════════════════════
-   KEYBOARD: ESC closes modals & dropdowns
-══════════════════════════════════════════════ */
-document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){
-    ['add','edit','filter','catmon'].forEach(ctx=>{
-      const p=document.getElementById(`cdp-${ctx}`);
-      const d=document.getElementById(`csd-${ctx}`);
-      if(p) p.classList.remove('open');
-      if(d) d.classList.remove('open');
-    });
-    ['edit-mo','confirm-mo'].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el&&el.classList.contains('open')) el.classList.remove('open');
-    });
-  }
-  if(e.key==='Enter'){
-    const pwMo=document.getElementById('pw-mo');
-    if(pwMo&&pwMo.style.display!=='none') submitPw();
-  }
-});
-
-/* ══════════════════════════════════════════════
-   START APP
+   START APP  ← THE CRITICAL FIX
 ══════════════════════════════════════════════ */
 init();
 
 </script>
 </body>
 </html>
-
