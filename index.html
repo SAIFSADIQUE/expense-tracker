@@ -205,42 +205,12 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .pct-row{display:flex;align-items:center;gap:9px;margin-bottom:10px}
 .pct-label{min-width:88px;font-weight:600;color:var(--txt);font-size:.77rem}
 .pct-track{flex:1;height:20px;background:var(--bdr);border-radius:6px;overflow:hidden}
-.pct-fill{height:100%;border-radius:6px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:6px}
-.pct-fill span{font-size:.68rem;font-weight:800;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3)}
-.pct-amt{font-weight:700;color:var(--err);min-width:83px;text-align:right;font-size:.75rem}
+.pct-fill{height:100%;border-radius:6px;transition:width .5s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:5px}
+.pct-fill span{font-size:.6rem;color:#fff;font-weight:700}
+.pct-amt{font-weight:700;color:var(--err);font-size:.77rem;min-width:70px;text-align:right}
 
-/* 3-PERIOD COMPARE */
-.cmp3-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
-.cmp3-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
-.cmp3-periods{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
-.period-box{border:2px solid var(--bdr);border-radius:var(--rs);padding:13px}
-.period-box.pa{border-color:var(--p)}.period-box.pb2x{border-color:var(--acc)}.period-box.pc{border-color:var(--ok)}
-.period-label{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.pa .period-label{color:var(--p)}.pb2x .period-label{color:var(--acc)}.pc .period-label{color:var(--ok)}
-.period-ctrl{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sum-bar{background:var(--sec);border-radius:var(--rs);padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sb-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px}
-.sb-val{font-size:.95rem;font-weight:800;color:var(--p)}
-.sb-val.acc{color:var(--acc)}.sb-val.ok2{color:var(--ok)}.sb-val.err{color:var(--err)}
-.sb-lbl{font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;text-align:center}
-.sb-div{width:1px;height:34px;background:var(--bdr)}
-.cmp3-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:16px}
-.cmp3-card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
-.cmp3-card.pa{border-top:3px solid var(--p)}.cmp3-card.pb2x{border-top:3px solid var(--acc)}.cmp3-card.pc{border-top:3px solid var(--ok)}
-.cmp3-diff{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
-.winner-badge{font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:5px}
-.w-a{background:var(--pl);color:var(--p)}.w-b{background:#ffe4ec;color:#be185d}.w-c{background:#dcfce7;color:#15803d}
-.chg-up{color:var(--err);font-weight:700}.chg-down{color:var(--ok);font-weight:700}.chg-eq{color:var(--muted)}
-
-/* CATEGORY × MONTH */
-.catmon-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
-.catmon-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
-.catmon-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
-.heatmap-cell{display:inline-block;padding:6px 8px;border-radius:var(--rxs);font-size:.74rem;font-weight:700;text-align:center;min-width:70px;transition:all .2s;cursor:default}
-.heatmap-cell:hover{transform:scale(1.08);box-shadow:var(--sh)}
-
-/* CATEGORY MGR */
-.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin-bottom:20px}
+/* CATEGORIES */
+.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
 .cstat{background:var(--card);border-radius:var(--rs);padding:14px;box-shadow:var(--sh);text-align:center}
 .cstat .cv{font-size:1.55rem;font-weight:800;color:var(--p)}
 .cstat .cl{font-size:.71rem;color:var(--muted);margin-top:3px}
@@ -258,6 +228,10 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   margin-bottom:9px;border-left:4px solid var(--p);display:flex;align-items:flex-start;gap:12px;transition:all .2s}
 .hist-item.create{border-left-color:var(--ok)}.hist-item.update{border-left-color:var(--warn)}
 .hist-item.delete{border-left-color:var(--err)}.hist-item.cat_add,.hist-item.cat_edit,.hist-item.cat_delete{border-left-color:var(--info)}
+.hist-item.bulk_delete{border-left-color:#7c3aed}
+.hist-item.import{border-left-color:#0891b2}
+.hist-item.security{border-left-color:#be185d}
+.hist-item.session{border-left-color:#059669}
 .hico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
 .hbody{flex:1;min-width:0}
 .hact{font-size:.81rem;font-weight:700}
@@ -266,6 +240,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .hbadge{display:inline-block;font-size:.65rem;font-weight:700;padding:1px 7px;border-radius:10px;margin-right:4px}
 .hb-c{background:#dcfce7;color:#16a34a}.hb-u{background:#fef9c3;color:#92400e}
 .hb-d{background:#fee2e2;color:#dc2626}.hb-cat{background:#dbeafe;color:#1d4ed8}
+.hb-bulk{background:#ede9fe;color:#7c3aed}.hb-imp{background:#cffafe;color:#0891b2}
+.hb-sec{background:#fce7f3;color:#be185d}.hb-sess{background:#d1fae5;color:#059669}
 .hdiff{background:var(--sec);border-radius:var(--rxs);padding:6px 9px;margin-top:5px;font-size:.74rem;font-family:'Courier New',monospace}
 .hdiff .old{color:var(--err);text-decoration:line-through}.hdiff .new{color:var(--ok)}
 
@@ -291,6 +267,33 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .confirm-box{background:var(--sec);border-radius:var(--rs);padding:13px;margin:11px 0;font-size:.83rem}
 .confirm-box .impact{color:var(--err);font-weight:700;margin-bottom:5px}
 
+/* PASSWORD MODAL */
+.pw-mo{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:3000;display:flex;
+  align-items:center;justify-content:center;padding:20px}
+.pw-md{background:var(--card);border-radius:var(--r);padding:32px;max-width:380px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}
+.pw-md h2{font-size:1.1rem;font-weight:800;color:var(--p);margin-bottom:8px}
+.pw-md p{font-size:.82rem;color:var(--muted);margin-bottom:20px}
+.pw-md input{width:100%;padding:12px 16px;border:2px solid var(--bdr);border-radius:var(--rs);
+  font-size:1rem;text-align:center;letter-spacing:4px;font-family:var(--font);background:var(--bg);color:var(--txt)}
+.pw-md input:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(108,99,255,.12)}
+.pw-err{color:var(--err);font-size:.78rem;font-weight:700;margin-top:8px;min-height:18px}
+.pw-btn{width:100%;margin-top:14px;padding:11px;background:var(--p);color:#fff;border:none;
+  border-radius:var(--rs);font-size:.9rem;font-weight:700;cursor:pointer;transition:background .2s}
+.pw-btn:hover{background:var(--pd)}
+
+/* LAST VISIT BANNER */
+.lv-banner{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #6ee7b7;
+  border-radius:var(--rs);padding:10px 16px;margin-bottom:16px;font-size:.78rem;color:#065f46;
+  display:flex;align-items:center;gap:8px;font-weight:600}
+
+/* SESSION HISTORY */
+.sess-panel{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:20px}
+.sess-panel h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
+.sess-item{border-left:3px solid var(--p);padding:6px 12px;margin-bottom:7px;font-size:.78rem;
+  background:var(--sec);border-radius:0 var(--rxs) var(--rxs) 0}
+.sess-item .st{font-weight:700;color:var(--txt)}.sess-item .sd{color:var(--muted);font-size:.71rem}
+
 /* TOAST */
 .tc2{position:fixed;bottom:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:7px;max-width:300px}
 .toast{background:#1e1e2e;color:#fff;padding:11px 16px;border-radius:var(--rs);font-size:.82rem;font-weight:600;
@@ -300,9 +303,21 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 @keyframes tin{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes tout{to{transform:translateX(120px);opacity:0}}
 
+/* SETTINGS TAB */
+.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+
 @media(max-width:600px){
   .main{padding:11px}.fg{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}
-  .sg2{grid-template-columns:1fr 1fr}.app-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .sg2{grid-template-columns:1fr 1fr}
+  /* FIX 6: sync banner single line on mobile */
+  .sync-banner{flex-direction:row;flex-wrap:nowrap;align-items:center;overflow-x:auto;gap:5px;padding:5px 10px}
+  .sg{flex-wrap:nowrap;gap:5px}
+  .si{padding:2px 7px;font-size:.65rem;white-space:nowrap;flex-shrink:0}
+  /* FIX 7: Add Expense button to right on mobile */
+  .app-header{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap}
+  .hb h1{font-size:.95rem}
+  .ha{flex-wrap:nowrap}
+  .ib{padding:6px 10px;font-size:.72rem}
   thead{display:none}
   tbody tr{display:block;padding:9px;border-bottom:2px solid var(--bdr)}
   td{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 3px;border:none;font-size:.79rem}
@@ -313,6 +328,18 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 </style>
 </head>
 <body>
+
+<!-- PASSWORD MODAL -->
+<div class="pw-mo" id="pw-mo" style="display:none">
+  <div class="pw-md">
+    <div style="font-size:2rem;margin-bottom:8px">🔒</div>
+    <h2 id="pw-title">Authentication Required</h2>
+    <p id="pw-subtitle">Enter your password to continue.</p>
+    <input type="password" id="pw-input" placeholder="••••" maxlength="20" onkeydown="if(event.key==='Enter')submitPw()"/>
+    <div class="pw-err" id="pw-err"></div>
+    <button class="pw-btn" onclick="submitPw()">Unlock 🔓</button>
+  </div>
+</div>
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loading-overlay">
@@ -327,8 +354,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 <div class="sync-banner">
   <div class="sg">
     <div class="si"><span class="dot dot-yellow" id="sync-dot"></span><span id="sync-status">Connecting…</span></div>
-    <div class="si">📊 Records: <strong id="rec-disp">0</strong></div>
-    <div class="si">📂 Categories: <strong id="cat-disp">0</strong></div>
+    <div class="si">📊 <strong id="rec-disp">0</strong></div>
+    <div class="si">📂 <strong id="cat-disp">0</strong></div>
   </div>
   <div class="sg"><div class="si">📅 <strong id="hdr-date">—</strong></div></div>
 </div>
@@ -347,12 +374,14 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <button class="tb" data-tab="categories" onclick="switchTab('categories',this)">🏷️ Categories</button>
   <button class="tb" data-tab="history"    onclick="switchTab('history',this)">🕓 History</button>
   <button class="tb" data-tab="export"     onclick="switchTab('export',this)">💾 Export</button>
+  <button class="tb" data-tab="settings"   onclick="switchTab('settings',this)">⚙️ Settings</button>
 </nav>
 
 <main class="main">
 
 <!-- DASHBOARD -->
 <section id="tab-dashboard" class="tp active">
+  <div id="lv-banner-container"></div>
   <div class="sg2">
     <div class="sc t"><div class="lbl">Today</div><div class="amt" id="s-today">₹0.00</div><div class="sub" id="s-today-c">0 entries</div></div>
     <div class="sc m"><div class="lbl">This Month</div><div class="amt" id="s-month">₹0.00</div><div class="sub" id="s-month-c">0 entries</div></div>
@@ -360,7 +389,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
     <div class="sc"><div class="lbl">All Time</div><div class="amt" id="s-total">₹0.00</div><div class="sub" id="s-total-c">0 entries</div></div>
   </div>
   <div class="fc">
-    <div class="fct">➕ Add Expense</div>
+    <div class="fct">➕ Add New Expense</div>
     <div class="fg">
       <div class="fg2"><label>Date</label><input type="date" id="f-date" class="fc2"/></div>
       <div class="fg2"><label>Amount (₹)</label><input type="number" id="f-amount" class="fc2" min="0" step="0.01" placeholder="0.00"/></div>
@@ -391,6 +420,11 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
       </tr></thead>
       <tbody id="rec-tbody"></tbody>
     </table></div>
+  </div>
+  <!-- SESSION HISTORY PANEL -->
+  <div class="sess-panel">
+    <h3>🗂️ This Session — Browsing History</h3>
+    <div id="session-hist-list"><p style="color:var(--muted);font-size:.8rem">No actions recorded yet in this session.</p></div>
   </div>
 </section>
 
@@ -487,75 +521,66 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   </div>
 
   <div id="an-monthwise" class="an-panel">
-    <div class="fb" style="margin-bottom:18px">
+    <div class="fb">
       <div class="fbt">📅 Select Year</div>
-      <select id="mw-year" class="fc2" style="max-width:160px" onchange="renderMonthWise()"><option value="">All Years</option></select>
+      <select id="mw-year" class="fc2" style="max-width:150px" onchange="renderMonthWise()"><option value="">All Years</option></select>
     </div>
     <div class="pct-card" style="margin-bottom:18px"><h3>🗓️ Month-wise Breakdown</h3><div id="mw-breakdown"></div></div>
     <div class="ac"><div id="mw-table"></div></div>
   </div>
 
   <div id="an-compare3" class="an-panel">
-    <div class="cmp3-setup">
-      <h3>⚖️ Compare 3 Periods</h3>
-      <div class="cmp3-periods">
-        <div class="period-box pa">
-          <div class="period-label">📘 Period A</div>
-          <div class="period-ctrl">
-            <div class="fg2"><label>Year</label><select id="cya" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
-            <div class="fg2"><label>Month</label>
-              <select id="cma" class="fc2" onchange="renderCompare3()">
-                <option value="">All</option>
-                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-              </select></div>
-          </div>
-        </div>
-        <div class="period-box pb2x">
-          <div class="period-label">📙 Period B</div>
-          <div class="period-ctrl">
-            <div class="fg2"><label>Year</label><select id="cyb" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
-            <div class="fg2"><label>Month</label>
-              <select id="cmb" class="fc2" onchange="renderCompare3()">
-                <option value="">All</option>
-                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-              </select></div>
-          </div>
-        </div>
-        <div class="period-box pc">
-          <div class="period-label">📗 Period C</div>
-          <div class="period-ctrl">
-            <div class="fg2"><label>Year</label><select id="cyc" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
-            <div class="fg2"><label>Month</label>
-              <select id="cmc" class="fc2" onchange="renderCompare3()">
-                <option value="">All</option>
-                <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
-                <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
-                <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
-                <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
-              </select></div>
-          </div>
-        </div>
+    <div class="pct-grid" id="cmp3-grid"></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-bottom:18px">
+      <div class="fb">
+        <div class="fbt" style="color:var(--p)">Period A</div>
+        <div class="fg2"><label>Year</label><select id="cya" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
+        <div class="fg2" style="margin-top:8px"><label>Month</label>
+          <select id="cma" class="fc2" onchange="renderCompare3()">
+            <option value="">Full Year</option>
+            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+          </select></div>
       </div>
-      <button class="btn bp bsm" onclick="renderCompare3()">⚖️ Compare</button>
+      <div class="fb">
+        <div class="fbt" style="color:var(--acc)">Period B</div>
+        <div class="fg2"><label>Year</label><select id="cyb" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
+        <div class="fg2" style="margin-top:8px"><label>Month</label>
+          <select id="cmb" class="fc2" onchange="renderCompare3()">
+            <option value="">Full Year</option>
+            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+          </select></div>
+      </div>
+      <div class="fb">
+        <div class="fbt" style="color:var(--ok)">Period C</div>
+        <div class="fg2"><label>Year</label><select id="cyc" class="fc2" onchange="renderCompare3()"><option value="">Select</option></select></div>
+        <div class="fg2" style="margin-top:8px"><label>Month</label>
+          <select id="cmc" class="fc2" onchange="renderCompare3()">
+            <option value="">Full Year</option>
+            <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+            <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+            <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+            <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+          </select></div>
+      </div>
     </div>
-    <div id="cmp3-result"></div>
+    <div id="cmp3-table"></div>
   </div>
 
   <div id="an-catmon" class="an-panel">
-    <div class="catmon-setup">
-      <h3>🏷️ Category × Month Comparison</h3>
-      <div class="catmon-controls">
-        <div class="fg2"><label>Year *</label>
+    <div class="fb" style="margin-bottom:18px">
+      <div class="fbt">🏷️ Category × Month</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:11px">
+        <div class="fg2"><label>Year</label>
           <select id="cm-year" class="fc2" onchange="renderCatMon()"><option value="">Select Year</option></select></div>
-        <div class="fg2"><label>Category (optional)</label>
+        <div class="fg2"><label>Category</label>
           <div class="cdw" id="cdw-catmon">
-            <div class="csd" id="csd-catmon" onclick="toggleDrop('catmon')" style="min-height:39px">
+            <div class="csd" id="csd-catmon" onclick="toggleDrop('catmon')">
               <span id="ct-catmon" class="ph">All Categories</span><span class="ca">▼</span>
             </div>
             <div class="cdp" id="cdp-catmon">
@@ -565,12 +590,9 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
             <input type="hidden" id="cm-cat"/>
           </div>
         </div>
-        <div class="fg2" style="align-self:end">
-          <button class="btn bp bsm" onclick="renderCatMon()">🔄 Refresh</button>
-        </div>
       </div>
     </div>
-    <div id="catmon-result"></div>
+    <div id="catmon-out"></div>
   </div>
 </section>
 
@@ -605,9 +627,13 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
         <option value="create">➕ Created</option>
         <option value="update">✏️ Updated</option>
         <option value="delete">🗑️ Deleted</option>
+        <option value="bulk_delete">🗑️ Bulk Delete</option>
+        <option value="import">📥 Import</option>
         <option value="cat_add">🏷️ Cat Added</option>
         <option value="cat_edit">🏷️ Cat Edited</option>
         <option value="cat_delete">🏷️ Cat Deleted</option>
+        <option value="security">🔒 Security</option>
+        <option value="session">🗂️ Session</option>
       </select>
       <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear History</button>
       <span class="fs2" id="hist-count-lbl" style="margin-left:auto"></span>
@@ -623,15 +649,42 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
     <div class="fct">💾 Export & Backup</div>
     <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Your data is safely stored in Firebase. Export as a local backup anytime.</p>
     <div class="ex-grid">
-      <div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div>
-      <div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div>
+      <div class="ex-card" onclick="doExportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div>
+      <div class="ex-card" onclick="triggerImport()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div>
     </div>
-    <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
+    <input type="file" id="imp-file" accept=".json" style="display:none" onchange="doImportJSON(this)"/>
   </div>
   <div class="fc">
     <div class="fct" style="color:var(--err)">⚠️ Danger Zone</div>
     <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Permanently erase ALL data from Firebase.</p>
-    <button class="btn bd" onclick="confirmDeleteAll()">🗑️ Delete All Data</button>
+    <button class="btn bd" onclick="doConfirmDeleteAll()">🗑️ Delete All Data</button>
+  </div>
+</section>
+
+<!-- SETTINGS -->
+<section id="tab-settings" class="tp">
+  <div class="settings-grid">
+    <div class="fc">
+      <div class="fct">🔑 Change Password</div>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Update your application access password.</p>
+      <div class="fg2" style="margin-bottom:14px"><label>Current Password</label>
+        <input type="password" id="s-cur-pw" class="fc2" placeholder="Enter current password"/></div>
+      <div class="fg2" style="margin-bottom:14px"><label>New Password</label>
+        <input type="password" id="s-new-pw" class="fc2" placeholder="Enter new password"/></div>
+      <div class="fg2" style="margin-bottom:18px"><label>Confirm New Password</label>
+        <input type="password" id="s-conf-pw" class="fc2" placeholder="Confirm new password"/></div>
+      <button class="btn bp" onclick="changePassword()">🔑 Update Password</button>
+    </div>
+    <div class="fc">
+      <div class="fct">ℹ️ App Info</div>
+      <p style="font-size:.83rem;color:var(--muted);line-height:1.7">
+        <strong>💰 Expense Tracker</strong><br/>
+        Version: 2.0.0<br/>
+        Database: Firebase Firestore<br/>
+        Session timeout: 1 hour of inactivity<br/>
+        All sensitive operations are password-protected.
+      </p>
+    </div>
   </div>
 </section>
 
@@ -734,6 +787,122 @@ let histPage=1; const HPG=20;
 let curAnTab='overview';
 let unsubExpenses=null, unsubCategories=null, unsubHistory=null;
 
+/* ══════════════════════════════════════════════
+   PASSWORD SYSTEM (FIX 5)
+══════════════════════════════════════════════ */
+const PW_STORAGE_KEY = 'et_password';
+const PW_AUTH_KEY    = 'et_auth_ts';
+const PW_DEFAULT     = '1432';
+const INACTIVITY_MS  = 60 * 60 * 1000; // 1 hour
+
+function getStoredPassword(){ return localStorage.getItem(PW_STORAGE_KEY) || PW_DEFAULT; }
+function isAuthenticated(){
+  const ts = parseInt(localStorage.getItem(PW_AUTH_KEY)||'0');
+  return ts && (Date.now() - ts < INACTIVITY_MS);
+}
+function markAuthenticated(){ localStorage.setItem(PW_AUTH_KEY, Date.now().toString()); }
+function resetAuth(){ localStorage.removeItem(PW_AUTH_KEY); }
+
+let _pwResolve = null;
+let _pwContext = '';
+let _inactivityTimer = null;
+
+function resetInactivityTimer(){
+  clearTimeout(_inactivityTimer);
+  _inactivityTimer = setTimeout(()=>{ resetAuth(); }, INACTIVITY_MS);
+}
+
+// Track activity to reset timer
+['click','keydown','mousemove','touchstart'].forEach(ev=>{
+  document.addEventListener(ev, ()=>{ if(isAuthenticated()) resetInactivityTimer(); }, {passive:true});
+});
+
+function showPasswordModal(context=''){
+  _pwContext = context;
+  document.getElementById('pw-title').textContent = context || 'Authentication Required';
+  document.getElementById('pw-subtitle').textContent = context
+    ? `Password required to: ${context}`
+    : 'Please enter your password to access the app.';
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-err').textContent='';
+  document.getElementById('pw-mo').style.display='flex';
+  setTimeout(()=>document.getElementById('pw-input').focus(), 100);
+  logHistory(ACT.SECURITY,{event:'Password prompt shown', context: context||'App Access'});
+  return new Promise(resolve=>{ _pwResolve = resolve; });
+}
+
+window.submitPw = function(){
+  const val = document.getElementById('pw-input').value;
+  if(val === getStoredPassword()){
+    document.getElementById('pw-mo').style.display='none';
+    markAuthenticated();
+    resetInactivityTimer();
+    logHistory(ACT.SECURITY,{event:'Password authentication successful', context: _pwContext||'App Access'});
+    if(_pwResolve){ _pwResolve(true); _pwResolve=null; }
+  } else {
+    document.getElementById('pw-err').textContent = '❌ Incorrect password. Try again.';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+};
+
+async function requireAuth(context=''){
+  if(isAuthenticated()) return true;
+  return await showPasswordModal(context);
+}
+
+window.changePassword = function(){
+  const cur = document.getElementById('s-cur-pw').value;
+  const nw  = document.getElementById('s-new-pw').value;
+  const cf  = document.getElementById('s-conf-pw').value;
+  if(cur !== getStoredPassword()){ toast('❌ Current password is incorrect.','error'); return; }
+  if(!nw){ toast('❌ New password cannot be empty.','error'); return; }
+  if(nw !== cf){ toast('❌ Passwords do not match.','error'); return; }
+  localStorage.setItem(PW_STORAGE_KEY, nw);
+  document.getElementById('s-cur-pw').value='';
+  document.getElementById('s-new-pw').value='';
+  document.getElementById('s-conf-pw').value='';
+  toast('✅ Password updated successfully!','success');
+  logHistory(ACT.SECURITY,{event:'Password changed by user'});
+};
+
+/* ══════════════════════════════════════════════
+   SESSION HISTORY (FIX 3)
+══════════════════════════════════════════════ */
+const sessionLog = [];
+function logSession(action, detail=''){
+  const entry = { action, detail, time: new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) };
+  sessionLog.unshift(entry);
+  if(sessionLog.length > 50) sessionLog.pop();
+  renderSessionHistory();
+}
+function renderSessionHistory(){
+  const el = document.getElementById('session-hist-list');
+  if(!el) return;
+  if(!sessionLog.length){ el.innerHTML='<p style="color:var(--muted);font-size:.8rem">No actions yet.</p>'; return; }
+  el.innerHTML = sessionLog.slice(0,15).map(e=>`
+    <div class="sess-item">
+      <div class="st">${esc(e.action)}</div>
+      <div class="sd">$${esc(e.detail)} &nbsp;·&nbsp; $${e.time}</div>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════════════
+   LAST VISIT NOTIFICATION (FIX 4)
+══════════════════════════════════════════════ */
+const LV_KEY = 'et_last_visit';
+function showLastVisit(){
+  const lv = localStorage.getItem(LV_KEY);
+  const container = document.getElementById('lv-banner-container');
+  if(lv && container){
+    container.innerHTML = `<div class="lv-banner">🕐 Last visit: <strong>${lv}</strong></div>`;
+  }
+  localStorage.setItem(LV_KEY, new Date().toLocaleString('en-IN',{
+    weekday:'short', day:'2-digit', month:'short', year:'numeric',
+    hour:'2-digit', minute:'2-digit', second:'2-digit'
+  }));
+}
+
 function localDateStr(d){
   const dt=d||new Date();
   return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
@@ -749,14 +918,23 @@ window.addEventListener('offline', ()=>{
 });
 
 /* ══════════════════════════════════════════════
-   BOOT — FIXED VERSION
+   BOOT
 ══════════════════════════════════════════════ */
 async function init(){
   console.log("🚀 init() called");
+
+  // FIX 5: Require password on initial load
+  await requireAuth('Access App');
+
   setMsg('Connecting to Firebase…');
   document.getElementById('hdr-date').textContent =
     new Date().toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
   setToday();
+  showLastVisit();
+
+  // Log session start
+  logSession('App Opened', new Date().toLocaleString('en-IN'));
+  logHistory(ACT.SESSION,{event:'Session started', time: new Date().toISOString()});
 
   const safetyTimer = setTimeout(()=>{
     console.warn('⚠️ Safety timeout — force hiding loader');
@@ -780,57 +958,39 @@ async function init(){
       console.log("✅ Default categories seeded");
     }
 
-    setMsg('Loading expenses…');
-    console.log("📡 Starting expense listener…");
-
-    await new Promise((resolve)=>{
-      let done = false;
-      const q = query(collection(db, EXPENSE_COL), orderBy('date','desc'));
-      unsubExpenses = onSnapshot(q, snap=>{
-        console.log("✅ Expenses snapshot received:", snap.size, "docs");
-        expenses = snap.docs.map(d=>({id:d.id,...d.data()}));
-        populateYears();
-        buildAllDropdowns();
-        renderDashboard();
-        renderRecords();
-        if(curAnTab!=='compare3') renderAnTab(curAnTab);
-        updateStatusBar();
-        if(!done){
-          done = true;
-          clearTimeout(safetyTimer);
-          setSyncStatus('live');
-          hideLoading();
-          console.log("✅ Loader hidden — app ready!");
-          resolve();
-        }
-      }, err=>{
-        console.error("❌ Expense listener error:", err);
-        toast('Sync error: '+err.message,'error');
-        if(!done){
-          done = true;
-          clearTimeout(safetyTimer);
-          setSyncStatus('error');
-          hideLoading();
-          resolve();
-        }
-      });
-    });
-
+    setMsg('Loading data…');
+    listenExpenses();
     listenCategories();
     listenHistory();
-
-  }catch(err){
     clearTimeout(safetyTimer);
-    console.error("❌ init() error:", err);
-    setMsg('❌ Firebase connection failed: '+err.message);
-    setSyncStatus('error');
+  } catch(err){
+    console.error("❌ Init error:", err);
+    clearTimeout(safetyTimer);
     hideLoading();
+    setSyncStatus('error');
+    toast('❌ Connection error: '+err.message,'error');
   }
 }
 
 /* ══════════════════════════════════════════════
    REAL-TIME LISTENERS
 ══════════════════════════════════════════════ */
+function listenExpenses(){
+  const q = query(collection(db, EXPENSE_COL), orderBy('date','desc'));
+  unsubExpenses = onSnapshot(q, snap=>{
+    expenses = snap.docs.map(d=>({id:d.id,...d.data()}));
+    renderDashboard();
+    applyFilters();
+    updateStatusBar();
+    hideLoading();
+    setSyncStatus('live');
+  }, err=>{
+    console.error("Expenses listener error:", err);
+    setSyncStatus('error');
+    hideLoading();
+  });
+}
+
 function listenCategories(){
   unsubCategories = onSnapshot(collection(db, CATEGORY_COL), snap=>{
     categories = snap.docs.map(d=>({id:d.id,...d.data()}))
@@ -867,15 +1027,21 @@ function setMsg(m){document.getElementById('loading-msg').textContent=m;}
 function hideLoading(){document.getElementById('loading-overlay').style.display='none';}
 
 /* ══════════════════════════════════════════════
-   AUDIT HISTORY
+   AUDIT HISTORY — EXTENDED ACTION TYPES
 ══════════════════════════════════════════════ */
 const ACT={
-  CREATE:    {key:'create',    icon:'➕',label:'Expense Created', badge:'hb-c'},
-  UPDATE:    {key:'update',    icon:'✏️',label:'Expense Updated', badge:'hb-u'},
-  DELETE:    {key:'delete',    icon:'🗑️',label:'Expense Deleted', badge:'hb-d'},
-  CAT_ADD:   {key:'cat_add',   icon:'🏷️',label:'Category Added',  badge:'hb-cat'},
-  CAT_EDIT:  {key:'cat_edit',  icon:'✏️',label:'Category Renamed',badge:'hb-u'},
-  CAT_DELETE:{key:'cat_delete',icon:'🗑️',label:'Category Deleted',badge:'hb-d'},
+  CREATE:      {key:'create',      icon:'➕', label:'Expense Created',    badge:'hb-c'},
+  UPDATE:      {key:'update',      icon:'✏️', label:'Expense Updated',    badge:'hb-u'},
+  DELETE:      {key:'delete',      icon:'🗑️', label:'Expense Deleted',    badge:'hb-d'},
+  CAT_ADD:     {key:'cat_add',     icon:'🏷️', label:'Category Added',     badge:'hb-cat'},
+  CAT_EDIT:    {key:'cat_edit',    icon:'✏️', label:'Category Renamed',   badge:'hb-u'},
+  CAT_DELETE:  {key:'cat_delete',  icon:'🗑️', label:'Category Deleted',   badge:'hb-d'},
+  BULK_DELETE: {key:'bulk_delete', icon:'🗑️', label:'All Data Deleted',   badge:'hb-bulk'},
+  IMPORT:      {key:'import',      icon:'📥', label:'JSON Imported',       badge:'hb-imp'},
+  SECURITY:    {key:'security',    icon:'🔒', label:'Security Event',     badge:'hb-sec'},
+  SESSION:     {key:'session',     icon:'🗂️', label:'Session Event',      badge:'hb-sess'},
+  CLEAR_HIST:  {key:'security',    icon:'🗑️', label:'History Cleared',    badge:'hb-sec'},
+  EXPORT:      {key:'security',    icon:'🗂️', label:'Data Exported',      badge:'hb-sec'},
 };
 async function logHistory(act, data){
   try{
@@ -929,6 +1095,7 @@ window.clearForm=function(){
 window.focusAdd=function(){
   switchTab('dashboard',document.querySelector('[data-tab="dashboard"]'));
   setTimeout(()=>document.getElementById('f-amount').focus(),200);
+  logSession('Navigated to','Add Expense (Dashboard)');
 };
 window.switchTab=function(id,btn){
   document.querySelectorAll('.tp').forEach(p=>p.classList.remove('active'));
@@ -939,6 +1106,7 @@ window.switchTab=function(id,btn){
   if(id==='records') renderRecords();
   if(id==='categories') renderCatMgr();
   if(id==='history'){histPage=1;renderHistory();}
+  logSession('Tab switched', id.charAt(0).toUpperCase()+id.slice(1));
 };
 function populateYears(){
   const yrs=[...new Set(expenses.map(e=>new Date(e.date+'T00:00:00').getFullYear()))].sort((a,b)=>b-a);
@@ -954,8 +1122,8 @@ function populateYears(){
 function mkSummaryTable(headers,rows,footer){
   return `<table style="width:100%;border-collapse:collapse;font-size:.78rem">
     <thead><tr style="background:var(--sec)">${headers.map((h,i)=>`<th style="padding:8px 10px;text-align:${i===0?'left':'right'};font-size:.69rem;color:var(--p);text-transform:uppercase">${h}</th>`).join('')}</tr></thead>
-    <tbody>${rows.map(r=>`<tr style="border-bottom:1px solid var(--bdr)">${r.map((c,i)=>`<td style="padding:8px 10px;text-align:${i===0?'left':'right'};${i===1?'font-weight:700;color:var(--err)':''}">${c}</td>`).join('')}</tr>`).join('')}</tbody>
-    ${footer?`<tfoot><tr style="background:var(--sec);font-weight:800">${footer.map((c,i)=>`<td style="padding:8px 10px;text-align:${i===0?'left':'right'}">${c}</td>`).join('')}</tr></tfoot>`:''}
+    <tbody>$${rows.map(r=>`<tr style="border-bottom:1px solid var(--bdr)">${r.map((c,i)=>`<td style="padding:8px 10px;text-align:$${i===0?'left':'right'};$${i===1?'font-weight:700;color:var(--err)':''}">$${c}</td>`).join('')}</tr>`).join('')}</tbody>
+    $${footer?`<tfoot><tr style="background:var(--sec);font-weight:800">${footer.map((c,i)=>`<td style="padding:8px 10px;text-align:$${i===0?'left':'right'}">${c}</td>`).join('')}</tr></tfoot>`:''}
   </table>`;
 }
 
@@ -974,6 +1142,7 @@ window.saveExp=async function(){
   try{
     const ref=await addDoc(collection(db,EXPENSE_COL),{date,amount,category:cat,note,createdAt:new Date().toISOString()});
     await logHistory(ACT.CREATE,{id:ref.id,date,amount,category:cat,note});
+    logSession('Expense Added', `${cat} ₹${fmtAmt(amount)} on ${fmtDate(date)}`);
     clearForm();toast('✅ Expense saved & synced!','success');
   }catch(e){toast('❌ Save failed: '+e.message,'error');}
   setSyncStatus('live');
@@ -997,6 +1166,7 @@ window.updateExp=async function(){
   try{
     await updateDoc(doc(db,EXPENSE_COL,id),{date,amount,category:cat,note});
     if(changes.length) await logHistory(ACT.UPDATE,{id,changes});
+    logSession('Expense Updated', `ID ${id}`);
     closeMo('edit-mo');toast('✅ Updated & synced!','success');
   }catch(e){toast('❌ Update failed: '+e.message,'error');}
   setSyncStatus('live');
@@ -1009,6 +1179,7 @@ window.deleteExp=async function(id){
   try{
     await deleteDoc(doc(db,EXPENSE_COL,id));
     await logHistory(ACT.DELETE,{id:rec.id,date:rec.date,amount:rec.amount,category:rec.category});
+    logSession('Expense Deleted', `${rec.category} ₹${fmtAmt(rec.amount)}`);
     toast('🗑️ Deleted & synced.','info');
   }catch(e){toast('❌ Delete failed: '+e.message,'error');}
   setSyncStatus('live');
@@ -1022,16 +1193,28 @@ window.openEditMo=function(id){
   document.getElementById('m-note').value=e.note||'';
   setCat('edit',e.category);
   document.getElementById('edit-mo').classList.add('open');
+  logSession('Opened Edit', `ID ${id}`);
 };
 
-window.confirmDeleteAll=async function(){
+/* ══════════════════════════════════════════════
+   FIX 1: DELETE ALL — NOW WITH HISTORY LOGGING
+══════════════════════════════════════════════ */
+window.doConfirmDeleteAll=async function(){
+  const ok = await requireAuth('Delete All Data');
+  if(!ok) return;
   if(!confirm('⚠️ Delete ALL data from Firebase permanently?')) return;
   if(!confirm('This CANNOT be undone. Absolutely sure?')) return;
+  const count = expenses.length;
+  setSyncStatus('saving');
   const snap=await getDocs(collection(db,EXPENSE_COL));
   const batch=writeBatch(db);
   snap.docs.forEach(d=>batch.delete(d.ref));
   await batch.commit();
+  // FIX 1: Log bulk delete to history
+  await logHistory(ACT.BULK_DELETE,{count, deletedAt: new Date().toISOString()});
+  logSession('All Data Deleted', `${count} records removed`);
   toast('All expense data deleted.','info');
+  setSyncStatus('live');
 };
 
 /* ══════════════════════════════════════════════
@@ -1059,19 +1242,21 @@ function renderDashboard(){
 }
 
 /* ══════════════════════════════════════════════
-   RECORDS
+   RECORDS — FIX 2: SEARCH WITH "ALL CATEGORIES"
 ══════════════════════════════════════════════ */
 function applyFilters(){
   const q=document.getElementById('r-search').value.toLowerCase().trim();
   const yr=document.getElementById('r-year').value;
   const mon=document.getElementById('r-month').value;
   const day=document.getElementById('r-day').value;
-  const cat=document.getElementById('r-cat').value;
+  // FIX 2: Read from catVals directly (not r-cat hidden field) so empty string = All Categories
+  const cat=catVals['filter'];
   filtered=expenses.filter(e=>{
     const d=new Date(e.date+'T00:00:00');
     if(yr&&d.getFullYear()!==parseInt(yr)) return false;
     if(mon&&d.getMonth()+1!==parseInt(mon)) return false;
     if(day&&e.date!==day) return false;
+    // FIX 2: Only filter by category if one is actually selected (non-empty)
     if(cat&&e.category!==cat) return false;
     if(q){const hay=`${e.date} ${e.category} ${e.amount} ${e.note||''}`.toLowerCase();if(!hay.includes(q)) return false;}
     return true;
@@ -1126,9 +1311,9 @@ function renderPag(pages,total){
     if(i===1||i===pages||Math.abs(i-curPage)<=1) btns+=`<button class="pb ${i===curPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
     else if(Math.abs(i-curPage)===2) btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
   }
-  el.innerHTML=`<span class="pi">Showing ${s}–${e} of ${total}</span>
-    <div class="pb2"><button class="pb" onclick="goPage(${curPage-1})" ${curPage===1?'disabled':''}>◀</button>
-    ${btns}<button class="pb" onclick="goPage(${curPage+1})" ${curPage===pages?'disabled':''}>▶</button></div>`;
+  el.innerHTML=`<span class="pi">Showing $${s}–$${e} of ${total}</span>
+    <div class="pb2"><button class="pb" onclick="goPage($${curPage-1})" $${curPage===1?'disabled':''}>◀</button>
+    $${btns}<button class="pb" onclick="goPage($${curPage+1})" ${curPage===pages?'disabled':''}>▶</button></div>`;
 }
 window.goPage=function(p){const pages=Math.ceil(filtered.length/PG)||1;if(p<1||p>pages) return;curPage=p;renderRecPage();};
 
@@ -1150,8 +1335,8 @@ function renderOverview(){
     const mx=sorted[0]?.[1]||1;
     document.getElementById(id).innerHTML=sorted.length
       ?sorted.map(([k,v])=>`<div class="br">
-          <span class="bl" title="${esc(k)}">${esc(k)}</span>
-          <div class="bt"><div class="bf ${cls}" style="width:${(v/mx*100).toFixed(1)}%"></div></div>
+          <span class="bl" title="$${esc(k)}">$${esc(k)}</span>
+          <div class="bt"><div class="bf $${cls}" style="width:$${(v/mx*100).toFixed(1)}%"></div></div>
           <span class="bamt">₹${fmtAmt(v)}</span></div>`).join('')
       :'<p style="color:var(--muted);font-size:.82rem">No data.</p>';
   };
@@ -1179,27 +1364,25 @@ function renderYearWise(){
   const maxV=sorted[0]?.[1].total||1;
   const brkEl=document.getElementById('yw-breakdown');
   if(!sorted.length){brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';document.getElementById('yw-table').innerHTML='';return;}
-  brkEl.innerHTML=sorted.map(([yr,{total}],i)=>{
+  brkEl.innerHTML=sorted.map(([y,{total}],i)=>{
     const pct=grand>0?((total/grand)*100).toFixed(2):0;
-    const col=COLORS[i%COLORS.length];
     return `<div class="pct-row">
-      <span class="pct-label">${yr}</span>
-      <div class="pct-track"><div class="pct-fill" style="width:${((total/maxV)*100).toFixed(1)}%;background:${col}">
+      <span class="pct-label">${y}</span>
+      <div class="pct-track"><div class="pct-fill" style="width:$${((total/maxV)*100).toFixed(1)}%;background:$${COLORS[i%COLORS.length]}">
         <span>${pct}%</span></div></div>
       <span class="pct-amt">₹${fmtAmt(total)}</span></div>`;
   }).join('');
   document.getElementById('yw-table').innerHTML=mkSummaryTable(
     ['Year','Total','Records','% Share'],
-    sorted.map(([yr,{total,count}])=>[yr,`₹${fmtAmt(total)}`,count,`${grand>0?((total/grand)*100).toFixed(2):0}%`]),
-    ['All Time',`₹${fmtAmt(grand)}`,expenses.length,'100%']
+    sorted.map(([y,{total,count}])=>[y,`₹${fmtAmt(total)}`,count,`${grand>0?((total/grand)*100).toFixed(2):0}%`]),
+    ['Total',`₹${fmtAmt(grand)}`,expenses.length,'100%']
   );
 }
 
 function renderMonthWise(){
   populateYears();
-  const selYr=document.getElementById('mw-year').value;
-  const data=selYr?expenses.filter(e=>new Date(e.date+'T00:00:00').getFullYear()===parseInt(selYr)):expenses;
-  const grand=data.reduce((s,e)=>s+e.amount,0);
+  const yr=document.getElementById('mw-year').value;
+  const data=yr?expenses.filter(e=>new Date(e.date+'T00:00:00').getFullYear()===parseInt(yr)):expenses;
   const monMap={};
   data.forEach(e=>{
     const m=new Date(e.date+'T00:00:00').getMonth()+1;
@@ -1207,6 +1390,7 @@ function renderMonthWise(){
     monMap[m].total+=e.amount;monMap[m].count++;
   });
   const sorted=Object.entries(monMap).sort((a,b)=>b[1].total-a[1].total);
+  const grand=sorted.reduce((s,[,{total}])=>s+total,0);
   const maxV=sorted[0]?.[1].total||1;
   const brkEl=document.getElementById('mw-breakdown');
   if(!sorted.length){brkEl.innerHTML='<p style="color:var(--muted)">No data.</p>';document.getElementById('mw-table').innerHTML='';return;}
@@ -1214,7 +1398,7 @@ function renderMonthWise(){
     const pct=grand>0?((total/grand)*100).toFixed(2):0;
     return `<div class="pct-row">
       <span class="pct-label">${MS[parseInt(m)]}</span>
-      <div class="pct-track"><div class="pct-fill" style="width:${((total/maxV)*100).toFixed(1)}%;background:${COLORS[i%COLORS.length]}">
+      <div class="pct-track"><div class="pct-fill" style="width:$${((total/maxV)*100).toFixed(1)}%;background:$${COLORS[i%COLORS.length]}">
         <span>${pct}%</span></div></div>
       <span class="pct-amt">₹${fmtAmt(total)}</span></div>`;
   }).join('');
@@ -1245,139 +1429,82 @@ window.renderCompare3=function(){
   const allCats=[...new Set([...Object.keys(cA),...Object.keys(cB),...Object.keys(cC)])].sort();
   const miniBar=(map,maxV,col)=>Object.entries(map).sort((a,b)=>b[1]-a[1]).map(([cat,v])=>`
     <div class="br"><span class="bl">${esc(cat)}</span>
-    <div class="bt"><div class="bf" style="width:${((v/maxV)*100).toFixed(1)}%;background:${col}"></div></div>
-    <span class="bamt">₹${fmtAmt(v)}</span></div>`).join('')||'<p style="color:var(--muted)">No data.</p>';
-  const chg=(from,to)=>{
-    if(from===0&&to===0) return {txt:'—',cls:'chg-eq'};
-    if(from===0) return {txt:'New',cls:'chg-up'};
-    const p=(((to-from)/from)*100).toFixed(1);
-    return {txt:`${p>0?'+':''}${p}%`,cls:p>0?'chg-up':p<0?'chg-down':'chg-eq'};
-  };
-  const el=document.getElementById('cmp3-result');
-  const diff=(a,b)=>a-b;
-  el.innerHTML=`
-  <div class="sum-bar">
-    <div class="sb-item"><div class="sb-val">₹${fmtAmt(tA)}</div><div class="sb-lbl">A — ${lA}</div></div>
-    <div class="sb-div"></div>
-    <div class="sb-item"><div class="sb-val acc">₹${fmtAmt(tB)}</div><div class="sb-lbl">B — ${lB}</div></div>
-    <div class="sb-div"></div>
-    <div class="sb-item"><div class="sb-val ok2">₹${fmtAmt(tC)}</div><div class="sb-lbl">C — ${lC}</div></div>
-    <div class="sb-div"></div>
-    <div class="sb-item"><div class="sb-val ${diff(tA,tB)>0?'err':'ok2'}">${diff(tA,tB)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tA,tB)))}</div><div class="sb-lbl">A vs B</div></div>
-    <div class="sb-div"></div>
-    <div class="sb-item"><div class="sb-val ${diff(tA,tC)>0?'err':'ok2'}">${diff(tA,tC)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tA,tC)))}</div><div class="sb-lbl">A vs C</div></div>
-    <div class="sb-div"></div>
-    <div class="sb-item"><div class="sb-val ${diff(tB,tC)>0?'err':'ok2'}">${diff(tB,tC)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tB,tC)))}</div><div class="sb-lbl">B vs C</div></div>
-  </div>
-  <div class="cmp3-cards">
-    <div class="cmp3-card pa"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <span style="font-size:.83rem;font-weight:700;color:var(--p)">📘 A — ${esc(lA)}</span>
-      <span style="font-size:1.1rem;font-weight:800;color:var(--p)">₹${fmtAmt(tA)}</span></div>
-      ${miniBar(cA,Math.max(tA,1),'#6c63ff')}</div>
-    <div class="cmp3-card pb2x"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <span style="font-size:.83rem;font-weight:700;color:var(--acc)">📙 B — ${esc(lB)}</span>
-      <span style="font-size:1.1rem;font-weight:800;color:var(--acc)">₹${fmtAmt(tB)}</span></div>
-      ${miniBar(cB,Math.max(tB,1),'#ff6584')}</div>
-    <div class="cmp3-card pc"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <span style="font-size:.83rem;font-weight:700;color:var(--ok)">📗 C — ${esc(lC)}</span>
-      <span style="font-size:1.1rem;font-weight:800;color:var(--ok)">₹${fmtAmt(tC)}</span></div>
-      ${miniBar(cC,Math.max(tC,1),'#22c55e')}</div>
-  </div>
-  <div class="cmp3-diff"><h3>📊 Category Comparison — A vs B vs C</h3>
-  <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
-    <thead><tr style="background:var(--sec)">
-      <th style="padding:9px 11px;text-align:left;font-size:.69rem;color:var(--p);text-transform:uppercase">Category</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--p);text-transform:uppercase">A</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--acc);text-transform:uppercase">B</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--ok);text-transform:uppercase">C</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">A vs B</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">A vs C</th>
-      <th style="padding:9px 11px;text-align:right;font-size:.69rem;color:var(--muted);text-transform:uppercase">Best</th>
-    </tr></thead><tbody>
-    ${allCats.map(cat=>{
-      const vA=cA[cat]||0,vB=cB[cat]||0,vC=cC[cat]||0;
-      const abChg=chg(vB,vA),acChg=chg(vC,vA);
-      const best=vA<=vB&&vA<=vC?'<span class="winner-badge w-a">A</span>':vB<=vA&&vB<=vC?'<span class="winner-badge w-b">B</span>':'<span class="winner-badge w-c">C</span>';
-      return `<tr style="border-bottom:1px solid var(--bdr)">
-        <td style="padding:9px 11px;font-weight:600">${esc(cat)}</td>
-        <td style="padding:9px 11px;text-align:right;color:var(--p);font-weight:700">${vA>0?'₹'+fmtAmt(vA):'—'}</td>
-        <td style="padding:9px 11px;text-align:right;color:var(--acc);font-weight:700">${vB>0?'₹'+fmtAmt(vB):'—'}</td>
-        <td style="padding:9px 11px;text-align:right;color:var(--ok);font-weight:700">${vC>0?'₹'+fmtAmt(vC):'—'}</td>
-        <td style="padding:9px 11px;text-align:right"><span class="${abChg.cls}">${abChg.txt}</span></td>
-        <td style="padding:9px 11px;text-align:right"><span class="${acChg.cls}">${acChg.txt}</span></td>
-        <td style="padding:9px 11px;text-align:right">${best}</td>
-      </tr>`;
-    }).join('')}</tbody>
-  </table></div></div>`;
+    <div class="bt"><div class="bf" style="width:$${maxV?((v/maxV)*100).toFixed(1):0}%;background:$${col}"></div></div>
+    <span class="bamt">₹${fmtAmt(v)}</span></div>`).join('');
+  const mxA=Math.max(...Object.values(cA),1),mxB=Math.max(...Object.values(cB),1),mxC=Math.max(...Object.values(cC),1);
+  document.getElementById('cmp3-grid').innerHTML=[
+    {label:lA,data:cA,total:tA,col:'#6c63ff',mx:mxA},
+    {label:lB,data:cB,total:tB,col:'#ff6584',mx:mxB},
+    {label:lC,data:cC,total:tC,col:'#22c55e',mx:mxC}
+  ].map(p=>`<div class="pct-card">
+    <h3>$${p.label==='—'?'Not Selected':esc(p.label)} — ₹$${fmtAmt(p.total)}</h3>
+    ${Object.keys(p.data).length?miniBar(p.data,p.mx,p.col):'<p style="color:var(--muted);font-size:.82rem">No data.</p>'}
+  </div>`).join('');
+  if(!allCats.length){document.getElementById('cmp3-table').innerHTML='';return;}
+  document.getElementById('cmp3-table').innerHTML=mkSummaryTable(
+    ['Category',lA||'A',lB||'B',lC||'C'],
+    allCats.map(cat=>[esc(cat),cA[cat]?`₹${fmtAmt(cA[cat])}`:'—',cB[cat]?`₹${fmtAmt(cB[cat])}`:'—',cC[cat]?`₹${fmtAmt(cC[cat])}`:'—'])
+  );
 };
 
-function renderCatMon(){
+window.renderCatMon=function(){
+  populateYears();
   const yr=document.getElementById('cm-year').value;
-  const catFilter=document.getElementById('cm-cat').value;
-  const el=document.getElementById('catmon-result');
-  if(!yr){el.innerHTML=`<div class="es"><div class="ei">📅</div><p>Select a year.</p></div>`;return;}
+  const cat=catVals['catmon'];
+  if(!yr){document.getElementById('catmon-out').innerHTML='<p style="color:var(--muted)">Select a year.</p>';return;}
   const data=expenses.filter(e=>{
     if(new Date(e.date+'T00:00:00').getFullYear()!==parseInt(yr)) return false;
-    if(catFilter&&e.category!==catFilter) return false;
+    if(cat&&e.category!==cat) return false;
     return true;
   });
-  if(!data.length){el.innerHTML=`<div class="es"><div class="ei">📭</div><p>No data.</p></div>`;return;}
-  const usedCats=[...new Set(data.map(e=>e.category))].sort();
+  if(!data.length){document.getElementById('catmon-out').innerHTML='<p style="color:var(--muted)">No data.</p>';return;}
   const usedMonths=[...new Set(data.map(e=>new Date(e.date+'T00:00:00').getMonth()+1))].sort((a,b)=>a-b);
-  const map={};
-  usedCats.forEach(c=>{map[c]={};});
-  data.forEach(e=>{
-    const m=new Date(e.date+'T00:00:00').getMonth()+1;
-    map[e.category][m]=(map[e.category][m]||0)+e.amount;
-  });
-  let grandMax=0;
-  usedCats.forEach(c=>usedMonths.forEach(m=>{if((map[c][m]||0)>grandMax) grandMax=map[c][m]||0;}));
-  const rowTotals={};usedCats.forEach(c=>rowTotals[c]=usedMonths.reduce((s,m)=>s+(map[c][m]||0),0));
-  const monTotals={};usedMonths.forEach(m=>monTotals[m]=usedCats.reduce((s,c)=>s+(map[c][m]||0),0));
-  const grandTotal=usedCats.reduce((s,c)=>s+rowTotals[c],0);
-  const cellBg=(val)=>{
-    if(!val) return 'background:#f8f8ff;color:#ccc';
-    return `background:rgba(108,99,255,${(val/grandMax*.7+.08).toFixed(2)});color:${val/grandMax>.5?'#fff':'#1e1e2e'}`;
-  };
-  el.innerHTML=`<div style="overflow-x:auto;margin-bottom:18px">
-  <table style="width:100%;border-collapse:collapse;font-size:.76rem;min-width:600px">
-    <thead><tr style="background:var(--sec)">
-      <th style="padding:9px 12px;text-align:left;font-size:.69rem;color:var(--p);text-transform:uppercase">Category</th>
-      ${usedMonths.map(m=>`<th style="padding:9px 10px;text-align:center;font-size:.69rem;color:var(--p);text-transform:uppercase">${MS[m]}</th>`).join('')}
-      <th style="padding:9px 10px;text-align:right;font-size:.69rem;color:var(--p);text-transform:uppercase">Total</th>
-    </tr></thead>
-    <tbody>${usedCats.map(cat=>`<tr style="border-bottom:1px solid var(--bdr)">
-      <td style="padding:8px 12px;font-weight:600;white-space:nowrap">${esc(cat)}</td>
-      ${usedMonths.map(m=>{
-        const v=map[cat][m]||0;
-        return `<td style="padding:6px 8px;text-align:center">
-          ${v>0?`<span class="heatmap-cell" style="${cellBg(v)}">₹${fmtAmt(v)}</span>`:`<span style="color:#ddd">—</span>`}
-        </td>`;
-      }).join('')}
-      <td style="padding:8px 10px;text-align:right;font-weight:800;color:var(--err)">₹${fmtAmt(rowTotals[cat])}</td>
-    </tr>`).join('')}</tbody>
-    <tfoot><tr style="background:var(--sec);font-weight:800">
-      <td style="padding:9px 12px">Monthly Total</td>
-      ${usedMonths.map(m=>`<td style="padding:9px 10px;text-align:center;color:var(--p)">₹${fmtAmt(monTotals[m])}</td>`).join('')}
-      <td style="padding:9px 10px;text-align:right;color:var(--err)">₹${fmtAmt(grandTotal)}</td>
-    </tr></tfoot>
-  </table></div>
+  const usedCats=[...new Set(data.map(e=>e.category))].sort();
+  const map={};usedCats.forEach(c=>{map[c]={};usedMonths.forEach(m=>{map[c][m]=0;});});
+  data.forEach(e=>{const m=new Date(e.date+'T00:00:00').getMonth()+1;map[e.category][m]=(map[e.category][m]||0)+e.amount;});
+  const monTotals={};usedMonths.forEach(m=>{monTotals[m]=usedCats.reduce((s,c)=>s+(map[c][m]||0),0);});
+  const grand=Object.values(monTotals).reduce((a,b)=>a+b,0);
+  document.getElementById('catmon-out').innerHTML=`
+  <div class="ac" style="margin-bottom:18px">
+    <div class="tw"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
+      <thead><tr style="background:var(--sec)">
+        <th style="padding:8px 10px;text-align:left;font-size:.69rem;color:var(--p)">Category</th>
+        ${usedMonths.map(m=>`<th style="padding:8px 10px;text-align:right;font-size:.69rem;color:var(--p)">${MS[m]}</th>`).join('')}
+        <th style="padding:8px 10px;text-align:right;font-size:.69rem;color:var(--p)">Total</th>
+      </tr></thead>
+      <tbody>
+        ${usedCats.map(c=>{
+          const rowTotal=usedMonths.reduce((s,m)=>s+(map[c][m]||0),0);
+          return `<tr style="border-bottom:1px solid var(--bdr)">
+            <td style="padding:8px 10px">${esc(c)}</td>
+            $${usedMonths.map(m=>`<td style="padding:8px 10px;text-align:right">${map[c][m]?`₹$${fmtAmt(map[c][m])}`:'—'}</td>`).join('')}
+            <td style="padding:8px 10px;text-align:right;font-weight:700;color:var(--err)">₹${fmtAmt(rowTotal)}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+      <tfoot><tr style="background:var(--sec);font-weight:800">
+        <td style="padding:8px 10px">Total</td>
+        ${usedMonths.map(m=>`<td style="padding:8px 10px;text-align:right">₹${fmtAmt(monTotals[m])}</td>`).join('')}
+        <td style="padding:8px 10px;text-align:right">₹${fmtAmt(grand)}</td>
+      </tr></tfoot>
+    </table></div>
+  </div>
   <div class="ac"><h3>📊 Category Share per Month — ${yr}</h3>
     ${usedMonths.map(m=>{
       const mt=monTotals[m];if(!mt) return '';
       return `<div style="margin-bottom:14px">
-        <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:7px">${MF[m]} — ₹${fmtAmt(mt)}</div>
+        <div style="font-size:.78rem;font-weight:700;color:var(--p);margin-bottom:7px">$${MF[m]} — ₹$${fmtAmt(mt)}</div>
         ${usedCats.filter(c=>map[c][m]).map((cat,i)=>{
           const v=map[cat][m]||0,pct=((v/mt)*100).toFixed(1);
           return `<div class="pct-row">
             <span class="pct-label" style="min-width:140px;font-size:.74rem">${esc(cat)}</span>
-            <div class="pct-track"><div class="pct-fill" style="width:${pct}%;background:${COLORS[i%COLORS.length]}">
+            <div class="pct-track"><div class="pct-fill" style="width:$${pct}%;background:$${COLORS[i%COLORS.length]}">
               <span>${pct}%</span></div></div>
             <span class="pct-amt">₹${fmtAmt(v)}</span></div>`;
         }).join('')}</div>`;
     }).join('')}
   </div>`;
-}
+};
 
 /* ══════════════════════════════════════════════
    ANALYTICS TAB SWITCH
@@ -1398,16 +1525,27 @@ window.switchAnTab=function(id,btn){
 };
 
 /* ══════════════════════════════════════════════
-   EXPORT / IMPORT
+   FIX 1: EXPORT / IMPORT — WITH PASSWORD + HISTORY
 ══════════════════════════════════════════════ */
-window.exportJSON=function(){
+window.doExportJSON=async function(){
+  const ok = await requireAuth('Export JSON');
+  if(!ok) return;
   if(!expenses.length){toast('No data.','error');return;}
   const catNames=categories.map(c=>c.name);
   download(`expenses-${localDateStr()}.json`,
     JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2),'application/json');
+  await logHistory(ACT.EXPORT,{exportedAt:new Date().toISOString(), count:expenses.length});
+  logSession('Data Exported', `${expenses.length} records`);
   toast('🗂️ JSON exported!','success');
 };
-window.importJSON=async function(input){
+
+window.triggerImport=async function(){
+  const ok = await requireAuth('Import JSON');
+  if(!ok) return;
+  document.getElementById('imp-file').click();
+};
+
+window.doImportJSON=async function(input){
   const file=input.files[0];if(!file) return;
   const r=new FileReader();
   r.onload=async e=>{
@@ -1435,6 +1573,9 @@ window.importJSON=async function(input){
         });
         await catBatch.commit();
       }
+      // FIX 1: Log import to history
+      await logHistory(ACT.IMPORT,{imported: fresh.length, fileName: file.name, importedAt: new Date().toISOString()});
+      logSession('JSON Imported', `${fresh.length} new records from ${file.name}`);
       toast(`✅ Imported ${fresh.length} records to Firebase!`,'success');
       setSyncStatus('live');
     }catch{toast('❌ Invalid file.','error');}
@@ -1468,8 +1609,8 @@ function renderCatMgr(){
       <div class="cn">${esc(cat.name)}</div>
       <div class="cc">${count} rec</div>
       <div class="cact">
-        <button class="btn bo bxs" onclick="promptEditCat('${escQ(cat.id)}','${escQ(cat.name)}')">✏️</button>
-        <button class="btn bd bxs" onclick="promptDeleteCat('${escQ(cat.id)}','${escQ(cat.name)}')">🗑️</button>
+        <button class="btn bo bxs" onclick="promptEditCat('$${escQ(cat.id)}','$${escQ(cat.name)}')">✏️</button>
+        <button class="btn bd bxs" onclick="promptDeleteCat('$${escQ(cat.id)}','$${escQ(cat.name)}')">🗑️</button>
       </div>
     </div>`;
   }).join('');
@@ -1481,6 +1622,7 @@ window.addCategory=async function(){
   await addDoc(collection(db,CATEGORY_COL),{name,createdAt:new Date().toISOString()});
   document.getElementById('new-cat-name').value='';
   await logHistory(ACT.CAT_ADD,{name});
+  logSession('Category Added', name);
   toast(`✅ Category "${name}" added!`,'success');
 };
 window.promptEditCat=function(id,name){
@@ -1531,8 +1673,8 @@ function buildOpts(ctx,q=''){
   if(!src.length){el.innerHTML=html+'<div class="co nr">No results</div>';return;}
   src.forEach(cat=>{
     const cnt=expenses.filter(e=>e.category===cat.name).length;
-    html+=`<div class="co ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">
-      ${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}
+    html+=`<div class="co $${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('$${ctx}','$${escQ(cat.name)}','$${escQ(cat.name)}')">
+      $${esc(cat.name)}$${cnt>0?`<span class="cob">${cnt}</span>`:''}
     </div>`;
   });
   el.innerHTML=html;
@@ -1582,7 +1724,7 @@ function setCat(ctx,val){
 }
 
 /* ══════════════════════════════════════════════
-   HISTORY
+   HISTORY — EXTENDED RENDERING
 ══════════════════════════════════════════════ */
 function renderHistory(){
   const tf=document.getElementById('hist-type').value;
@@ -1599,35 +1741,52 @@ function renderHistory(){
     if(h.action==='create') detail=`${fmtDate(d.date||'')} | <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
     else if(h.action==='update'){
       detail=`ID: ${d.id||''}`;
-      if(d.changes&&d.changes.length) diff=`<div class="hdiff">${d.changes.map(c=>`<div><span class="old">${esc(c.field)}: ${esc(String(c.from))}</span> → <span class="new">${esc(String(c.to))}</span></div>`).join('')}</div>`;
+      if(d.changes&&d.changes.length) diff=`<div class="hdiff">${d.changes.map(c=>`<div><span class="old">$${esc(c.field)}: $${esc(String(c.from))}</span> → <span class="new">${esc(String(c.to))}</span></div>`).join('')}</div>`;
     }
     else if(h.action==='delete') detail=`Cat: <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
+    else if(h.action==='bulk_delete') detail=`<strong>${d.count||0}</strong> records permanently deleted`;
+    else if(h.action==='import') detail=`Imported <strong>${d.imported||0}</strong> records from <em>${esc(d.fileName||'file')}</em>`;
     else if(h.action==='cat_add') detail=`New: <strong>${esc(d.name||'')}</strong>`;
-    else if(h.action==='cat_edit') detail=`<strong>${esc(d.from||'')}</strong> → <strong>${esc(d.to||'')}</strong>`;
-    else if(h.action==='cat_delete') detail=`Deleted: <strong>${esc(d.name||'')}</strong>`;
-    return `<div class="hist-item ${h.action}">
-      <div class="hico">${h.icon}</div>
-      <div class="hbody"><div class="hact"><span class="hbadge ${h.badge}">${h.label}</span></div>
-        <div class="hdet">${detail}</div>${diff}</div>
+    else if(h.action==='cat_edit') detail=`<strong>${esc(d.from||'')}</strong> → <strong>${esc(d.to||'')}</strong> (${d.affected||0} records updated)`;
+    else if(h.action==='cat_delete') detail=`Deleted: <strong>${esc(d.name||'')}</strong> (${d.affected||0} records)`;
+    else if(h.action==='security') detail=`${esc(d.event||'')}${d.context?` — <em>${esc(d.context)}</em>`:''}`;
+    else if(h.action==='session') detail=`${esc(d.event||'')}`;
+        return `<div class="hist-item ${h.action}">
+      <div class="hico">${h.icon||'📝'}</div>
+      <div class="hbody">
+        <div class="hact">
+          <span class="hbadge ${h.badge||'hb-c'}">${h.label||h.action}</span>
+        </div>
+        <div class="hdet">${detail}${diff}</div>
+      </div>
       <div class="htime">${timeStr}</div>
     </div>`;
   }).join('');
-  renderHistPag(tp,total);
+  renderHistPag(tp, total);
 }
-function renderHistPag(tp,total){
+
+function renderHistPag(tp, total){
+  const tf=document.getElementById('hist-type').value;
   const el=document.getElementById('hist-pag');
   if(tp<=1){el.innerHTML='';return;}
-  const s=(histPage-1)*HPG+1,e2=Math.min(histPage*HPG,total);
+  const s=(histPage-1)*HPG+1, e=Math.min(histPage*HPG,total);
   let btns='';
   for(let i=1;i<=tp;i++){
-    if(i===1||i===tp||Math.abs(i-histPage)<=1) btns+=`<button class="pb ${i===histPage?'active':''}" onclick="goHistPage(${i})">${i}</button>`;
-    else if(Math.abs(i-histPage)===2) btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
+    if(i===1||i===tp||Math.abs(i-histPage)<=1)
+      btns+=`<button class="pb ${i===histPage?'active':''}" onclick="goHistPage(${i})">${i}</button>`;
+    else if(Math.abs(i-histPage)===2)
+      btns+=`<span style="padding:4px 2px;color:var(--muted)">…</span>`;
   }
-  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px">
-    <span class="pi">Showing ${s}–${e2} of ${total}</span>
-    <div class="pb2"><button class="pb" onclick="goHistPage(${histPage-1})" ${histPage===1?'disabled':''}>◀</button>
-    ${btns}<button class="pb" onclick="goHistPage(${histPage+1})" ${histPage===tp?'disabled':''}>▶</button></div></div>`;
+  el.innerHTML=`<div class="pag">
+    <span class="pi">Showing ${s}–${e} of ${total}</span>
+    <div class="pb2">
+      <button class="pb" onclick="goHistPage(${histPage-1})" ${histPage===1?'disabled':''}>◀</button>
+      ${btns}
+      <button class="pb" onclick="goHistPage(${histPage+1})" ${histPage===tp?'disabled':''}>▶</button>
+    </div>
+  </div>`;
 }
+
 window.goHistPage=function(p){
   const tf=document.getElementById('hist-type').value;
   const total=(tf?history.filter(h=>h.action===tf):history).length;
@@ -1635,17 +1794,21 @@ window.goHistPage=function(p){
   if(p<1||p>tp) return;
   histPage=p;renderHistory();
 };
+
 window.clearHistory=async function(){
+  const ok = await requireAuth('Clear History');
+  if(!ok) return;
   if(!confirm('Clear all history from Firebase?')) return;
   const snap=await getDocs(collection(db,HISTORY_COL));
   const batch=writeBatch(db);
   snap.docs.forEach(d=>batch.delete(d.ref));
   await batch.commit();
+  logSession('History Cleared','All history records removed');
   toast('History cleared.','info');
 };
 
 /* ══════════════════════════════════════════════
-   START APP  ← THE CRITICAL FIX
+   START APP
 ══════════════════════════════════════════════ */
 init();
 
