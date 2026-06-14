@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>💰 Expense Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -13,7 +14,30 @@
   --sh:0 4px 20px rgba(108,99,255,.10);--shl:0 8px 40px rgba(108,99,255,.18);
   --r:16px;--rs:10px;--rxs:6px;--font:'Segoe UI',system-ui,sans-serif
 }
-body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+/* DARK MODE */
+[data-theme="dark"]{
+  --bg:#11111f;--card:#1b1b30;--txt:#eceaff;--muted:#9b9bc4;--bdr:#33335a;
+  --sec:#25253f;--pl:#2c2a52;
+  --sh:0 4px 20px rgba(0,0,0,.35);--shl:0 8px 40px rgba(0,0,0,.5);
+}
+/* ACCENT THEMES */
+[data-accent="blue"]{--p:#3b82f6;--pd:#2563eb;--pl:#dbeafe;--acc:#06b6d4}
+[data-accent="green"]{--p:#10b981;--pd:#059669;--pl:#d1fae5;--acc:#f59e0b}
+[data-accent="pink"]{--p:#ec4899;--pd:#db2777;--pl:#fce7f3;--acc:#8b5cf6}
+[data-accent="orange"]{--p:#f97316;--pd:#ea580c;--pl:#ffedd5;--acc:#3b82f6}
+[data-accent="teal"]{--p:#14b8a6;--pd:#0d9488;--pl:#ccfbf1;--acc:#f97316}
+[data-accent="indigo"]{--p:#6366f1;--pd:#4f46e5;--pl:#e0e7ff;--acc:#f59e0b}
+[data-accent="red"]{--p:#ef4444;--pd:#dc2626;--pl:#fee2e2;--acc:#3b82f6}
+[data-accent="yellow"]{--p:#eab308;--pd:#ca8a04;--pl:#fef9c3;--acc:#6366f1}
+[data-theme="dark"][data-accent="blue"]{--pl:#1e3a5f}
+[data-theme="dark"][data-accent="green"]{--pl:#1d3b30}
+[data-theme="dark"][data-accent="pink"]{--pl:#3a2240}
+[data-theme="dark"][data-accent="orange"]{--pl:#3a2a1a}
+[data-theme="dark"][data-accent="teal"]{--pl:#143b38}
+[data-theme="dark"][data-accent="indigo"]{--pl:#2b2a52}
+[data-theme="dark"][data-accent="red"]{--pl:#3a1f1f}
+[data-theme="dark"][data-accent="yellow"]{--pl:#3a3416}
+body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;transition:background .25s,color .25s}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:var(--p);border-radius:10px}
 
@@ -44,11 +68,24 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
   position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(108,99,255,.3)
 }
 .hb h1{font-size:1.18rem;font-weight:800}
-.ha{display:flex;gap:7px;flex-wrap:wrap}
+.ha{display:flex;gap:7px;flex-wrap:nowrap;align-items:center}
 .ib{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:var(--rs);
   color:#fff;cursor:pointer;padding:7px 13px;font-size:.77rem;font-weight:600;
   transition:all .2s;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .ib:hover{background:rgba(255,255,255,.32);transform:translateY(-1px)}
+.notif-wrap{position:relative}
+.ib.nb{padding:7px 10px;position:relative}
+.notif-dot{display:none;position:absolute;top:5px;right:6px;width:9px;height:9px;border-radius:50%;
+  background:var(--err);border:2px solid var(--pd)}
+.notif-dot.show{display:block}
+.notif-panel{display:none;position:absolute;top:calc(100% + 10px);left:0;width:280px;max-width:85vw;
+  background:var(--card);color:var(--txt);border:1px solid var(--bdr);border-radius:var(--rs);
+  box-shadow:var(--shl);padding:13px;z-index:200}
+.notif-panel.open{display:block}
+.notif-title{font-weight:800;font-size:.85rem;margin-bottom:9px}
+.notif-empty{font-size:.78rem;color:var(--muted);text-align:center;padding:8px 0}
+.notif-item{background:var(--pl);border-radius:var(--rxs);padding:10px 11px;font-size:.78rem;line-height:1.5}
+.notif-item .ni-act{margin-top:8px}
 
 /* TABS */
 .tabs{display:flex;background:var(--card);border-bottom:2px solid var(--bdr);
@@ -75,7 +112,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .loading-overlay p{font-size:.88rem;color:var(--muted);font-weight:600}
 
 /* SUMMARY CARDS */
-.sg2{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:13px;margin-bottom:20px}
+.sg2{margin-bottom:20px}
 .sc{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh);
   border-left:4px solid var(--p);transition:transform .2s}
 .sc:hover{transform:translateY(-2px);box-shadow:var(--shl)}
@@ -87,7 +124,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 /* FORM */
 .fc{background:var(--card);border-radius:var(--r);padding:22px;box-shadow:var(--sh);margin-bottom:20px}
 .fct{font-size:.97rem;font-weight:700;color:var(--p);margin-bottom:18px;display:flex;align-items:center;gap:7px}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:14px}
+.fg{margin-bottom:14px}
 .fg2{display:flex;flex-direction:column;gap:5px}
 .fg2 label{font-size:.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
 .fc2{padding:9px 13px;border:2px solid var(--bdr);border-radius:var(--rs);font-size:.87rem;
@@ -96,7 +133,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .fc2:focus{outline:none;border-color:var(--p);box-shadow:0 0 0 3px rgba(108,99,255,.12)}
 .fc2::placeholder{color:#b0b4c8}
 textarea.fc2{resize:vertical;min-height:70px}
-.frf{grid-column:1/-1}
 
 /* SEARCHABLE DROPDOWN */
 .cdw{position:relative}
@@ -115,7 +151,7 @@ textarea.fc2{resize:vertical;min-height:70px}
 .csi{width:100%;padding:6px 11px;border:1.5px solid var(--bdr);border-radius:var(--rxs);
   font-size:.82rem;font-family:var(--font);background:var(--sec);color:var(--txt)}
 .csi:focus{outline:none;border-color:var(--p)}
-.col{overflow-y:auto;flex:1;padding:3px 0}
+.cdrop-col{overflow-y:auto;flex:1;padding:3px 0}
 .co{padding:8px 13px;font-size:.84rem;cursor:pointer;color:var(--txt);transition:background .15s;
   display:flex;align-items:center;gap:7px}
 .co:hover{background:var(--pl);color:var(--p)}
@@ -137,7 +173,7 @@ textarea.fc2{resize:vertical;min-height:70px}
 /* FILTER */
 .fb{background:var(--card);border-radius:var(--r);padding:16px 18px;box-shadow:var(--sh);margin-bottom:17px}
 .fbt{font-size:.86rem;font-weight:700;color:var(--p);margin-bottom:12px}
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:11px;margin-bottom:11px}
+.fgrid{margin-bottom:11px}
 .sw{position:relative}
 .sw .si2{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .sw input{padding-left:32px}
@@ -178,7 +214,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .pb:disabled{opacity:.35;cursor:not-allowed}
 
 /* ANALYTICS */
-.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-bottom:20px}
+.ag{margin-bottom:20px}
 .ac{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:0}
 .ac h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
 .br{display:flex;align-items:center;gap:9px;margin-bottom:10px;font-size:.79rem}
@@ -212,7 +248,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 /* 3-PERIOD COMPARE */
 .cmp3-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
 .cmp3-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
-.cmp3-periods{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
+.cmp3-periods{margin-bottom:14px}
 .period-box{border:2px solid var(--bdr);border-radius:var(--rs);padding:13px}
 .period-box.pa{border-color:var(--p)}.period-box.pb2x{border-color:var(--acc)}.period-box.pc{border-color:var(--ok)}
 .period-label{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
@@ -224,7 +260,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .sb-val.acc{color:var(--acc)}.sb-val.ok2{color:var(--ok)}.sb-val.err{color:var(--err)}
 .sb-lbl{font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;text-align:center}
 .sb-div{width:1px;height:34px;background:var(--bdr)}
-.cmp3-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:16px}
+.cmp3-cards{margin-bottom:16px}
 .cmp3-card{background:var(--card);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
 .cmp3-card.pa{border-top:3px solid var(--p)}.cmp3-card.pb2x{border-top:3px solid var(--acc)}.cmp3-card.pc{border-top:3px solid var(--ok)}
 .cmp3-diff{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
@@ -235,12 +271,12 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 /* CATEGORY × MONTH */
 .catmon-setup{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh);margin-bottom:18px}
 .catmon-setup h3{font-size:.9rem;font-weight:700;color:var(--p);margin-bottom:14px}
-.catmon-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:14px}
+.catmon-controls{margin-bottom:14px}
 .heatmap-cell{display:inline-block;padding:6px 8px;border-radius:var(--rxs);font-size:.74rem;font-weight:700;text-align:center;min-width:70px;transition:all .2s;cursor:default}
 .heatmap-cell:hover{transform:scale(1.08);box-shadow:var(--sh)}
 
 /* CATEGORY MGR */
-.cat-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:12px;margin-bottom:20px}
+.cat-stats{margin-bottom:20px}
 .cstat{background:var(--card);border-radius:var(--rs);padding:14px;box-shadow:var(--sh);text-align:center}
 .cstat .cv{font-size:1.55rem;font-weight:800;color:var(--p)}
 .cstat .cl{font-size:.71rem;color:var(--muted);margin-top:3px}
@@ -257,7 +293,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .hist-item{background:var(--card);border-radius:var(--rs);padding:13px 16px;box-shadow:var(--sh);
   margin-bottom:9px;border-left:4px solid var(--p);display:flex;align-items:flex-start;gap:12px;transition:all .2s}
 .hist-item.create{border-left-color:var(--ok)}.hist-item.update{border-left-color:var(--warn)}
-.hist-item.delete{border-left-color:var(--err)}.hist-item.cat_add,.hist-item.cat_edit,.hist-item.cat_delete{border-left-color:var(--info)}
+.hist-item.delete,.hist-item.delete_all{border-left-color:var(--err)}.hist-item.cat_add,.hist-item.cat_edit,.hist-item.cat_delete,.hist-item.export,.hist-item.import,.hist-item.pass_change{border-left-color:var(--info)}
+.hist-item.login{border-left-color:var(--ok)}.hist-item.logout{border-left-color:var(--warn)}
 .hico{font-size:1.1rem;flex-shrink:0;margin-top:1px}
 .hbody{flex:1;min-width:0}
 .hact{font-size:.81rem;font-weight:700}
@@ -270,7 +307,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 .hdiff .old{color:var(--err);text-decoration:line-through}.hdiff .new{color:var(--ok)}
 
 /* EXPORT */
-.ex-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:14px;margin-bottom:20px}
+.ex-grid{margin-bottom:20px}
 .ex-card{background:var(--card);border-radius:var(--r);padding:20px;box-shadow:var(--sh);
   text-align:center;cursor:pointer;transition:all .2s;border:2px solid transparent}
 .ex-card:hover{border-color:var(--p);transform:translateY(-3px);box-shadow:var(--shl)}
@@ -300,19 +337,81 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 @keyframes tin{from{transform:translateX(100px);opacity:0}to{transform:translateX(0);opacity:1}}
 @keyframes tout{to{transform:translateX(120px);opacity:0}}
 
+/* LOGIN OVERLAY */
+.login-overlay{position:fixed;inset:0;background:linear-gradient(135deg,var(--p),var(--pd));
+  z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:var(--card);border-radius:var(--r);padding:34px 30px;max-width:340px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);text-align:center}
+.login-box h1{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+.login-box p{font-size:.82rem;color:var(--muted);margin-bottom:18px}
+.login-box input{text-align:center;font-size:1.1rem;letter-spacing:4px;margin-bottom:12px}
+.login-box .btn{width:100%;justify-content:center}
+.login-err{color:var(--err);font-size:.8rem;margin-top:10px;min-height:1em;font-weight:600}
+
+/* SETTINGS TAB */
+.theme-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.theme-opt{padding:10px 18px;border:2px solid var(--bdr);border-radius:var(--rs);cursor:pointer;
+  font-size:.82rem;font-weight:700;color:var(--txt);background:var(--card);transition:all .2s;display:flex;align-items:center;gap:7px}
+.theme-opt:hover{border-color:var(--p)}
+.theme-opt.active{border-color:var(--p);background:var(--pl);color:var(--p)}
+.accent-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.accent-swatch{width:38px;height:38px;border-radius:50%;cursor:pointer;border:3px solid transparent;
+  transition:all .2s;display:flex;align-items:center;justify-content:center;font-size:.9rem;color:#fff}
+.accent-swatch:hover{transform:scale(1.1)}
+.accent-swatch.active{border-color:var(--txt);box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--p)}
+.set-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+
+/* BULK SELECT */
+.bulk-count{font-size:.78rem;font-weight:700;color:var(--p);background:var(--pl);
+  padding:4px 10px;border-radius:20px}
+tr.row-selected td{background:var(--pl)!important}
+input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer}
+.cal-nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.cal-dow{font-size:.68rem;font-weight:700;color:var(--muted);text-align:center;padding:4px 0;text-transform:uppercase}
+.cal-day{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--rxs);min-height:60px;
+  padding:5px 6px;font-size:.7rem;display:flex;flex-direction:column;gap:2px;cursor:pointer;transition:all .15s}
+.cal-day:hover{border-color:var(--p);transform:translateY(-1px);box-shadow:var(--sh)}
+.cal-day.empty{background:transparent;border:none;cursor:default}
+.cal-day.empty:hover{transform:none;box-shadow:none}
+.cal-day .cd-num{font-weight:800;font-size:.8rem}
+.cal-day .cd-count{font-size:.68rem;color:var(--p);font-weight:700}
+.cal-day .cd-amt{font-size:.62rem;color:var(--muted)}
+.cal-day .cd-na{font-size:.68rem;color:var(--muted)}
+.cal-day.cd-today{border-color:var(--p);box-shadow:0 0 0 1px var(--p) inset}
+.cal-legend{font-size:.72rem;color:var(--muted);margin-top:10px}
+.date-lock-pill{background:var(--sec);border:1.5px solid var(--bdr);border-radius:20px;
+  padding:3px 10px;font-size:.7rem;font-weight:700;cursor:pointer;color:var(--muted);
+  transition:all .2s;white-space:nowrap;line-height:1.4}
+.date-lock-pill:hover{border-color:var(--p);color:var(--p)}
+.date-lock-pill.locked{background:var(--warn);border-color:var(--warn);color:#fff}
+.date-lock-hint{font-size:.7rem;color:var(--warn);font-weight:700;min-height:1.1em;margin-top:4px}
 @media(max-width:600px){
-  .main{padding:11px}.fg{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}
-  .sg2{grid-template-columns:1fr 1fr}.app-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .cal-day{min-height:44px;padding:3px 4px;font-size:.6rem}
+  .cal-day .cd-num{font-size:.72rem}
+}
+@media(max-width:600px){
+  .main{padding:11px}.app-header{flex-direction:column;align-items:flex-start;gap:8px}
   thead{display:none}
   tbody tr{display:block;padding:9px;border-bottom:2px solid var(--bdr)}
   td{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 3px;border:none;font-size:.79rem}
   td::before{content:attr(data-label);font-weight:700;color:var(--muted);font-size:.69rem;text-transform:uppercase;margin-right:7px;flex-shrink:0;min-width:62px}
   .ab{justify-content:flex-end}.cat-grid{grid-template-columns:1fr}
 }
-@media(min-width:900px){.fg{grid-template-columns:1fr 1fr 1fr}.fgrid{grid-template-columns:2fr 1fr 1fr 1fr 1fr}}
 </style>
 </head>
 <body>
+
+<!-- LOGIN OVERLAY -->
+<div class="login-overlay" id="login-overlay" style="display:none">
+  <div class="login-box">
+    <h1>💰 Expense Tracker</h1>
+    <p>Enter password to continue</p>
+    <input type="password" id="login-pass" class="fc2" placeholder="••••" maxlength="20" inputmode="numeric"/>
+    <button class="btn bp" onclick="attemptLogin()">🔓 Unlock</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
 
 <!-- LOADING -->
 <div class="loading-overlay" id="loading-overlay">
@@ -336,7 +435,16 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 <!-- HEADER -->
 <header class="app-header">
   <div class="hb"><h1>💰 Expense Tracker</h1></div>
-  <div class="ha"><button class="ib" onclick="focusAdd()">➕ Add Expense</button></div>
+  <div class="ha">
+    <div class="notif-wrap" id="notif-wrap">
+      <button class="ib nb" onclick="toggleNotifPanel()" title="Notifications">🔔<span class="notif-dot" id="notif-dot"></span></button>
+      <div class="notif-panel" id="notif-panel">
+        <div class="notif-title">🔔 Reminders</div>
+        <div id="notif-list"><div class="notif-empty">✅ No new notifications</div></div>
+      </div>
+    </div>
+    <button class="ib" onclick="focusAdd()">➕ Add Expense</button>
+  </div>
 </header>
 
 <!-- TABS -->
@@ -347,36 +455,44 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <button class="tb" data-tab="categories" onclick="switchTab('categories',this)">🏷️ Categories</button>
   <button class="tb" data-tab="history"    onclick="switchTab('history',this)">🕓 History</button>
   <button class="tb" data-tab="export"     onclick="switchTab('export',this)">💾 Export</button>
+  <button class="tb" data-tab="settings"   onclick="switchTab('settings',this)">⚙️ Settings</button>
 </nav>
 
 <main class="main">
 
 <!-- DASHBOARD -->
 <section id="tab-dashboard" class="tp active">
-  <div class="sg2">
-    <div class="sc t"><div class="lbl">Today</div><div class="amt" id="s-today">₹0.00</div><div class="sub" id="s-today-c">0 entries</div></div>
-    <div class="sc m"><div class="lbl">This Month</div><div class="amt" id="s-month">₹0.00</div><div class="sub" id="s-month-c">0 entries</div></div>
-    <div class="sc y"><div class="lbl">This Year</div><div class="amt" id="s-year">₹0.00</div><div class="sub" id="s-year-c">0 entries</div></div>
-    <div class="sc"><div class="lbl">All Time</div><div class="amt" id="s-total">₹0.00</div><div class="sub" id="s-total-c">0 entries</div></div>
+  <div class="sg2 row g-3">
+    <div class="col-6 col-md-3"><div class="sc t"><div class="lbl">Today</div><div class="amt" id="s-today">₹0.00</div><div class="sub" id="s-today-c">0 entries</div></div></div>
+    <div class="col-6 col-md-3"><div class="sc m"><div class="lbl">This Month</div><div class="amt" id="s-month">₹0.00</div><div class="sub" id="s-month-c">0 entries</div></div></div>
+    <div class="col-6 col-md-3"><div class="sc y"><div class="lbl">This Year</div><div class="amt" id="s-year">₹0.00</div><div class="sub" id="s-year-c">0 entries</div></div></div>
+    <div class="col-6 col-md-3"><div class="sc"><div class="lbl">All Time</div><div class="amt" id="s-total">₹0.00</div><div class="sub" id="s-total-c">0 entries</div></div></div>
   </div>
   <div class="fc">
     <div class="fct">➕ Add Expense</div>
-    <div class="fg">
-      <div class="fg2"><label>Date</label><input type="date" id="f-date" class="fc2"/></div>
-      <div class="fg2"><label>Amount (₹)</label><input type="number" id="f-amount" class="fc2" min="0" step="0.01" placeholder="0.00"/></div>
-      <div class="fg2 frf"><label>Category</label>
+    <div class="fg row g-3">
+      <div class="col-12 col-md-6 fg2">
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <span>Date</span>
+          <button type="button" id="date-lock-btn" onclick="toggleDateLock()" class="date-lock-pill" title="Lock date to add multiple records for the same day">🔓 Lock date</button>
+        </label>
+        <input type="date" id="f-date" class="fc2"/>
+        <div class="date-lock-hint" id="date-lock-hint"></div>
+      </div>
+      <div class="col-12 col-md-6 fg2"><label>Amount (₹)</label><input type="number" id="f-amount" class="fc2" min="0" step="0.01" placeholder="0.00"/></div>
+      <div class="col-12 fg2"><label>Category</label>
         <div class="cdw" id="cdw-add">
           <div class="csd" id="csd-add" onclick="toggleDrop('add')">
             <span id="ct-add" class="ph">Select Category</span><span class="ca">▼</span>
           </div>
           <div class="cdp" id="cdp-add">
             <div class="csb"><input class="csi" id="cs-add" placeholder="🔎 Search…" oninput="filterOpts('add')" autocomplete="off"/></div>
-            <div class="col" id="cl-add"></div>
+            <div class="cdrop-col" id="cl-add"></div>
           </div>
           <input type="hidden" id="f-cat"/>
         </div>
       </div>
-      <div class="fg2 frf"><label>Note</label><textarea id="f-note" class="fc2" placeholder="Optional note…"></textarea></div>
+      <div class="col-12 fg2"><label>Note</label><textarea id="f-note" class="fc2" placeholder="Optional note…"></textarea></div>
     </div>
     <div class="ba">
       <button class="btn bp" onclick="saveExp()">💾 Save Expense</button>
@@ -398,13 +514,13 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 <section id="tab-records" class="tp">
   <div class="fb">
     <div class="fbt">🔎 Filter Records</div>
-    <div class="fgrid">
-      <div class="fg2"><label>Search</label>
+    <div class="fgrid row g-2">
+      <div class="col-12 col-md-4 fg2"><label>Search</label>
         <div class="sw"><span class="si2">🔎</span>
           <input type="text" id="r-search" class="fc2" placeholder="Search…" oninput="applyFilters()"/></div></div>
-      <div class="fg2"><label>Year</label>
+      <div class="col-6 col-md-2 fg2"><label>Year</label>
         <select id="r-year" class="fc2" onchange="applyFilters()"><option value="">All Years</option></select></div>
-      <div class="fg2"><label>Month</label>
+      <div class="col-6 col-md-2 fg2"><label>Month</label>
         <select id="r-month" class="fc2" onchange="applyFilters()">
           <option value="">All Months</option>
           <option value="1">January</option><option value="2">February</option><option value="3">March</option>
@@ -412,15 +528,15 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
           <option value="7">July</option><option value="8">August</option><option value="9">September</option>
           <option value="10">October</option><option value="11">November</option><option value="12">December</option>
         </select></div>
-      <div class="fg2"><label>Day</label><input type="date" id="r-day" class="fc2" onchange="applyFilters()"/></div>
-      <div class="fg2"><label>Category</label>
+      <div class="col-6 col-md-2 fg2"><label>Day</label><input type="date" id="r-day" class="fc2" onchange="applyFilters()"/></div>
+      <div class="col-6 col-md-2 fg2"><label>Category</label>
         <div class="cdw" id="cdw-filter">
           <div class="csd" id="csd-filter" onclick="toggleDrop('filter')" style="min-height:39px">
             <span id="ct-filter" class="ph">All Categories</span><span class="ca">▼</span>
           </div>
           <div class="cdp" id="cdp-filter">
             <div class="csb"><input class="csi" id="cs-filter" placeholder="🔎 Search…" oninput="filterOpts('filter')" autocomplete="off"/></div>
-            <div class="col" id="cl-filter"></div>
+            <div class="cdrop-col" id="cl-filter"></div>
           </div>
           <input type="hidden" id="r-cat"/>
         </div>
@@ -432,10 +548,36 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
       <span class="fs2" id="f-summary"></span>
     </div>
   </div>
+  <div class="fc">
+    <div class="fct" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span>📅 Calendar View</span>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <div class="cal-nav">
+          <button class="btn bo bxs" onclick="changeCalMonth(-1)" id="cal-prev">◀</button>
+          <select id="cal-sel-month" class="fc2" style="width:auto;padding:5px 7px;font-size:.78rem" onchange="calSelChange()"></select>
+          <select id="cal-sel-year"  class="fc2" style="width:auto;padding:5px 7px;font-size:.78rem" onchange="calSelChange()"></select>
+          <button class="btn bo bxs" onclick="changeCalMonth(1)"  id="cal-next">▶</button>
+        </div>
+        <button class="btn bo bxs" onclick="jumpCalToday()" style="font-size:.74rem">📍 Today</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend" id="cal-legend">Tap a day to view its records · <strong>N/A</strong> = no records · 🔒 Lock keeps calendar still while adding backdated entries</div>
+  </div>
   <div class="tc">
-    <div class="th2"><h3>📋 All Records</h3><span class="rb" id="all-badge">0</span></div>
+    <div class="th2" style="flex-wrap:wrap;gap:10px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <h3>📋 All Records</h3><span class="rb" id="all-badge">0</span>
+      </div>
+      <div id="bulk-toolbar" style="display:none;align-items:center;gap:8px;flex-wrap:wrap">
+        <span class="bulk-count" id="bulk-count">0 selected</span>
+        <button class="btn bd bxs" onclick="openBulkDelete()">🗑️ Delete Selected</button>
+        <button class="btn bo bxs" onclick="clearSelection()">✕ Deselect All</button>
+      </div>
+    </div>
     <div class="tw"><table>
       <thead><tr>
+        <th style="width:36px"><input type="checkbox" id="sel-all" title="Select all on page" onchange="toggleSelAll(this)"/></th>
         <th onclick="doSort('idx')">#</th>
         <th onclick="doSort('date')">Date ↕</th>
         <th onclick="doSort('category')">Category ↕</th>
@@ -461,10 +603,10 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <div id="an-overview" class="an-panel active">
     <div class="fb">
       <div class="fbt">⚙️ Filter Period</div>
-      <div class="fgrid" style="grid-template-columns:repeat(auto-fit,minmax(130px,1fr))">
-        <div class="fg2"><label>Year</label>
+      <div class="fgrid row g-2">
+        <div class="col-6 col-sm-3 fg2"><label>Year</label>
           <select id="a-year" class="fc2" onchange="renderOverview()"><option value="">All Years</option></select></div>
-        <div class="fg2"><label>Month</label>
+        <div class="col-6 col-sm-3 fg2"><label>Month</label>
           <select id="a-month" class="fc2" onchange="renderOverview()">
             <option value="">All Months</option>
             <option value="1">January</option><option value="2">February</option><option value="3">March</option>
@@ -474,10 +616,10 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
           </select></div>
       </div>
     </div>
-    <div class="ag">
-      <div class="ac"><h3>🏷️ By Category</h3><div id="ac-cat"></div></div>
-      <div class="ac"><h3>🗓️ By Month</h3><div id="ac-mon"></div></div>
-      <div class="ac"><h3>📆 Top Days</h3><div id="ac-day"></div></div>
+    <div class="ag row g-3">
+      <div class="col-12 col-md-4"><div class="ac"><h3>🏷️ By Category</h3><div id="ac-cat"></div></div></div>
+      <div class="col-12 col-md-4"><div class="ac"><h3>🗓️ By Month</h3><div id="ac-mon"></div></div></div>
+      <div class="col-12 col-md-4"><div class="ac"><h3>📆 Top Days</h3><div id="ac-day"></div></div></div>
     </div>
   </div>
 
@@ -498,8 +640,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <div id="an-compare3" class="an-panel">
     <div class="cmp3-setup">
       <h3>⚖️ Compare 3 Periods</h3>
-      <div class="cmp3-periods">
-        <div class="period-box pa">
+      <div class="cmp3-periods row g-3">
+        <div class="col-12 col-md-4"><div class="period-box pa">
           <div class="period-label">📘 Period A</div>
           <div class="period-ctrl">
             <div class="fg2"><label>Year</label><select id="cya" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
@@ -512,8 +654,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
                 <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
               </select></div>
           </div>
-        </div>
-        <div class="period-box pb2x">
+        </div></div>
+        <div class="col-12 col-md-4"><div class="period-box pb2x">
           <div class="period-label">📙 Period B</div>
           <div class="period-ctrl">
             <div class="fg2"><label>Year</label><select id="cyb" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
@@ -526,8 +668,8 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
                 <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
               </select></div>
           </div>
-        </div>
-        <div class="period-box pc">
+        </div></div>
+        <div class="col-12 col-md-4"><div class="period-box pc">
           <div class="period-label">📗 Period C</div>
           <div class="period-ctrl">
             <div class="fg2"><label>Year</label><select id="cyc" class="fc2" onchange="renderCompare3()"><option value="">—</option></select></div>
@@ -540,7 +682,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
                 <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
               </select></div>
           </div>
-        </div>
+        </div></div>
       </div>
       <button class="btn bp bsm" onclick="renderCompare3()">⚖️ Compare</button>
     </div>
@@ -550,22 +692,22 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <div id="an-catmon" class="an-panel">
     <div class="catmon-setup">
       <h3>🏷️ Category × Month Comparison</h3>
-      <div class="catmon-controls">
-        <div class="fg2"><label>Year *</label>
+      <div class="catmon-controls row g-2">
+        <div class="col-12 col-md-4 fg2"><label>Year *</label>
           <select id="cm-year" class="fc2" onchange="renderCatMon()"><option value="">Select Year</option></select></div>
-        <div class="fg2"><label>Category (optional)</label>
+        <div class="col-12 col-md-4 fg2"><label>Category (optional)</label>
           <div class="cdw" id="cdw-catmon">
             <div class="csd" id="csd-catmon" onclick="toggleDrop('catmon')" style="min-height:39px">
               <span id="ct-catmon" class="ph">All Categories</span><span class="ca">▼</span>
             </div>
             <div class="cdp" id="cdp-catmon">
               <div class="csb"><input class="csi" id="cs-catmon" placeholder="🔎 Search…" oninput="filterOpts('catmon')" autocomplete="off"/></div>
-              <div class="col" id="cl-catmon"></div>
+              <div class="cdrop-col" id="cl-catmon"></div>
             </div>
             <input type="hidden" id="cm-cat"/>
           </div>
         </div>
-        <div class="fg2" style="align-self:end">
+        <div class="col-12 col-md-4 fg2" style="align-self:end">
           <button class="btn bp bsm" onclick="renderCatMon()">🔄 Refresh</button>
         </div>
       </div>
@@ -576,7 +718,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 
 <!-- CATEGORIES -->
 <section id="tab-categories" class="tp">
-  <div class="cat-stats" id="cat-stats"></div>
+  <div class="cat-stats row g-3" id="cat-stats"></div>
   <div class="fc">
     <div class="fct">➕ Add New Category</div>
     <div class="cat-add-row">
@@ -608,6 +750,12 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
         <option value="cat_add">🏷️ Cat Added</option>
         <option value="cat_edit">🏷️ Cat Edited</option>
         <option value="cat_delete">🏷️ Cat Deleted</option>
+        <option value="export">🗂️ Exported</option>
+        <option value="import">📥 Imported</option>
+        <option value="delete_all">🧨 All Deleted</option>
+        <option value="login">🔓 Login</option>
+        <option value="logout">🔒 Logout</option>
+        <option value="pass_change">🔑 Password Changed</option>
       </select>
       <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear History</button>
       <span class="fs2" id="hist-count-lbl" style="margin-left:auto"></span>
@@ -622,9 +770,9 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   <div class="fc">
     <div class="fct">💾 Export & Backup</div>
     <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Your data is safely stored in Firebase. Export as a local backup anytime.</p>
-    <div class="ex-grid">
-      <div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div>
-      <div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div>
+    <div class="ex-grid row g-3">
+      <div class="col-12 col-sm-6"><div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div></div>
+      <div class="col-12 col-sm-6"><div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div></div>
     </div>
     <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
   </div>
@@ -635,28 +783,99 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   </div>
 </section>
 
+<!-- SETTINGS -->
+<section id="tab-settings" class="tp">
+  <div class="fc">
+    <div class="fct">🎨 Appearance</div>
+    <div class="fg2" style="margin-bottom:14px"><label>Mode</label>
+      <div class="theme-row">
+        <div class="theme-opt" id="theme-light" onclick="setThemeMode('light')">☀️ Light</div>
+        <div class="theme-opt" id="theme-dark" onclick="setThemeMode('dark')">🌙 Dark</div>
+      </div>
+    </div>
+    <div class="fg2"><label>Accent Color</label>
+      <div class="accent-row">
+        <div class="accent-swatch" data-accent="purple" style="background:#6c63ff" onclick="setAccent('purple')" title="Purple"></div>
+        <div class="accent-swatch" data-accent="blue" style="background:#3b82f6" onclick="setAccent('blue')" title="Blue"></div>
+        <div class="accent-swatch" data-accent="green" style="background:#10b981" onclick="setAccent('green')" title="Green"></div>
+        <div class="accent-swatch" data-accent="pink" style="background:#ec4899" onclick="setAccent('pink')" title="Pink"></div>
+        <div class="accent-swatch" data-accent="orange" style="background:#f97316" onclick="setAccent('orange')" title="Orange"></div>
+        <div class="accent-swatch" data-accent="teal" style="background:#14b8a6" onclick="setAccent('teal')" title="Teal"></div>
+        <div class="accent-swatch" data-accent="indigo" style="background:#6366f1" onclick="setAccent('indigo')" title="Indigo"></div>
+        <div class="accent-swatch" data-accent="red" style="background:#ef4444" onclick="setAccent('red')" title="Red"></div>
+        <div class="accent-swatch" data-accent="yellow" style="background:#eab308" onclick="setAccent('yellow')" title="Yellow"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc">
+    <div class="fct">🔑 Change Password</div>
+    <div class="fg row g-3">
+      <div class="col-12 col-md-4 fg2"><label>Current Password</label><input type="password" id="set-cur-pass" class="fc2" placeholder="Current password" maxlength="20"/></div>
+      <div class="col-12 col-md-4 fg2"><label>New Password</label><input type="password" id="set-new-pass" class="fc2" placeholder="New password" maxlength="20"/></div>
+      <div class="col-12 col-md-4 fg2"><label>Confirm New Password</label><input type="password" id="set-confirm-pass" class="fc2" placeholder="Confirm new password" maxlength="20"/></div>
+    </div>
+    <div class="ba">
+      <button class="btn bp" onclick="changePassword()">💾 Update Password</button>
+    </div>
+  </div>
+
+  <div class="fc">
+    <div class="fct">⏱️ Session Timeout</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">You'll be asked to log in again after this many minutes of inactivity.</p>
+    <div class="set-row">
+      <div class="fg2" style="max-width:160px"><label>Minutes</label>
+        <input type="number" id="set-session-min" class="fc2" min="1" max="1440" step="1"/></div>
+      <button class="btn bp" onclick="saveSessionTimeout()">💾 Save</button>
+    </div>
+  </div>
+
+  <div class="fc">
+    <div class="fct" style="color:var(--err)">🚪 Session</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Lock the app immediately. You'll need your password to get back in.</p>
+    <button class="btn bd" onclick="logout()">🔒 Logout Now</button>
+  </div>
+</section>
+<!-- BULK DELETE MODAL -->
+<div class="mo" id="bulk-del-mo">
+  <div class="md">
+    <div class="mt">🗑️ Delete Selected Records</div>
+    <div id="bulk-del-summary" style="margin-bottom:14px"></div>
+    <div class="fg2">
+      <label>Reason for deletion <span style="color:var(--muted);font-weight:400">(required)</span></label>
+      <textarea id="bulk-del-reason" class="fc2" rows="3" placeholder="e.g. Duplicate entries, entered by mistake, wrong category…" maxlength="300"></textarea>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:4px;text-align:right"><span id="bulk-reason-len">0</span>/300</div>
+    </div>
+    <p style="font-size:.78rem;color:var(--err);margin-top:8px">⚠️ This action is permanent and cannot be undone.</p>
+    <div class="mf">
+      <button class="btn bg2" onclick="closeMo('bulk-del-mo')">Cancel</button>
+      <button class="btn bd" onclick="executeBulkDelete()">🗑️ Delete Records</button>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <!-- EDIT MODAL -->
 <div class="mo" id="edit-mo" onclick="closeMo('edit-mo',event)">
   <div class="md">
     <div class="mt">✏️ Edit Expense</div>
-    <div class="fg" style="grid-template-columns:1fr 1fr">
-      <div class="fg2"><label>Date</label><input type="date" id="m-date" class="fc2"/></div>
-      <div class="fg2"><label>Amount (₹)</label><input type="number" id="m-amount" class="fc2" min="0" step="0.01"/></div>
-      <div class="fg2" style="grid-column:1/-1"><label>Category</label>
+    <div class="fg row g-3">
+      <div class="col-12 col-sm-6 fg2"><label>Date</label><input type="date" id="m-date" class="fc2"/></div>
+      <div class="col-12 col-sm-6 fg2"><label>Amount (₹)</label><input type="number" id="m-amount" class="fc2" min="0" step="0.01"/></div>
+      <div class="col-12 fg2"><label>Category</label>
         <div class="cdw" id="cdw-edit">
           <div class="csd" id="csd-edit" onclick="toggleDrop('edit')">
             <span id="ct-edit" class="ph">Select Category</span><span class="ca">▼</span>
           </div>
           <div class="cdp" id="cdp-edit">
             <div class="csb"><input class="csi" id="cs-edit" placeholder="🔎 Search…" oninput="filterOpts('edit')" autocomplete="off"/></div>
-            <div class="col" id="cl-edit"></div>
+            <div class="cdrop-col" id="cl-edit"></div>
           </div>
           <input type="hidden" id="m-cat"/>
         </div>
       </div>
-      <div class="fg2" style="grid-column:1/-1"><label>Note</label>
+      <div class="col-12 fg2"><label>Note</label>
         <textarea id="m-note" class="fc2"></textarea></div>
     </div>
     <input type="hidden" id="m-id"/>
@@ -681,6 +900,7 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 
 <div class="tc2" id="toast-c"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script type="module">
 
 import { initializeApp }       from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -714,12 +934,28 @@ const MS=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','
 const COLORS=['#6c63ff','#ff6584','#22c55e','#f59e0b','#3b82f6','#a855f7',
               '#ec4899','#14b8a6','#f97316','#06b6d4','#84cc16','#ef4444'];
 const DEFAULT_CATS=[
-  "Cash Withdraw","Home Fitra","Home Fruits","Home Rations","Home Snacks","Home Travel","Home Vegetables","Home Other Expenses","Miscellaneous","Home Electricity Bill","Home Rent","Home NonVeg","No Expense",
+  // Home
+  "Home Fitra","Home Fruits","Home Rations","Home Snacks","Home Travel","Home Vegetables",
+  "Home Other Expenses","Home Electricity Bill","Home Rent","Home Gas Expenses",
+  "Home Maid Expenses","Home NonVeg","Home Milk Expenses","Home Sadqah","Home Zakaat",
+  // Saad
   "Saad Hospital","Saad Medicine","Saad School","Saad Shopping","Saad Snacks","Saad Travel",
-  "Saif Sadqah","Saif Medicine","Saif Office Food","Saif Office Travel","Saif Saloon","Saif Shopping","Saif Snacks","Saif Travel","Saif Cycle Expenses","Saif Zakaat",
+  // Saif
+  "Saif Medicine","Saif Office Food","Saif Office Travel","Saif Saloon","Saif Shopping",
+  "Saif Snacks","Saif Travel","Saif Cycle Expenses",
+  // Seema
   "Seema Hospital","Seema Medicine","Seema Recharge","Seema Shopping","Seema Travel","Seema Snacks",
+  // Shama
   "Shama Hospital","Shama Medicine","Shama Recharge","Shama Shopping",
-  "Subscription Muharram","Subscription WIFI","Subscription Water","Subscription Youtube"
+  // Subscriptions
+  "Subscription Muharram","Subscription WIFI","Subscription Water","Subscription Youtube",
+  // General
+  "No Expense","Miscellaneous","Cash Withdraw",
+];
+/* All categories that must exist — seeded on install, patched on existing DBs */
+const REQUIRED_CATS=[
+  "Home Gas Expenses","Home Maid Expenses","Home NonVeg","Home Milk Expenses",
+  "Home Sadqah","Home Zakaat","Seema Snacks",
 ];
 
 let expenses=[], categories=[], history=[];
@@ -730,11 +966,98 @@ let catVals={add:'',edit:'',filter:'',catmon:''};
 let histPage=1; const HPG=20;
 let curAnTab='overview';
 let unsubExpenses=null, unsubCategories=null, unsubHistory=null;
+let appInitialized=false, sessionTimer=null;
+const DEFAULT_PASSWORD='1432', DEFAULT_SESSION_MIN=15;
 
 function localDateStr(d){
   const dt=d||new Date();
   return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
 }
+
+/* ══════════════════════════════════════════════
+   CALENDAR VIEW (Records tab)
+══════════════════════════════════════════════ */
+let calYear, calMonth;
+(function initCalState(){
+  const now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
+})();
+
+const CAL_MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function buildCalSelectors(){
+  const mSel=document.getElementById('cal-sel-month');
+  const ySel=document.getElementById('cal-sel-year');
+  if(!mSel||!ySel) return;
+  mSel.innerHTML=CAL_MONTHS.map((m,i)=>`<option value="${i}"${i===calMonth?' selected':''}>${m}</option>`).join('');
+  const nowY=new Date().getFullYear();
+  const years=expenses.map(e=>parseInt(e.date?.slice(0,4))).filter(Boolean);
+  const minY=years.length?Math.min(...years):nowY-5;
+  const maxY=nowY+1;
+  ySel.innerHTML='';
+  for(let y=maxY;y>=minY;y--){
+    const opt=document.createElement('option');
+    opt.value=y; opt.textContent=y;
+    if(y===calYear) opt.selected=true;
+    ySel.appendChild(opt);
+  }
+}
+
+window.calSelChange=function(){
+  const mSel=document.getElementById('cal-sel-month');
+  const ySel=document.getElementById('cal-sel-year');
+  if(mSel) calMonth=parseInt(mSel.value);
+  if(ySel) calYear=parseInt(ySel.value);
+  renderCalendar();
+};
+
+window.changeCalMonth=function(delta){
+  calMonth+=delta;
+  if(calMonth<0){calMonth=11;calYear--;}
+  if(calMonth>11){calMonth=0;calYear++;}
+  renderCalendar();
+};
+
+window.jumpCalToday=function(){
+  const now=new Date(); calYear=now.getFullYear(); calMonth=now.getMonth();
+  renderCalendar();
+};
+
+function renderCalendar(){
+  const grid=document.getElementById('cal-grid');
+  if(!grid) return;
+  buildCalSelectors();
+  const firstDow=new Date(calYear,calMonth,1).getDay();
+  const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  const today=localDateStr();
+  const counts={}, amounts={};
+  expenses.forEach(e=>{
+    const d=new Date(e.date+'T00:00:00');
+    if(d.getFullYear()===calYear && d.getMonth()===calMonth){
+      counts[e.date]=(counts[e.date]||0)+1;
+      amounts[e.date]=(amounts[e.date]||0)+e.amount;
+    }
+  });
+  let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  for(let i=0;i<firstDow;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let day=1;day<=daysInMonth;day++){
+    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+    const c=counts[dateStr]||0;
+    const isToday=dateStr===today;
+    html+=`<div class="cal-day${isToday?' cd-today':''}" onclick="calDayClick('${dateStr}')" title="${dateStr}">
+      <div class="cd-num">${day}</div>
+      ${c>0?`<div class="cd-count">${c} rec</div><div class="cd-amt">₹${fmtAmt(amounts[dateStr])}</div>`:'<div class="cd-na">N/A</div>'}
+    </div>`;
+  }
+  grid.innerHTML=html;
+}
+
+window.calDayClick=function(dateStr){
+  switchTab('records', document.querySelector('.tb[data-tab="records"]'));
+  document.getElementById('r-search').value='';
+  document.getElementById('r-day').value=dateStr;
+  applyFilters();
+  toast(`📅 Showing records for ${dateStr}`,'info');
+};
 
 window.addEventListener('online', ()=>{
   document.getElementById('offline-bar').classList.remove('show');
@@ -746,6 +1069,131 @@ window.addEventListener('offline', ()=>{
 });
 
 /* ══════════════════════════════════════════════
+   NOTIFICATIONS / REMINDERS
+══════════════════════════════════════════════ */
+window.toggleNotifPanel=function(){
+  document.getElementById('notif-panel').classList.toggle('open');
+};
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('notif-wrap');
+  const panel=document.getElementById('notif-panel');
+  if(wrap && panel && !wrap.contains(e.target)) panel.classList.remove('open');
+});
+function checkYesterdayReminder(){
+  const y=new Date(); y.setDate(y.getDate()-1);
+  const yStr=localDateStr(y);
+  const dot=document.getElementById('notif-dot');
+  const list=document.getElementById('notif-list');
+  if(!dot||!list) return;
+  const hasYesterday=expenses.some(e=>e.date===yStr);
+  if(!hasYesterday){
+    dot.classList.add('show');
+    const dispDate=y.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
+    list.innerHTML=`<div class="notif-item">⚠️ No expenses were recorded for <strong>${dispDate}</strong> (yesterday). Don't forget to add yesterday's entries!
+      <div class="ni-act"><button class="btn bp bxs" onclick="quickAddYesterday('${yStr}')">➕ Add for ${dispDate}</button></div></div>`;
+  }else{
+    dot.classList.remove('show');
+    list.innerHTML='<div class="notif-empty">✅ No new notifications</div>';
+  }
+}
+window.quickAddYesterday=function(dateStr){
+  document.getElementById('notif-panel').classList.remove('open');
+  switchTab('dashboard', document.querySelector('.tb[data-tab="dashboard"]'));
+  document.getElementById('f-date').value=dateStr;
+  focusAdd();
+};
+
+/* ══════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════ */
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('et_theme')||'light');
+  document.documentElement.setAttribute('data-accent', localStorage.getItem('et_accent')||'purple');
+}
+window.setThemeMode=function(mode){
+  localStorage.setItem('et_theme',mode);applyTheme();renderSettingsUI();
+};
+window.setAccent=function(acc){
+  localStorage.setItem('et_accent',acc);applyTheme();renderSettingsUI();
+};
+function renderSettingsUI(){
+  const theme=localStorage.getItem('et_theme')||'light';
+  const accent=localStorage.getItem('et_accent')||'purple';
+  const lt=document.getElementById('theme-light'),dk=document.getElementById('theme-dark');
+  if(lt&&dk){lt.classList.toggle('active',theme==='light');dk.classList.toggle('active',theme==='dark');}
+  document.querySelectorAll('.accent-swatch').forEach(s=>s.classList.toggle('active',s.dataset.accent===accent));
+  const sm=document.getElementById('set-session-min');
+  if(sm) sm.value=getSessionMin();
+}
+applyTheme();
+
+/* ══════════════════════════════════════════════
+   LOGIN & SESSION
+══════════════════════════════════════════════ */
+function getPassword(){return localStorage.getItem('et_password')||DEFAULT_PASSWORD;}
+function getSessionMin(){const v=parseInt(localStorage.getItem('et_session_min'));return (v&&v>0)?v:DEFAULT_SESSION_MIN;}
+
+const ACTIVITY_EVENTS=['click','keydown','mousemove','touchstart','scroll'];
+function resetSessionTimer(){
+  if(sessionTimer) clearTimeout(sessionTimer);
+  sessionTimer=setTimeout(()=>logout('timeout'), getSessionMin()*60000);
+}
+window.attemptLogin=function(){
+  const input=document.getElementById('login-pass');
+  const err=document.getElementById('login-err');
+  if(input.value===getPassword()){
+    document.getElementById('login-overlay').style.display='none';
+    input.value='';err.textContent='';
+    ACTIVITY_EVENTS.forEach(evt=>document.addEventListener(evt,resetSessionTimer,{passive:true}));
+    resetSessionTimer();
+    if(!appInitialized){appInitialized=true;init();}
+    logHistory(ACT.LOGIN,{});
+  }else{
+    err.textContent='❌ Incorrect password. Try again.';
+    input.value='';input.focus();
+  }
+};
+window.logout=function(reason='manual'){
+  if(sessionTimer) clearTimeout(sessionTimer);
+  document.getElementById('login-overlay').style.display='flex';
+  const input=document.getElementById('login-pass');
+  input.value='';input.focus();
+  if(appInitialized) logHistory(ACT.LOGOUT,{reason});
+};
+window.changePassword=function(){
+  const cur=document.getElementById('set-cur-pass').value;
+  const nw=document.getElementById('set-new-pass').value;
+  const cf=document.getElementById('set-confirm-pass').value;
+  if(cur!==getPassword()){toast('❌ Current password is incorrect.','error');return;}
+  if(!nw||nw.length<4){toast('❌ New password must be at least 4 characters.','error');return;}
+  if(nw!==cf){toast('❌ New passwords do not match.','error');return;}
+  localStorage.setItem('et_password',nw);
+  document.getElementById('set-cur-pass').value='';
+  document.getElementById('set-new-pass').value='';
+  document.getElementById('set-confirm-pass').value='';
+  logHistory(ACT.PASS_CHANGE,{});
+  toast('✅ Password updated.','success');
+};
+window.saveSessionTimeout=function(){
+  const v=parseInt(document.getElementById('set-session-min').value);
+  if(isNaN(v)||v<1||v>1440){toast('❌ Enter minutes between 1 and 1440.','error');return;}
+  localStorage.setItem('et_session_min',v);
+  if(appInitialized) resetSessionTimer();
+  toast('✅ Session timeout updated to '+v+' min.','success');
+};
+
+document.addEventListener('input',e=>{
+  if(e.target.id==='bulk-del-reason'){
+    const el=document.getElementById('bulk-reason-len');
+    if(el) el.textContent=e.target.value.length;
+  }
+});
+// Show login screen on every page load
+document.getElementById('login-overlay').style.display='flex';
+document.getElementById('login-pass').addEventListener('keydown',e=>{if(e.key==='Enter') attemptLogin();});
+setTimeout(()=>document.getElementById('login-pass').focus(),100);
+
+/* ══════════════════════════════════════════════
    BOOT — FIXED VERSION
 ══════════════════════════════════════════════ */
 async function init(){
@@ -753,7 +1201,7 @@ async function init(){
   setMsg('Connecting to Firebase…');
   document.getElementById('hdr-date').textContent =
     new Date().toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-  setToday();
+  if(!dateLocked) document.getElementById('f-date').value=localDateStr();
 
   const safetyTimer = setTimeout(()=>{
     console.warn('⚠️ Safety timeout — force hiding loader');
@@ -775,6 +1223,19 @@ async function init(){
       });
       await batch.commit();
       console.log("✅ Default categories seeded");
+    }else{
+      const existingNames=new Set(catSnap.docs.map(d=>(d.data().name||'').toLowerCase()));
+      const missing=REQUIRED_CATS.filter(name=>!existingNames.has(name.toLowerCase()));
+      if(missing.length){
+        setMsg('Adding new categories…');
+        const batch=writeBatch(db);
+        missing.forEach(name=>{
+          const ref=doc(collection(db,CATEGORY_COL));
+          batch.set(ref,{name,createdAt:new Date().toISOString()});
+        });
+        await batch.commit();
+        console.log("✅ Added missing required categories:",missing);
+      }
     }
 
     setMsg('Loading expenses…');
@@ -790,6 +1251,8 @@ async function init(){
         buildAllDropdowns();
         renderDashboard();
         renderRecords();
+        renderCalendar();
+        checkYesterdayReminder();
         if(curAnTab!=='compare3') renderAnTab(curAnTab);
         updateStatusBar();
         if(!done){
@@ -833,7 +1296,11 @@ function listenCategories(){
     categories = snap.docs.map(d=>({id:d.id,...d.data()}))
                   .sort((a,b)=>a.name.localeCompare(b.name));
     buildAllDropdowns();
-    renderCatMgr();
+    // Only re-render if categories tab is active OR no search query (preserve live search)
+    const searchEl=document.getElementById('cat-search-mgr');
+    const activeSearch=searchEl&&searchEl.value.trim()!=='';
+    if(!activeSearch) renderCatMgr();
+    else renderCatMgr(); // still re-render but keep the query (renderCatMgr reads input value)
     updateStatusBar();
   });
 }
@@ -873,6 +1340,12 @@ const ACT={
   CAT_ADD:   {key:'cat_add',   icon:'🏷️',label:'Category Added',  badge:'hb-cat'},
   CAT_EDIT:  {key:'cat_edit',  icon:'✏️',label:'Category Renamed',badge:'hb-u'},
   CAT_DELETE:{key:'cat_delete',icon:'🗑️',label:'Category Deleted',badge:'hb-d'},
+  EXPORT:      {key:'export',      icon:'🗂️',label:'Data Exported',   badge:'hb-cat'},
+  IMPORT:      {key:'import',      icon:'📥',label:'Data Imported',   badge:'hb-cat'},
+  DELETE_ALL:  {key:'delete_all',  icon:'🧨',label:'All Data Deleted', badge:'hb-d'},
+  LOGIN:       {key:'login',       icon:'🔓',label:'Logged In',       badge:'hb-c'},
+  LOGOUT:      {key:'logout',      icon:'🔒',label:'Logged Out',      badge:'hb-u'},
+  PASS_CHANGE: {key:'pass_change', icon:'🔑',label:'Password Changed',badge:'hb-u'},
 };
 async function logHistory(act, data){
   try{
@@ -917,11 +1390,38 @@ window.closeMo=function(id,evt){
   if(!evt||evt.target===document.getElementById(id))
     document.getElementById(id).classList.remove('open');
 };
-function setToday(){document.getElementById('f-date').value=localDateStr();}
+let dateLocked=false;
+
+window.toggleDateLock=function(){
+  dateLocked=!dateLocked;
+  const btn=document.getElementById('date-lock-btn');
+  const hint=document.getElementById('date-lock-hint');
+  const dateInput=document.getElementById('f-date');
+  if(dateLocked){
+    btn.textContent='🔒 Date locked';
+    btn.classList.add('locked');
+    dateInput.style.borderColor='var(--warn)';
+    dateInput.style.boxShadow='0 0 0 2px rgba(234,179,8,.25)';
+    const locked=dateInput.value||localDateStr();
+    dateInput.value=locked;
+    const d=new Date(locked+'T00:00:00');
+    hint.textContent=`📌 Locked to ${d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})} — add as many records as needed`;
+  }else{
+    btn.textContent='🔓 Lock date';
+    btn.classList.remove('locked');
+    dateInput.style.borderColor='';
+    dateInput.style.boxShadow='';
+    hint.textContent='';
+    setToday();
+  }
+};
 window.clearForm=function(){
   document.getElementById('f-amount').value='';
   document.getElementById('f-note').value='';
-  setCat('add','');setToday();
+  setCat('add','');
+  if(!dateLocked) document.getElementById('f-date').value=localDateStr();
+  // When locked: keep date, refocus amount for fast multi-entry
+  setTimeout(()=>document.getElementById('f-amount').focus(),50);
 };
 window.focusAdd=function(){
   switchTab('dashboard',document.querySelector('[data-tab="dashboard"]'));
@@ -936,6 +1436,7 @@ window.switchTab=function(id,btn){
   if(id==='records') renderRecords();
   if(id==='categories') renderCatMgr();
   if(id==='history'){histPage=1;renderHistory();}
+  if(id==='settings') renderSettingsUI();
 };
 function populateYears(){
   const yrs=[...new Set(expenses.map(e=>new Date(e.date+'T00:00:00').getFullYear()))].sort((a,b)=>b-a);
@@ -999,16 +1500,125 @@ window.updateExp=async function(){
   setSyncStatus('live');
 };
 
-window.deleteExp=async function(id){
-  const rec=expenses.find(e=>e.id===id);if(!rec) return;
-  if(!confirm(`Delete?\n\n${fmtDate(rec.date)} | ${rec.category} | ₹${fmtAmt(rec.amount)}`)) return;
+/* ══════════════════════════════════════════════
+   MULTI-SELECT & BULK DELETE
+══════════════════════════════════════════════ */
+let selectedIds=new Set();
+
+function updateBulkToolbar(){
+  const toolbar=document.getElementById('bulk-toolbar');
+  const countEl=document.getElementById('bulk-count');
+  const selAll=document.getElementById('sel-all');
+  if(!toolbar||!countEl) return;
+  const n=selectedIds.size;
+  toolbar.style.display=n>0?'flex':'none';
+  countEl.textContent=`${n} selected`;
+  // Update "select all" checkbox state
+  if(selAll){
+    const pageIds=getPageIds();
+    const allChecked=pageIds.length>0&&pageIds.every(id=>selectedIds.has(id));
+    const someChecked=pageIds.some(id=>selectedIds.has(id));
+    selAll.checked=allChecked;
+    selAll.indeterminate=someChecked&&!allChecked;
+  }
+}
+function getPageIds(){
+  return [...document.querySelectorAll('#all-tbody input[type=checkbox]')].map(cb=>cb.dataset.id);
+}
+window.toggleSelAll=function(masterCb){
+  getPageIds().forEach(id=>{
+    if(masterCb.checked) selectedIds.add(id);
+    else selectedIds.delete(id);
+  });
+  // Sync row checkboxes
+  document.querySelectorAll('#all-tbody input[type=checkbox]').forEach(cb=>{
+    cb.checked=masterCb.checked;
+    cb.closest('tr').classList.toggle('row-selected',masterCb.checked);
+  });
+  updateBulkToolbar();
+};
+window.toggleRowSel=function(cb,id){
+  if(cb.checked) selectedIds.add(id);
+  else selectedIds.delete(id);
+  cb.closest('tr').classList.toggle('row-selected',cb.checked);
+  updateBulkToolbar();
+};
+window.clearSelection=function(){
+  selectedIds.clear();
+  document.querySelectorAll('#all-tbody input[type=checkbox]').forEach(cb=>{
+    cb.checked=false;cb.closest('tr').classList.remove('row-selected');
+  });
+  const sa=document.getElementById('sel-all');
+  if(sa){sa.checked=false;sa.indeterminate=false;}
+  updateBulkToolbar();
+};
+window.openBulkDelete=function(){
+  if(!selectedIds.size){toast('No records selected.','error');return;}
+  const selected=expenses.filter(e=>selectedIds.has(e.id));
+  const total=selected.reduce((s,e)=>s+e.amount,0);
+  const summary=document.getElementById('bulk-del-summary');
+  summary.innerHTML=`<div class="confirm-box"><div class="impact">
+    Deleting <strong>${selected.length} record(s)</strong> totalling <strong>₹${fmtAmt(total)}</strong>
+    <div style="margin-top:8px;font-size:.75rem;max-height:110px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
+      ${selected.slice(0,8).map(e=>`<span>• ${fmtDate(e.date)} — ${esc(e.category)} — ₹${fmtAmt(e.amount)}</span>`).join('')}
+      ${selected.length>8?`<span style="color:var(--muted)">…and ${selected.length-8} more</span>`:''}
+    </div>
+  </div></div>`;
+  const reason=document.getElementById('bulk-del-reason');
+  reason.value='';
+  document.getElementById('bulk-reason-len').textContent='0';
+  document.getElementById('bulk-del-mo').classList.add('open');
+  setTimeout(()=>reason.focus(),150);
+};
+window.executeBulkDelete=async function(){
+  const reason=document.getElementById('bulk-del-reason').value.trim();
+  if(!reason){toast('❌ Please enter a reason for deletion.','error');document.getElementById('bulk-del-reason').focus();return;}
+  const ids=[...selectedIds];
+  const selected=expenses.filter(e=>ids.includes(e.id));
+  const total=selected.reduce((s,e)=>s+e.amount,0);
   setSyncStatus('saving');
   try{
-    await deleteDoc(doc(db,EXPENSE_COL,id));
-    await logHistory(ACT.DELETE,{id:rec.id,date:rec.date,amount:rec.amount,category:rec.category});
-    toast('🗑️ Deleted & synced.','info');
-  }catch(e){toast('❌ Delete failed: '+e.message,'error');}
+    const batch=writeBatch(db);
+    ids.forEach(id=>batch.delete(doc(db,EXPENSE_COL,id)));
+    await batch.commit();
+    await logHistory(ACT.DELETE,{
+      bulk:true,count:ids.length,totalAmount:total,
+      reason,
+      records:selected.map(e=>({id:e.id,date:e.date,category:e.category,amount:e.amount}))
+    });
+    closeMo('bulk-del-mo');
+    selectedIds.clear();
+    updateBulkToolbar();
+    toast(`🗑️ ${ids.length} record(s) deleted.`,'info');
+  }catch(err){toast('❌ Bulk delete failed: '+err.message,'error');}
   setSyncStatus('live');
+};
+
+window.deleteExp=async function(id){
+  const rec=expenses.find(e=>e.id===id);if(!rec) return;
+  showConfirm('🗑️ Delete Record',
+    `<div class="confirm-box"><div class="impact">
+      ${fmtDate(rec.date)} &nbsp;|&nbsp; <strong>${esc(rec.category)}</strong> &nbsp;|&nbsp; ₹${fmtAmt(rec.amount)}
+      ${rec.note?`<br><span style="font-size:.75rem;color:var(--muted)">${esc(rec.note)}</span>`:''}
+    </div></div>
+    <div class="fg2" style="margin-top:12px">
+      <label>Reason for deletion <span style="color:var(--muted);font-weight:400">(required)</span></label>
+      <textarea id="del-reason-single" class="fc2" rows="2" placeholder="e.g. Entered by mistake, duplicate entry…" maxlength="300"></textarea>
+    </div>`,
+    'Delete',
+    async()=>{
+      const reason=document.getElementById('del-reason-single')?.value.trim();
+      if(!reason){toast('❌ Please enter a reason.','error');document.getElementById('del-reason-single')?.focus();return;}
+      setSyncStatus('saving');
+      try{
+        await deleteDoc(doc(db,EXPENSE_COL,id));
+        await logHistory(ACT.DELETE,{id:rec.id,date:rec.date,amount:rec.amount,category:rec.category,reason});
+        closeMo('confirm-mo');
+        toast('🗑️ Deleted & synced.','info');
+      }catch(e){toast('❌ Delete failed: '+e.message,'error');}
+      setSyncStatus('live');
+    },'bd');
+  setTimeout(()=>document.getElementById('del-reason-single')?.focus(),150);
 };
 
 window.openEditMo=function(id){
@@ -1021,14 +1631,28 @@ window.openEditMo=function(id){
   document.getElementById('edit-mo').classList.add('open');
 };
 
-window.confirmDeleteAll=async function(){
-  if(!confirm('⚠️ Delete ALL data from Firebase permanently?')) return;
-  if(!confirm('This CANNOT be undone. Absolutely sure?')) return;
-  const snap=await getDocs(collection(db,EXPENSE_COL));
-  const batch=writeBatch(db);
-  snap.docs.forEach(d=>batch.delete(d.ref));
-  await batch.commit();
-  toast('All expense data deleted.','info');
+window.confirmDeleteAll=function(){
+  showConfirm('🧨 Delete ALL Data',
+    `<p style="font-size:.83rem;margin-bottom:11px">This will permanently delete <strong>ALL ${expenses.length} expense record(s)</strong> from Firebase. This cannot be undone.</p>
+     <div class="confirm-box"><div class="impact">⚠️ For security, enter your password to confirm.</div></div>
+     <div class="fg2"><label>Password</label><input type="password" id="del-all-pass" class="fc2" placeholder="Enter password" maxlength="20"/></div>`,
+    'Delete Everything',
+    async()=>{
+      const passEl=document.getElementById('del-all-pass');
+      if(passEl.value!==getPassword()){
+        toast('❌ Incorrect password.','error');
+        passEl.value='';passEl.focus();
+        return;
+      }
+      const snap=await getDocs(collection(db,EXPENSE_COL));
+      const batch=writeBatch(db);
+      snap.docs.forEach(d=>batch.delete(d.ref));
+      await batch.commit();
+      await logHistory(ACT.DELETE_ALL,{count:snap.size});
+      closeMo('confirm-mo');
+      toast('🧨 All expense data deleted.','info');
+    },'bd');
+  setTimeout(()=>{const p=document.getElementById('del-all-pass');if(p) p.focus();},150);
 };
 
 /* ══════════════════════════════════════════════
@@ -1101,18 +1725,25 @@ function renderRecPage(){
 }
 function renderTbl(tbId,rows,off){
   const tb=document.getElementById(tbId);
-  if(!rows.length){tb.innerHTML=`<tr><td colspan="6"><div class="es"><div class="ei">📭</div><p>No records found.</p></div></td></tr>`;return;}
-  tb.innerHTML=rows.map((e,i)=>`<tr>
-    <td data-label="#">${off+i+1}</td>
-    <td data-label="Date" class="dc">${fmtDate(e.date)}</td>
-    <td data-label="Category"><span class="cb">${esc(e.category)}</span></td>
-    <td data-label="Amount" class="amc">₹${fmtAmt(e.amount)}</td>
-    <td data-label="Note" class="nc">${esc(e.note||'—')}</td>
-    <td data-label="Actions"><div class="ab">
-      <button class="btn bo bxs" onclick="openEditMo('${e.id}')">✏️</button>
-      <button class="btn bd bxs" onclick="deleteExp('${e.id}')">🗑️</button>
-    </div></td>
-  </tr>`).join('');
+  if(!rows.length){tb.innerHTML=`<tr><td colspan="7"><div class="es"><div class="ei">📭</div><p>No records found.</p></div></td></tr>`;return;}
+  const isBulkTable=tbId==='all-tbody';
+  tb.innerHTML=rows.map((e,i)=>{
+    const chk=isBulkTable?`<td><input type="checkbox" data-id="${e.id}" ${selectedIds.has(e.id)?'checked':''} onchange="toggleRowSel(this,'${e.id}')"/></td>`:'<td></td>';
+    const rowCls=isBulkTable&&selectedIds.has(e.id)?' class="row-selected"':'';
+    return `<tr${rowCls}>
+      ${chk}
+      <td data-label="#">${off+i+1}</td>
+      <td data-label="Date" class="dc">${fmtDate(e.date)}</td>
+      <td data-label="Category"><span class="cb">${esc(e.category)}</span></td>
+      <td data-label="Amount" class="amc">₹${fmtAmt(e.amount)}</td>
+      <td data-label="Note" class="nc">${esc(e.note||'—')}</td>
+      <td data-label="Actions"><div class="ab">
+        <button class="btn bo bxs" onclick="openEditMo('${e.id}')">✏️</button>
+        <button class="btn bd bxs" onclick="deleteExp('${e.id}')">🗑️</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  if(isBulkTable) updateBulkToolbar();
 }
 function renderPag(pages,total){
   const el=document.getElementById('pagination');
@@ -1266,19 +1897,19 @@ window.renderCompare3=function(){
     <div class="sb-div"></div>
     <div class="sb-item"><div class="sb-val ${diff(tB,tC)>0?'err':'ok2'}">${diff(tB,tC)>0?'▲':'▼'} ₹${fmtAmt(Math.abs(diff(tB,tC)))}</div><div class="sb-lbl">B vs C</div></div>
   </div>
-  <div class="cmp3-cards">
-    <div class="cmp3-card pa"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+  <div class="cmp3-cards row g-3">
+    <div class="col-12 col-md-4"><div class="cmp3-card pa"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <span style="font-size:.83rem;font-weight:700;color:var(--p)">📘 A — ${esc(lA)}</span>
       <span style="font-size:1.1rem;font-weight:800;color:var(--p)">₹${fmtAmt(tA)}</span></div>
-      ${miniBar(cA,Math.max(tA,1),'#6c63ff')}</div>
-    <div class="cmp3-card pb2x"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      ${miniBar(cA,Math.max(tA,1),'#6c63ff')}</div></div>
+    <div class="col-12 col-md-4"><div class="cmp3-card pb2x"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <span style="font-size:.83rem;font-weight:700;color:var(--acc)">📙 B — ${esc(lB)}</span>
       <span style="font-size:1.1rem;font-weight:800;color:var(--acc)">₹${fmtAmt(tB)}</span></div>
-      ${miniBar(cB,Math.max(tB,1),'#ff6584')}</div>
-    <div class="cmp3-card pc"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      ${miniBar(cB,Math.max(tB,1),'#ff6584')}</div></div>
+    <div class="col-12 col-md-4"><div class="cmp3-card pc"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <span style="font-size:.83rem;font-weight:700;color:var(--ok)">📗 C — ${esc(lC)}</span>
       <span style="font-size:1.1rem;font-weight:800;color:var(--ok)">₹${fmtAmt(tC)}</span></div>
-      ${miniBar(cC,Math.max(tC,1),'#22c55e')}</div>
+      ${miniBar(cC,Math.max(tC,1),'#22c55e')}</div></div>
   </div>
   <div class="cmp3-diff"><h3>📊 Category Comparison — A vs B vs C</h3>
   <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.78rem">
@@ -1402,6 +2033,7 @@ window.exportJSON=function(){
   const catNames=categories.map(c=>c.name);
   download(`expenses-${localDateStr()}.json`,
     JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2),'application/json');
+  logHistory(ACT.EXPORT,{expenses:expenses.length,categories:catNames.length});
   toast('🗂️ JSON exported!','success');
 };
 window.importJSON=async function(input){
@@ -1421,6 +2053,7 @@ window.importJSON=async function(input){
         batch.set(ref,{date:exp.date,amount:exp.amount,category:exp.category,note:exp.note||'',createdAt:exp.createdAt||new Date().toISOString()});
       });
       await batch.commit();
+      let newCats=0;
       if(d.categories&&Array.isArray(d.categories)){
         const existingCatNames=new Set(categories.map(c=>c.name));
         const catBatch=writeBatch(db);
@@ -1428,10 +2061,12 @@ window.importJSON=async function(input){
           if(!existingCatNames.has(name)){
             const ref=doc(collection(db,CATEGORY_COL));
             catBatch.set(ref,{name,createdAt:new Date().toISOString()});
+            newCats++;
           }
         });
         await catBatch.commit();
       }
+      await logHistory(ACT.IMPORT,{expenses:fresh.length,skipped:arr.length-fresh.length,categories:newCats});
       toast(`✅ Imported ${fresh.length} records to Firebase!`,'success');
       setSyncStatus('live');
     }catch{toast('❌ Invalid file.','error');}
@@ -1448,16 +2083,17 @@ function download(fn,content,mime){
 /* ══════════════════════════════════════════════
    CATEGORIES
 ══════════════════════════════════════════════ */
-function renderCatMgr(){
-  const q=(document.getElementById('cat-search-mgr').value||'').toLowerCase().trim();
+window.renderCatMgr=function renderCatMgr(){
+  const input=document.getElementById('cat-search-mgr');
+  const q=(input?input.value||'':'').toLowerCase().trim();
   const list=q?categories.filter(c=>c.name.toLowerCase().includes(q)):[...categories];
   document.getElementById('cat-count-lbl').textContent=`(${categories.length} total)`;
   const used=new Set(expenses.map(e=>e.category));
   document.getElementById('cat-stats').innerHTML=`
-    <div class="cstat"><div class="cv">${categories.length}</div><div class="cl">Total</div></div>
-    <div class="cstat"><div class="cv">${used.size}</div><div class="cl">Used</div></div>
-    <div class="cstat"><div class="cv">${categories.length-used.size}</div><div class="cl">Unused</div></div>
-    <div class="cstat"><div class="cv">${expenses.length}</div><div class="cl">Records</div></div>`;
+    <div class="col-6 col-md-3"><div class="cstat"><div class="cv">${categories.length}</div><div class="cl">Total</div></div></div>
+    <div class="col-6 col-md-3"><div class="cstat"><div class="cv">${used.size}</div><div class="cl">Used</div></div></div>
+    <div class="col-6 col-md-3"><div class="cstat"><div class="cv">${categories.length-used.size}</div><div class="cl">Unused</div></div></div>
+    <div class="col-6 col-md-3"><div class="cstat"><div class="cv">${expenses.length}</div><div class="cl">Records</div></div></div>`;
   if(!list.length){document.getElementById('cat-grid').innerHTML=`<div style="color:var(--muted);font-size:.83rem;padding:10px">No categories found.</div>`;return;}
   document.getElementById('cat-grid').innerHTML=list.map(cat=>{
     const count=expenses.filter(e=>e.category===cat.name).length;
@@ -1598,10 +2234,18 @@ function renderHistory(){
       detail=`ID: ${d.id||''}`;
       if(d.changes&&d.changes.length) diff=`<div class="hdiff">${d.changes.map(c=>`<div><span class="old">${esc(c.field)}: ${esc(String(c.from))}</span> → <span class="new">${esc(String(c.to))}</span></div>`).join('')}</div>`;
     }
-    else if(h.action==='delete') detail=`Cat: <strong>${esc(d.category||'')}</strong> | ₹${fmtAmt(d.amount)}`;
+    else if(h.action==='delete') detail=d.bulk
+      ? `Bulk deleted <strong>${d.count}</strong> record(s) totalling <strong>₹${fmtAmt(d.totalAmount)}</strong>${d.reason?` · Reason: <em>${esc(d.reason)}</em>`:''}`
+      : `${fmtDate(d.date||'')} — <strong>${esc(d.category||'')}</strong> — ₹${fmtAmt(d.amount)}${d.reason?` · Reason: <em>${esc(d.reason)}</em>`:''}` ;
     else if(h.action==='cat_add') detail=`New: <strong>${esc(d.name||'')}</strong>`;
     else if(h.action==='cat_edit') detail=`<strong>${esc(d.from||'')}</strong> → <strong>${esc(d.to||'')}</strong>`;
     else if(h.action==='cat_delete') detail=`Deleted: <strong>${esc(d.name||'')}</strong>`;
+    else if(h.action==='export') detail=`Exported <strong>${d.expenses||0}</strong> expense(s) and <strong>${d.categories||0}</strong> categor${(d.categories===1)?'y':'ies'} to JSON`;
+    else if(h.action==='import') detail=`Imported <strong>${d.expenses||0}</strong> new expense(s)${d.categories?`, <strong>${d.categories}</strong> new categor${d.categories===1?'y':'ies'}`:''}${d.skipped?`, skipped ${d.skipped} duplicate(s)`:''}`;
+    else if(h.action==='delete_all') detail=`Permanently deleted <strong>${d.count||0}</strong> expense record(s)`;
+    else if(h.action==='login') detail=`User unlocked the app`;
+    else if(h.action==='logout') detail=d.reason==='timeout'?`Session expired (auto logout after inactivity)`:`User logged out`;
+    else if(h.action==='pass_change') detail=`Login password was changed`;
     return `<div class="hist-item ${h.action}">
       <div class="hico">${h.icon}</div>
       <div class="hbody"><div class="hact"><span class="hbadge ${h.badge}">${h.label}</span></div>
@@ -1644,7 +2288,7 @@ window.clearHistory=async function(){
 /* ══════════════════════════════════════════════
    START APP  ← THE CRITICAL FIX
 ══════════════════════════════════════════════ */
-init();
+/* App starts only after successful login (see attemptLogin) */
 
 </script>
 </body>
