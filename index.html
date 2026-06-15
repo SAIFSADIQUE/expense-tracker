@@ -44,14 +44,17 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 /* SYNC BANNER */
 .sync-banner{
   background:linear-gradient(135deg,#1e1e2e,#2d2b55);color:rgba(255,255,255,.9);
-  padding:7px 18px;display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:7px;font-size:.73rem;font-weight:500
+  padding:6px 14px;display:flex;align-items:center;justify-content:space-between;
+  gap:6px;font-size:.72rem;font-weight:500;flex-wrap:nowrap;overflow-x:auto;
+  scrollbar-width:none
 }
-.si{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);
-  padding:3px 11px;border-radius:20px;border:1px solid rgba(255,255,255,.1)}
+.sync-banner::-webkit-scrollbar{display:none}
+.si{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);
+  padding:3px 9px;border-radius:20px;border:1px solid rgba(255,255,255,.1);white-space:nowrap;flex-shrink:0}
 .si .dot{width:7px;height:7px;border-radius:50%;animation:pulse 2s infinite}
 .dot-green{background:var(--ok)}.dot-yellow{background:var(--warn)}.dot-red{background:var(--err)}
-.sg{display:flex;gap:7px;flex-wrap:wrap}
+.sg{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.sg-right{margin-left:auto;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.85)}}
 
 /* OFFLINE ALERT */
@@ -63,16 +66,23 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 
 /* HEADER */
 .app-header{
-  background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:13px 20px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(108,99,255,.3)
+  background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;padding:10px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(108,99,255,.3);
+  min-height:50px
 }
-.hb h1{font-size:1.18rem;font-weight:800}
-.ha{display:flex;gap:7px;flex-wrap:nowrap;align-items:center}
+.hb{flex:1;min-width:0}
+.hb h1{font-size:1.05rem;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ha{display:flex;gap:6px;flex-wrap:nowrap;align-items:center;flex-shrink:0}
 .ib{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);border-radius:var(--rs);
-  color:#fff;cursor:pointer;padding:7px 13px;font-size:.77rem;font-weight:600;
-  transition:all .2s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+  color:#fff;cursor:pointer;padding:6px 12px;font-size:.75rem;font-weight:600;
+  transition:all .2s;display:flex;align-items:center;gap:4px;white-space:nowrap}
 .ib:hover{background:rgba(255,255,255,.32);transform:translateY(-1px)}
+@media(max-width:480px){
+  .hb h1{font-size:.95rem}
+  .ib{padding:6px 10px;font-size:.72rem}
+  .ib span.ib-lbl{display:none}
+}
 .notif-wrap{position:relative}
 .ib.nb{padding:7px 10px;position:relative}
 .notif-dot{display:none;position:absolute;top:5px;right:6px;width:9px;height:9px;border-radius:50%;
@@ -151,6 +161,9 @@ textarea.fc2{resize:vertical;min-height:70px}
 .csi{width:100%;padding:6px 11px;border:1.5px solid var(--bdr);border-radius:var(--rxs);
   font-size:.82rem;font-family:var(--font);background:var(--sec);color:var(--txt)}
 .csi:focus{outline:none;border-color:var(--p)}
+.co-grp-hdr{padding:7px 13px 4px;font-size:.68rem;font-weight:800;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.06em;background:var(--sec);margin-top:3px}
+.co.co-grp{padding-left:20px}
 .cdrop-col{overflow-y:auto;flex:1;padding:3px 0}
 .co{padding:8px 13px;font-size:.84rem;cursor:pointer;color:var(--txt);transition:background .15s;
   display:flex;align-items:center;gap:7px}
@@ -367,31 +380,38 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
 tr.row-selected td{background:var(--pl)!important}
 input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer}
 .cal-nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
-.cal-dow{font-size:.68rem;font-weight:700;color:var(--muted);text-align:center;padding:4px 0;text-transform:uppercase}
-.cal-day{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--rxs);min-height:60px;
-  padding:5px 6px;font-size:.7rem;display:flex;flex-direction:column;gap:2px;cursor:pointer;transition:all .15s}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:12px;width:100%}
+.cal-dow{font-size:.62rem;font-weight:700;color:var(--muted);text-align:center;padding:3px 1px;text-transform:uppercase}
+.cal-day{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--rxs);min-height:58px;
+  padding:4px;font-size:.68rem;display:flex;flex-direction:column;gap:2px;cursor:pointer;
+  transition:all .15s;overflow:hidden;min-width:0}
 .cal-day:hover{border-color:var(--p);transform:translateY(-1px);box-shadow:var(--sh)}
 .cal-day.empty{background:transparent;border:none;cursor:default}
 .cal-day.empty:hover{transform:none;box-shadow:none}
-.cal-day .cd-num{font-weight:800;font-size:.8rem}
-.cal-day .cd-count{font-size:.68rem;color:var(--p);font-weight:700}
-.cal-day .cd-amt{font-size:.62rem;color:var(--muted)}
-.cal-day .cd-na{font-size:.68rem;color:var(--muted)}
+.cal-day .cd-num{font-weight:800;font-size:.77rem}
+.cal-day .cd-count{font-size:.62rem;color:var(--p);font-weight:700}
+.cal-day .cd-amt{font-size:.56rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-day .cd-na{font-size:.62rem;color:var(--muted)}
 .cal-day.cd-today{border-color:var(--p);box-shadow:0 0 0 1px var(--p) inset}
-.cal-legend{font-size:.72rem;color:var(--muted);margin-top:10px}
+.cal-day.cd-noexp{background:color-mix(in srgb,var(--ok) 10%,var(--bg))}
+.cd-noexp-lbl{font-size:.7rem}
+.cal-legend{font-size:.7rem;color:var(--muted);margin-top:8px}
 .date-lock-pill{background:var(--sec);border:1.5px solid var(--bdr);border-radius:20px;
   padding:3px 10px;font-size:.7rem;font-weight:700;cursor:pointer;color:var(--muted);
   transition:all .2s;white-space:nowrap;line-height:1.4}
 .date-lock-pill:hover{border-color:var(--p);color:var(--p)}
 .date-lock-pill.locked{background:var(--warn);border-color:var(--warn);color:#fff}
 .date-lock-hint{font-size:.7rem;color:var(--warn);font-weight:700;min-height:1.1em;margin-top:4px}
-@media(max-width:600px){
-  .cal-day{min-height:44px;padding:3px 4px;font-size:.6rem}
-  .cal-day .cd-num{font-size:.72rem}
+@media(max-width:480px){
+  .cal-grid{gap:2px}
+  .cal-day{min-height:40px;padding:2px 3px}
+  .cal-day .cd-num{font-size:.68rem}
+  .cal-day .cd-count{font-size:.55rem}
+  .cal-day .cd-amt{display:none}
+  .cal-dow{font-size:.52rem;padding:3px 0}
 }
 @media(max-width:600px){
-  .main{padding:11px}.app-header{flex-direction:column;align-items:flex-start;gap:8px}
+  .main{padding:11px}
   thead{display:none}
   tbody tr{display:block;padding:9px;border-bottom:2px solid var(--bdr)}
   td{display:flex;align-items:flex-start;justify-content:space-between;padding:4px 3px;border:none;font-size:.79rem}
@@ -426,10 +446,10 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
 <div class="sync-banner">
   <div class="sg">
     <div class="si"><span class="dot dot-yellow" id="sync-dot"></span><span id="sync-status">Connecting…</span></div>
-    <div class="si">📊 Records: <strong id="rec-disp">0</strong></div>
-    <div class="si">📂 Categories: <strong id="cat-disp">0</strong></div>
+    <div class="si">📊 <strong id="rec-disp">0</strong></div>
+    <div class="si">📂 <strong id="cat-disp">0</strong></div>
+    <div class="si">📅 <strong id="hdr-date">—</strong></div>
   </div>
-  <div class="sg"><div class="si">📅 <strong id="hdr-date">—</strong></div></div>
 </div>
 
 <!-- HEADER -->
@@ -443,7 +463,7 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
         <div id="notif-list"><div class="notif-empty">✅ No new notifications</div></div>
       </div>
     </div>
-    <button class="ib" onclick="focusAdd()">➕ Add Expense</button>
+    <button class="ib" onclick="focusAdd()">➕ <span class="ib-lbl">Add Expense</span></button>
   </div>
 </header>
 
@@ -548,7 +568,7 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
       <span class="fs2" id="f-summary"></span>
     </div>
   </div>
-  <div class="fc">
+  <div class="fc" style="overflow:hidden">
     <div class="fct" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <span>📅 Calendar View</span>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -742,7 +762,8 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
   <div class="fc">
     <div class="fct">🕓 Modification History</div>
     <div class="hist-filter">
-      <select id="hist-type" class="fc2" style="max-width:175px" onchange="renderHistory()">
+      <input type="text" id="hist-search" class="fc2" placeholder="🔎 Search history…" oninput="renderHistory()" style="max-width:200px"/>
+      <select id="hist-type" class="fc2" style="max-width:160px" onchange="renderHistory()">
         <option value="">All Actions</option>
         <option value="create">➕ Created</option>
         <option value="update">✏️ Updated</option>
@@ -757,7 +778,7 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
         <option value="logout">🔒 Logout</option>
         <option value="pass_change">🔑 Password Changed</option>
       </select>
-      <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear History</button>
+      <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear</button>
       <span class="fs2" id="hist-count-lbl" style="margin-left:auto"></span>
     </div>
     <div id="hist-list"></div>
@@ -771,10 +792,20 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
     <div class="fct">💾 Export & Backup</div>
     <p style="font-size:.82rem;color:var(--muted);margin-bottom:18px">Your data is safely stored in Firebase. Export as a local backup anytime.</p>
     <div class="ex-grid row g-3">
-      <div class="col-12 col-sm-6"><div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div></div>
-      <div class="col-12 col-sm-6"><div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div></div>
+      <div class="col-12 col-sm-6 col-md-3"><div class="ex-card" onclick="exportJSON()"><div class="eico">🗂️</div><h3>Export JSON</h3><p>Full local backup</p></div></div>
+      <div class="col-12 col-sm-6 col-md-3"><div class="ex-card" onclick="document.getElementById('imp-file').click()"><div class="eico">📥</div><h3>Import JSON</h3><p>Restore from backup</p></div></div>
+      <div class="col-12 col-sm-6 col-md-3"><div class="ex-card" onclick="openMonthlySummary()"><div class="eico">📊</div><h3>Monthly Summary</h3><p>Category-wise report</p></div></div>
+      <div class="col-12 col-sm-6 col-md-3"><div class="ex-card" onclick="sendEmailBackup()"><div class="eico">📧</div><h3>Email Backup</h3><p>Send JSON to email</p></div></div>
     </div>
     <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
+  </div>
+  <div class="fc">
+    <div class="fct">⏰ Auto Email Backup</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Automatic weekly backup runs on the 7th, 14th, 21st and last day of each month. Email: <strong>sadique.saif786@gmail.com</strong></p>
+    <div id="auto-backup-status" style="font-size:.8rem;color:var(--muted)">Checking last backup…</div>
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn bp" onclick="sendEmailBackup()">📧 Send Now</button>
+    </div>
   </div>
   <div class="fc">
     <div class="fct" style="color:var(--err)">⚠️ Danger Zone</div>
@@ -782,6 +813,29 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
     <button class="btn bd" onclick="confirmDeleteAll()">🗑️ Delete All Data</button>
   </div>
 </section>
+
+<!-- MONTHLY SUMMARY MODAL -->
+<div class="mo" id="summary-mo">
+  <div class="md" style="max-width:680px;width:95vw">
+    <div class="mt">📊 Monthly Summary Report</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:flex-end">
+      <div class="fg2" style="margin:0"><label>Month</label>
+        <select id="sum-month" class="fc2" style="width:auto" onchange="renderSummary()">
+          <option value="1">January</option><option value="2">February</option><option value="3">March</option>
+          <option value="4">April</option><option value="5">May</option><option value="6">June</option>
+          <option value="7">July</option><option value="8">August</option><option value="9">September</option>
+          <option value="10">October</option><option value="11">November</option><option value="12">December</option>
+        </select>
+      </div>
+      <div class="fg2" style="margin:0"><label>Year</label>
+        <select id="sum-year" class="fc2" style="width:auto" onchange="renderSummary()"></select>
+      </div>
+      <button class="btn bp bxs" onclick="printSummary()">🖨️ Print</button>
+    </div>
+    <div id="summary-body" style="max-height:65vh;overflow-y:auto"></div>
+    <div class="mf"><button class="btn bg2" onclick="closeMo('summary-mo')">Close</button></div>
+  </div>
+</div>
 
 <!-- SETTINGS -->
 <section id="tab-settings" class="tp">
@@ -933,6 +987,22 @@ const MF=['','January','February','March','April','May','June',
 const MS=['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const COLORS=['#6c63ff','#ff6584','#22c55e','#f59e0b','#3b82f6','#a855f7',
               '#ec4899','#14b8a6','#f97316','#06b6d4','#84cc16','#ef4444'];
+const BACKUP_EMAIL = 'sadique.saif786@gmail.com';
+
+/* Category Groups — drives grouped dropdowns + analytics */
+const CAT_GROUPS = [
+  { key:'home',   label:'🏠 Home',          color:'#6c63ff', prefixes:['Home'] },
+  { key:'saad',   label:'👦 Saad',           color:'#f59e0b', prefixes:['Saad'] },
+  { key:'saif',   label:'👨 Saif',           color:'#3b82f6', prefixes:['Saif'] },
+  { key:'seema',  label:'👩 Seema',          color:'#ec4899', prefixes:['Seema'] },
+  { key:'shama',  label:'👧 Shama',          color:'#14b8a6', prefixes:['Shama'] },
+  { key:'sub',    label:'📡 Subscriptions',  color:'#a855f7', prefixes:['Subscription'] },
+  { key:'gen',    label:'💼 General',        color:'#22c55e', prefixes:['Cash','Miscellaneous','No Expense'] },
+];
+function getCatGroup(name){
+  return CAT_GROUPS.find(g=>g.prefixes.some(p=>name.startsWith(p)))||{key:'other',label:'🏷️ Other',color:'#94a3b8'};
+}
+
 const DEFAULT_CATS=[
   // Home
   "Home Fitra","Home Fruits","Home Rations","Home Snacks","Home Travel","Home Vegetables",
@@ -1029,12 +1099,15 @@ function renderCalendar(){
   const firstDow=new Date(calYear,calMonth,1).getDay();
   const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
   const today=localDateStr();
-  const counts={}, amounts={};
+  const counts={}, amounts={}, noExpDays=new Set();
   expenses.forEach(e=>{
     const d=new Date(e.date+'T00:00:00');
     if(d.getFullYear()===calYear && d.getMonth()===calMonth){
-      counts[e.date]=(counts[e.date]||0)+1;
-      amounts[e.date]=(amounts[e.date]||0)+e.amount;
+      if(e.category==='No Expense') noExpDays.add(e.date);
+      else{
+        counts[e.date]=(counts[e.date]||0)+1;
+        amounts[e.date]=(amounts[e.date]||0)+e.amount;
+      }
     }
   });
   let html=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
@@ -1043,9 +1116,12 @@ function renderCalendar(){
     const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const c=counts[dateStr]||0;
     const isToday=dateStr===today;
-    html+=`<div class="cal-day${isToday?' cd-today':''}" onclick="calDayClick('${dateStr}')" title="${dateStr}">
+    const isNoExp=noExpDays.has(dateStr)&&c===0;
+    html+=`<div class="cal-day${isToday?' cd-today':''}${isNoExp?' cd-noexp':''}" onclick="calDayClick('${dateStr}')" title="${dateStr}">
       <div class="cd-num">${day}</div>
-      ${c>0?`<div class="cd-count">${c} rec</div><div class="cd-amt">₹${fmtAmt(amounts[dateStr])}</div>`:'<div class="cd-na">N/A</div>'}
+      ${c>0?`<div class="cd-count">${c} rec</div><div class="cd-amt">₹${fmtAmt(amounts[dateStr])}</div>`
+           :isNoExp?`<div class="cd-noexp-lbl">✅</div>`
+           :'<div class="cd-na">N/A</div>'}
     </div>`;
   }
   grid.innerHTML=html;
@@ -1085,17 +1161,34 @@ function checkYesterdayReminder(){
   const dot=document.getElementById('notif-dot');
   const list=document.getElementById('notif-list');
   if(!dot||!list) return;
-  const hasYesterday=expenses.some(e=>e.date===yStr);
+  const yEntries=expenses.filter(e=>e.date===yStr);
+  const markedNoExpense=yEntries.some(e=>e.category==='No Expense');
+  const hasYesterday=yEntries.length>0;
   if(!hasYesterday){
     dot.classList.add('show');
     const dispDate=y.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-    list.innerHTML=`<div class="notif-item">⚠️ No expenses were recorded for <strong>${dispDate}</strong> (yesterday). Don't forget to add yesterday's entries!
-      <div class="ni-act"><button class="btn bp bxs" onclick="quickAddYesterday('${yStr}')">➕ Add for ${dispDate}</button></div></div>`;
+    list.innerHTML=`<div class="notif-item">⚠️ No expenses were recorded for <strong>${dispDate}</strong> (yesterday).
+      <div class="ni-act" style="display:flex;gap:7px;flex-wrap:wrap">
+        <button class="btn bp bxs" onclick="quickAddYesterday('${yStr}')">➕ Add Entry</button>
+        <button class="btn bo bxs" onclick="markNoExpense('${yStr}')">✅ Mark as No Expense</button>
+      </div></div>`;
+  }else if(markedNoExpense){
+    dot.classList.remove('show');
+    list.innerHTML='<div class="notif-empty">✅ Yesterday marked as No Expense day</div>';
   }else{
     dot.classList.remove('show');
     list.innerHTML='<div class="notif-empty">✅ No new notifications</div>';
   }
 }
+window.markNoExpense=async function(dateStr){
+  document.getElementById('notif-panel').classList.remove('open');
+  setSyncStatus('saving');
+  try{
+    await addDoc(collection(db,EXPENSE_COL),{date:dateStr,amount:0,category:'No Expense',note:'Marked as no expense day',createdAt:new Date().toISOString()});
+    toast(`✅ ${dateStr} marked as No Expense.`,'success');
+  }catch(e){toast('❌ Failed: '+e.message,'error');}
+  setSyncStatus('live');
+};
 window.quickAddYesterday=function(dateStr){
   document.getElementById('notif-panel').classList.remove('open');
   switchTab('dashboard', document.querySelector('.tb[data-tab="dashboard"]'));
@@ -1148,6 +1241,7 @@ window.attemptLogin=function(){
     resetSessionTimer();
     if(!appInitialized){appInitialized=true;init();}
     logHistory(ACT.LOGIN,{});
+    setTimeout(checkAutoBackup,2000); // check after data loads
   }else{
     err.textContent='❌ Incorrect password. Try again.';
     input.value='';input.focus();
@@ -1437,6 +1531,7 @@ window.switchTab=function(id,btn){
   if(id==='categories') renderCatMgr();
   if(id==='history'){histPage=1;renderHistory();}
   if(id==='settings') renderSettingsUI();
+  if(id==='export') updateBackupStatus();
 };
 function populateYears(){
   const yrs=[...new Set(expenses.map(e=>new Date(e.date+'T00:00:00').getFullYear()))].sort((a,b)=>b-a);
@@ -1460,7 +1555,7 @@ function mkSummaryTable(headers,rows,footer){
 /* ══════════════════════════════════════════════
    EXPENSES CRUD
 ══════════════════════════════════════════════ */
-window.saveExp=async function(){
+window.saveExp=async function(force=false){
   const date=document.getElementById('f-date').value;
   const amount=parseFloat(document.getElementById('f-amount').value);
   const cat=document.getElementById('f-cat').value;
@@ -1468,11 +1563,29 @@ window.saveExp=async function(){
   if(!date){toast('Select a date.','error');return;}
   if(!cat){toast('Select a category.','error');return;}
   if(isNaN(amount)||amount<0){toast('Enter a valid amount.','error');return;}
+
+  // No Expense handling — mark day, don't count as real entry
+  const isNoExpense = cat==='No Expense';
+
+  // Duplicate detection (skip for No Expense)
+  if(!force && !isNoExpense){
+    const dup=expenses.find(e=>e.date===date && e.category===cat && Math.abs(e.amount-amount)<0.01);
+    if(dup){
+      showConfirm('⚠️ Possible Duplicate',
+        `<div class="confirm-box"><div class="impact">A similar entry already exists for this date:</div>
+         <div style="margin-top:8px;font-size:.82rem">${fmtDate(date)} | <strong>${esc(cat)}</strong> | ₹${fmtAmt(amount)}</div></div>
+         <p style="font-size:.8rem;color:var(--muted);margin-top:10px">Save anyway?</p>`,
+        'Save Anyway', ()=>saveExp(true), 'bp');
+      return;
+    }
+  }
+
   setSyncStatus('saving');
   try{
     const ref=await addDoc(collection(db,EXPENSE_COL),{date,amount,category:cat,note,createdAt:new Date().toISOString()});
     await logHistory(ACT.CREATE,{id:ref.id,date,amount,category:cat,note});
-    clearForm();toast('✅ Expense saved & synced!','success');
+    clearForm();
+    toast(isNoExpense?'✅ Day marked as No Expense.':'✅ Expense saved & synced!','success');
   }catch(e){toast('❌ Save failed: '+e.message,'error');}
   setSyncStatus('live');
 };
@@ -2162,12 +2275,33 @@ function buildOpts(ctx,q=''){
   if(ctx==='filter'||ctx==='catmon')
     html+=`<div class="co ${catVals[ctx]===''?'sel':''}" onclick="selectCat('${ctx}','','All Categories')">All Categories <span class="cob">${expenses.length}</span></div>`;
   if(!src.length){el.innerHTML=html+'<div class="co nr">No results</div>';return;}
-  src.forEach(cat=>{
-    const cnt=expenses.filter(e=>e.category===cat.name).length;
-    html+=`<div class="co ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">
-      ${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}
-    </div>`;
-  });
+  if(ql){
+    // flat search results - no grouping
+    src.forEach(cat=>{
+      const cnt=expenses.filter(e=>e.category===cat.name).length;
+      html+=`<div class="co ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}</div>`;
+    });
+  }else{
+    // grouped view
+    CAT_GROUPS.forEach(grp=>{
+      const grpCats=src.filter(c=>grp.prefixes.some(p=>c.name.startsWith(p)));
+      if(!grpCats.length) return;
+      html+=`<div class="co-grp-hdr" style="border-left:3px solid ${grp.color}">${grp.label}</div>`;
+      grpCats.forEach(cat=>{
+        const cnt=expenses.filter(e=>e.category===cat.name).length;
+        html+=`<div class="co co-grp ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}</div>`;
+      });
+    });
+    // ungrouped leftovers
+    const ungrouped=src.filter(c=>!CAT_GROUPS.some(g=>g.prefixes.some(p=>c.name.startsWith(p))));
+    if(ungrouped.length){
+      html+=`<div class="co-grp-hdr" style="border-left:3px solid #94a3b8">🏷️ Other</div>`;
+      ungrouped.forEach(cat=>{
+        const cnt=expenses.filter(e=>e.category===cat.name).length;
+        html+=`<div class="co co-grp ${catVals[ctx]===cat.name?'sel':''}" onclick="selectCat('${ctx}','${escQ(cat.name)}','${escQ(cat.name)}')">${esc(cat.name)}${cnt>0?`<span class="cob">${cnt}</span>`:''}</div>`;
+      });
+    }
+  }
   el.innerHTML=html;
 }
 function filterOpts(ctx){buildOpts(ctx,document.getElementById(`cs-${ctx}`).value);}
@@ -2219,11 +2353,23 @@ function setCat(ctx,val){
 ══════════════════════════════════════════════ */
 function renderHistory(){
   const tf=document.getElementById('hist-type').value;
-  const items=(tf?history.filter(h=>h.action===tf):history)
-    .slice((histPage-1)*HPG, histPage*HPG);
-  const total=(tf?history.filter(h=>h.action===tf):history).length;
+  const sq=(document.getElementById('hist-search')?.value||'').toLowerCase().trim();
+  let base=tf?history.filter(h=>h.action===tf):history;
+  if(sq){
+    base=base.filter(h=>{
+      const d=h.data||{};
+      const timeStr=h.timestamp?new Date(h.timestamp).toLocaleString('en-IN'):'';
+      return [h.action,h.label,timeStr,
+        d.category,d.name,d.note,d.reason,d.date,
+        d.from,d.to,String(d.amount||''),String(d.count||'')
+      ].some(v=>v&&String(v).toLowerCase().includes(sq));
+    });
+  }
+  const total=base.length;
   const tp=Math.ceil(total/HPG)||1;
-  document.getElementById('hist-count-lbl').textContent=`${total} entries`;
+  if(histPage>tp) histPage=1;
+  const items=base.slice((histPage-1)*HPG, histPage*HPG);
+  document.getElementById('hist-count-lbl').textContent=sq?`${total} match${total!==1?'es':''}`:(`${total} entries`);
   if(!items.length){document.getElementById('hist-list').innerHTML=`<div class="es"><div class="ei">📭</div><p>No history.</p></div>`;renderHistPag(tp,total);return;}
   document.getElementById('hist-list').innerHTML=items.map(h=>{
     const d=h.data||{};
@@ -2271,8 +2417,14 @@ function renderHistPag(tp,total){
 }
 window.goHistPage=function(p){
   const tf=document.getElementById('hist-type').value;
-  const total=(tf?history.filter(h=>h.action===tf):history).length;
-  const tp=Math.ceil(total/HPG)||1;
+  const sq=(document.getElementById('hist-search')?.value||'').toLowerCase().trim();
+  let base=tf?history.filter(h=>h.action===tf):history;
+  if(sq) base=base.filter(h=>{
+    const d=h.data||{};
+    return [h.action,h.label,d.category,d.name,d.note,d.reason,d.date,d.from,d.to,String(d.amount||'')]
+      .some(v=>v&&String(v).toLowerCase().includes(sq));
+  });
+  const tp=Math.ceil(base.length/HPG)||1;
   if(p<1||p>tp) return;
   histPage=p;renderHistory();
 };
@@ -2284,6 +2436,160 @@ window.clearHistory=async function(){
   await batch.commit();
   toast('History cleared.','info');
 };
+
+/* ══════════════════════════════════════════════
+   MONTHLY SUMMARY REPORT
+══════════════════════════════════════════════ */
+window.openMonthlySummary=function(){
+  const now=new Date();
+  const mSel=document.getElementById('sum-month');
+  const ySel=document.getElementById('sum-year');
+  if(mSel) mSel.value=now.getMonth()+1;
+  // populate years
+  if(ySel){
+    const ys=expenses.map(e=>parseInt(e.date?.slice(0,4))).filter(Boolean);
+    const minY=ys.length?Math.min(...ys):now.getFullYear()-3;
+    const maxY=now.getFullYear();
+    ySel.innerHTML='';
+    for(let y=maxY;y>=minY;y--){const o=document.createElement('option');o.value=y;o.textContent=y;if(y===now.getFullYear())o.selected=true;ySel.appendChild(o);}
+  }
+  document.getElementById('summary-mo').classList.add('open');
+  renderSummary();
+};
+
+window.renderSummary=function(){
+  const m=parseInt(document.getElementById('sum-month').value);
+  const y=parseInt(document.getElementById('sum-year').value);
+  const mm=String(m).padStart(2,'0');
+  const prefix=`${y}-${mm}`;
+  const rows=expenses.filter(e=>e.date&&e.date.startsWith(prefix)&&e.category!=='No Expense');
+  const total=rows.reduce((s,e)=>s+e.amount,0);
+  // Group by category group then category
+  const byCat={};
+  rows.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
+  // Group by family group
+  const byGrp={};
+  Object.entries(byCat).forEach(([cat,amt])=>{
+    const g=getCatGroup(cat);
+    if(!byGrp[g.label]) byGrp[g.label]={color:g.color,total:0,cats:{}};
+    byGrp[g.label].total+=amt;
+    byGrp[g.label].cats[cat]=amt;
+  });
+  // Day-by-day
+  const byDay={};
+  rows.forEach(e=>{byDay[e.date]=(byDay[e.date]||0)+e.amount;});
+  const days=Object.keys(byDay).sort();
+  const mName=CAL_MONTHS[m-1];
+  let html=`<div id="printable-summary">
+    <div style="text-align:center;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid var(--bdr)">
+      <h2 style="font-size:1.15rem;font-weight:800">💰 Expense Summary — ${mName} ${y}</h2>
+      <div style="font-size:.8rem;color:var(--muted);margin-top:4px">${rows.length} transactions · Total: <strong style="color:var(--p)">₹${fmtAmt(total)}</strong></div>
+    </div>`;
+  // Group breakdown
+  html+=`<div style="margin-bottom:18px"><div style="font-weight:700;font-size:.85rem;margin-bottom:10px">📂 By Category Group</div>`;
+  Object.entries(byGrp).sort((a,b)=>b[1].total-a[1].total).forEach(([grpLabel,g])=>{
+    const pct=total>0?((g.total/total)*100).toFixed(1):0;
+    html+=`<div style="margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between;font-size:.8rem;font-weight:700;margin-bottom:3px">
+        <span style="color:${g.color}">${grpLabel}</span><span>₹${fmtAmt(g.total)} <span style="color:var(--muted);font-weight:400">${pct}%</span></span>
+      </div>
+      <div style="height:6px;border-radius:3px;background:var(--bdr)"><div style="height:100%;border-radius:3px;background:${g.color};width:${pct}%"></div></div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:5px">
+        ${Object.entries(g.cats).sort((a,b)=>b[1]-a[1]).map(([cat,amt])=>`<span style="font-size:.7rem;background:var(--pl);padding:2px 8px;border-radius:10px">${esc(cat)}: ₹${fmtAmt(amt)}</span>`).join('')}
+      </div>
+    </div>`;
+  });
+  html+=`</div>`;
+  // Day-by-day table
+  html+=`<div><div style="font-weight:700;font-size:.85rem;margin-bottom:8px">📅 Day-by-Day</div>
+    <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.76rem">
+      <thead><tr style="border-bottom:2px solid var(--bdr)">
+        <th style="text-align:left;padding:5px 8px;color:var(--muted)">Date</th>
+        <th style="text-align:right;padding:5px 8px;color:var(--muted)">Amount</th>
+        <th style="text-align:right;padding:5px 8px;color:var(--muted)">% of Month</th>
+      </tr></thead><tbody>
+      ${days.map(d=>`<tr style="border-bottom:1px solid var(--bdr)">
+        <td style="padding:5px 8px">${fmtDate(d)}</td>
+        <td style="text-align:right;padding:5px 8px;font-weight:700;color:var(--p)">₹${fmtAmt(byDay[d])}</td>
+        <td style="text-align:right;padding:5px 8px;color:var(--muted)">${total>0?((byDay[d]/total)*100).toFixed(1):0}%</td>
+      </tr>`).join('')}
+      </tbody>
+      <tfoot><tr style="border-top:2px solid var(--p)">
+        <td style="padding:6px 8px;font-weight:800">TOTAL</td>
+        <td style="text-align:right;padding:6px 8px;font-weight:800;color:var(--p)">₹${fmtAmt(total)}</td>
+        <td style="text-align:right;padding:6px 8px">100%</td>
+      </tr></tfoot>
+    </table></div></div>
+  </div>`;
+  document.getElementById('summary-body').innerHTML=html;
+};
+
+window.printSummary=function(){
+  const el=document.getElementById('printable-summary');
+  if(!el) return;
+  const w=window.open('','_blank','width=700,height=800');
+  w.document.write(`<html><head><title>Monthly Summary</title>
+    <style>body{font-family:'Segoe UI',sans-serif;padding:24px;color:#111}
+    table{width:100%;border-collapse:collapse}th,td{padding:6px 10px}
+    h2{margin-bottom:8px}</style></head><body>${el.innerHTML}</body></html>`);
+  w.document.close();w.focus();setTimeout(()=>{w.print();},400);
+};
+
+/* ══════════════════════════════════════════════
+   EMAIL BACKUP (mailto: — opens mail client)
+══════════════════════════════════════════════ */
+window.sendEmailBackup=function(){
+  if(!expenses.length){toast('No data to backup.','error');return;}
+  const catNames=categories.map(c=>c.name);
+  const payload=JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2);
+  // Download the JSON first (email clients can't attach programmatically)
+  const dateStr=localDateStr();
+  download(`expense-backup-${dateStr}.json`,payload,'application/json');
+  // Open mail client with instructions
+  const subject=encodeURIComponent(`💰 Expense Tracker Backup — ${dateStr}`);
+  const body=encodeURIComponent(`Hi,\n\nPlease find the attached expense backup for ${dateStr}.\n\nFile: expense-backup-${dateStr}.json\n(Attach the downloaded file to this email)\n\nTotal records: ${expenses.length}\nCategories: ${catNames.length}\n\n— Expense Tracker`);
+  window.location.href=`mailto:${BACKUP_EMAIL}?subject=${subject}&body=${body}`;
+  localStorage.setItem('et_last_backup',dateStr);
+  updateBackupStatus();
+  logHistory(ACT.EXPORT,{expenses:expenses.length,categories:catNames.length,via:'email'});
+  toast('📧 JSON downloaded — attach it to the email that just opened!','success');
+};
+
+function updateBackupStatus(){
+  const el=document.getElementById('auto-backup-status');
+  if(!el) return;
+  const last=localStorage.getItem('et_last_backup');
+  el.textContent=last?`Last backup sent: ${last}`:'No backup sent yet from this device.';
+}
+
+/* ══════════════════════════════════════════════
+   AUTO BACKUP — checks on login if backup is due
+══════════════════════════════════════════════ */
+function checkAutoBackup(){
+  const now=new Date();
+  const day=now.getDate();
+  const lastDay=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+  const isBackupDay=day===7||day===14||day===21||day===lastDay;
+  if(!isBackupDay) return;
+  const todayStr=localDateStr();
+  const lastBackup=localStorage.getItem('et_last_backup');
+  if(lastBackup===todayStr) return; // already backed up today
+  // Notify user
+  const dot=document.getElementById('notif-dot');
+  const list=document.getElementById('notif-list');
+  if(dot) dot.classList.add('show');
+  if(list){
+    const existing=list.querySelector('.notif-backup');
+    if(!existing){
+      const item=document.createElement('div');
+      item.className='notif-item notif-backup';
+      item.innerHTML=`📦 <strong>Weekly backup due today!</strong> Send your data to ${BACKUP_EMAIL}
+        <div class="ni-act"><button class="btn bp bxs" onclick="sendEmailBackup();document.getElementById('notif-panel').classList.remove('open')">📧 Send Backup Now</button></div>`;
+      list.insertBefore(item,list.firstChild);
+    }
+  }
+  updateBackupStatus();
+}
 
 /* ══════════════════════════════════════════════
    START APP  ← THE CRITICAL FIX
