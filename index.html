@@ -88,14 +88,16 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:10
 .notif-dot{display:none;position:absolute;top:5px;right:6px;width:9px;height:9px;border-radius:50%;
   background:var(--err);border:2px solid var(--pd)}
 .notif-dot.show{display:block}
-.notif-panel{display:none;position:absolute;top:calc(100% + 10px);left:0;width:280px;max-width:85vw;
+.notif-panel{display:none;position:absolute;top:calc(100% + 10px);right:0;left:auto;
+  width:290px;max-width:92vw;
   background:var(--card);color:var(--txt);border:1px solid var(--bdr);border-radius:var(--rs);
-  box-shadow:var(--shl);padding:13px;z-index:200}
+  box-shadow:var(--shl);padding:13px;z-index:200;word-break:break-word}
 .notif-panel.open{display:block}
 .notif-title{font-weight:800;font-size:.85rem;margin-bottom:9px}
 .notif-empty{font-size:.78rem;color:var(--muted);text-align:center;padding:8px 0}
-.notif-item{background:var(--pl);border-radius:var(--rxs);padding:10px 11px;font-size:.78rem;line-height:1.5}
-.notif-item .ni-act{margin-top:8px}
+.notif-item{background:var(--pl);border-radius:var(--rxs);padding:10px 11px;
+  font-size:.78rem;line-height:1.6;word-break:break-word}
+.notif-item .ni-act{margin-top:10px;display:flex;gap:7px;flex-wrap:wrap}
 
 /* TABS */
 .tabs{display:flex;background:var(--card);border-bottom:2px solid var(--bdr);
@@ -379,6 +381,13 @@ td.nc{white-space:normal;max-width:160px;word-break:break-word;font-size:.77rem;
   padding:4px 10px;border-radius:20px}
 tr.row-selected td{background:var(--pl)!important}
 input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer}
+/* EMAILJS SETUP */
+.setup-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}
+.setup-step{display:flex;gap:10px;font-size:.8rem;line-height:1.55;align-items:flex-start}
+.step-num{background:var(--p);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;
+  align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0;margin-top:1px}
+
+/* CALENDAR VIEW */
 .cal-nav{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-top:12px;width:100%}
 .cal-dow{font-size:.62rem;font-weight:700;color:var(--muted);text-align:center;padding:3px 1px;text-transform:uppercase}
@@ -393,6 +402,8 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
 .cal-day .cd-amt{font-size:.56rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cal-day .cd-na{font-size:.62rem;color:var(--muted)}
 .cal-day.cd-today{border-color:var(--p);box-shadow:0 0 0 1px var(--p) inset}
+.cal-day.cd-future{opacity:.35;cursor:default;pointer-events:none}
+.cal-day.cd-future:hover{transform:none;border-color:var(--bdr);box-shadow:none}
 .cal-day.cd-noexp{background:color-mix(in srgb,var(--ok) 10%,var(--bg))}
 .cd-noexp-lbl{font-size:.7rem}
 .cal-legend{font-size:.7rem;color:var(--muted);margin-top:8px}
@@ -496,7 +507,7 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
           <span>Date</span>
           <button type="button" id="date-lock-btn" onclick="toggleDateLock()" class="date-lock-pill" title="Lock date to add multiple records for the same day">🔓 Lock date</button>
         </label>
-        <input type="date" id="f-date" class="fc2"/>
+        <input type="date" id="f-date" class="fc2" max=""/>
         <div class="date-lock-hint" id="date-lock-hint"></div>
       </div>
       <div class="col-12 col-md-6 fg2"><label>Amount (₹)</label><input type="number" id="f-amount" class="fc2" min="0" step="0.01" placeholder="0.00"/></div>
@@ -760,26 +771,12 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
 <!-- HISTORY -->
 <section id="tab-history" class="tp">
   <div class="fc">
-    <div class="fct">🕓 Modification History</div>
-    <div class="hist-filter">
-      <input type="text" id="hist-search" class="fc2" placeholder="🔎 Search history…" oninput="renderHistory()" style="max-width:200px"/>
-      <select id="hist-type" class="fc2" style="max-width:160px" onchange="renderHistory()">
-        <option value="">All Actions</option>
-        <option value="create">➕ Created</option>
-        <option value="update">✏️ Updated</option>
-        <option value="delete">🗑️ Deleted</option>
-        <option value="cat_add">🏷️ Cat Added</option>
-        <option value="cat_edit">🏷️ Cat Edited</option>
-        <option value="cat_delete">🏷️ Cat Deleted</option>
-        <option value="export">🗂️ Exported</option>
-        <option value="import">📥 Imported</option>
-        <option value="delete_all">🧨 All Deleted</option>
-        <option value="login">🔓 Login</option>
-        <option value="logout">🔒 Logout</option>
-        <option value="pass_change">🔑 Password Changed</option>
-      </select>
-      <button class="btn bg2 bsm" onclick="clearHistory()">🗑️ Clear</button>
-      <span class="fs2" id="hist-count-lbl" style="margin-left:auto"></span>
+    <div class="fct" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <span>🕓 Modification History</span>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span class="fs2" id="hist-count-lbl"></span>
+        <button class="btn bd bsm" onclick="clearHistory()">🗑️ Clear All</button>
+      </div>
     </div>
     <div id="hist-list"></div>
     <div id="hist-pag" style="margin-top:10px"></div>
@@ -798,14 +795,6 @@ input[type=checkbox]{accent-color:var(--p);width:15px;height:15px;cursor:pointer
       <div class="col-12 col-sm-6 col-md-3"><div class="ex-card" onclick="sendEmailBackup()"><div class="eico">📧</div><h3>Email Backup</h3><p>Send JSON to email</p></div></div>
     </div>
     <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importJSON(this)"/>
-  </div>
-  <div class="fc">
-    <div class="fct">⏰ Auto Email Backup</div>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Automatic weekly backup runs on the 7th, 14th, 21st and last day of each month. Email: <strong>sadique.saif786@gmail.com</strong></p>
-    <div id="auto-backup-status" style="font-size:.8rem;color:var(--muted)">Checking last backup…</div>
-    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn bp" onclick="sendEmailBackup()">📧 Send Now</button>
-    </div>
   </div>
   <div class="fc">
     <div class="fct" style="color:var(--err)">⚠️ Danger Zone</div>
@@ -1012,7 +1001,7 @@ const DEFAULT_CATS=[
   "Saad Hospital","Saad Medicine","Saad School","Saad Shopping","Saad Snacks","Saad Travel",
   // Saif
   "Saif Medicine","Saif Office Food","Saif Office Travel","Saif Saloon","Saif Shopping",
-  "Saif Snacks","Saif Travel","Saif Cycle Expenses",
+  "Saif Snacks","Saif Travel","Saif Cycle Expenses","Saif Recharge",
   // Seema
   "Seema Hospital","Seema Medicine","Seema Recharge","Seema Shopping","Seema Travel","Seema Snacks",
   // Shama
@@ -1025,7 +1014,7 @@ const DEFAULT_CATS=[
 /* All categories that must exist — seeded on install, patched on existing DBs */
 const REQUIRED_CATS=[
   "Home Gas Expenses","Home Maid Expenses","Home NonVeg","Home Milk Expenses",
-  "Home Sadqah","Home Zakaat","Seema Snacks",
+  "Home Sadqah","Home Zakaat","Seema Snacks","Saif Recharge",
 ];
 
 let expenses=[], categories=[], history=[];
@@ -1116,18 +1105,21 @@ function renderCalendar(){
     const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
     const c=counts[dateStr]||0;
     const isToday=dateStr===today;
+    const isFuture=dateStr>today;
     const isNoExp=noExpDays.has(dateStr)&&c===0;
-    html+=`<div class="cal-day${isToday?' cd-today':''}${isNoExp?' cd-noexp':''}" onclick="calDayClick('${dateStr}')" title="${dateStr}">
+    html+=`<div class="cal-day${isToday?' cd-today':''}${isNoExp?' cd-noexp':''}${isFuture?' cd-future':''}" onclick="calDayClick('${dateStr}')" title="${dateStr}">
       <div class="cd-num">${day}</div>
-      ${c>0?`<div class="cd-count">${c} rec</div><div class="cd-amt">₹${fmtAmt(amounts[dateStr])}</div>`
-           :isNoExp?`<div class="cd-noexp-lbl">✅</div>`
-           :'<div class="cd-na">N/A</div>'}
+      ${isFuture?''
+        :c>0?`<div class="cd-count">${c} rec</div><div class="cd-amt">₹${fmtAmt(amounts[dateStr])}</div>`
+        :isNoExp?`<div class="cd-noexp-lbl">✅</div>`
+        :'<div class="cd-na">N/A</div>'}
     </div>`;
   }
   grid.innerHTML=html;
 }
 
 window.calDayClick=function(dateStr){
+  if(dateStr>localDateStr()) return; // future — no action
   switchTab('records', document.querySelector('.tb[data-tab="records"]'));
   document.getElementById('r-search').value='';
   document.getElementById('r-day').value=dateStr;
@@ -1162,20 +1154,23 @@ function checkYesterdayReminder(){
   const list=document.getElementById('notif-list');
   if(!dot||!list) return;
   const yEntries=expenses.filter(e=>e.date===yStr);
-  const markedNoExpense=yEntries.some(e=>e.category==='No Expense');
-  const hasYesterday=yEntries.length>0;
-  if(!hasYesterday){
+  const realEntries=yEntries.filter(e=>e.category!=='No Expense');
+  const onlyNoExpense=yEntries.length>0&&realEntries.length===0;
+  if(yEntries.length===0){
+    // No entries at all yesterday — show reminder
     dot.classList.add('show');
     const dispDate=y.toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-    list.innerHTML=`<div class="notif-item">⚠️ No expenses were recorded for <strong>${dispDate}</strong> (yesterday).
-      <div class="ni-act" style="display:flex;gap:7px;flex-wrap:wrap">
+    list.innerHTML=`<div class="notif-item">⚠️ No expenses recorded for <strong>${dispDate}</strong> (yesterday).
+      <div class="ni-act">
         <button class="btn bp bxs" onclick="quickAddYesterday('${yStr}')">➕ Add Entry</button>
-        <button class="btn bo bxs" onclick="markNoExpense('${yStr}')">✅ Mark as No Expense</button>
+        <button class="btn bo bxs" onclick="markNoExpense('${yStr}')">✅ No Expense</button>
       </div></div>`;
-  }else if(markedNoExpense){
+  }else if(onlyNoExpense){
+    // Only a "No Expense" marker — no red dot, just quiet info
     dot.classList.remove('show');
     list.innerHTML='<div class="notif-empty">✅ Yesterday marked as No Expense day</div>';
   }else{
+    // Has real expense entries — all good, no notification
     dot.classList.remove('show');
     list.innerHTML='<div class="notif-empty">✅ No new notifications</div>';
   }
@@ -1241,7 +1236,6 @@ window.attemptLogin=function(){
     resetSessionTimer();
     if(!appInitialized){appInitialized=true;init();}
     logHistory(ACT.LOGIN,{});
-    setTimeout(checkAutoBackup,2000); // check after data loads
   }else{
     err.textContent='❌ Incorrect password. Try again.';
     input.value='';input.focus();
@@ -1295,7 +1289,9 @@ async function init(){
   setMsg('Connecting to Firebase…');
   document.getElementById('hdr-date').textContent =
     new Date().toLocaleDateString('en-IN',{weekday:'short',day:'2-digit',month:'short',year:'numeric'});
-  if(!dateLocked) document.getElementById('f-date').value=localDateStr();
+  const todayMax=localDateStr();
+  if(!dateLocked) document.getElementById('f-date').value=todayMax;
+  ['f-date','m-date'].forEach(id=>{const el=document.getElementById(id);if(el) el.max=todayMax;});
 
   const safetyTimer = setTimeout(()=>{
     console.warn('⚠️ Safety timeout — force hiding loader');
@@ -1531,7 +1527,6 @@ window.switchTab=function(id,btn){
   if(id==='categories') renderCatMgr();
   if(id==='history'){histPage=1;renderHistory();}
   if(id==='settings') renderSettingsUI();
-  if(id==='export') updateBackupStatus();
 };
 function populateYears(){
   const yrs=[...new Set(expenses.map(e=>new Date(e.date+'T00:00:00').getFullYear()))].sort((a,b)=>b-a);
@@ -2335,6 +2330,11 @@ function selectCat(ctx,val,label){
   closeDrop(ctx);
   if(ctx==='filter') applyFilters();
   if(ctx==='catmon') renderCatMon();
+  // Auto-fill 0 for No Expense category
+  if(val==='No Expense'){
+    const amtId=ctx==='add'?'f-amount':ctx==='edit'?'m-amount':null;
+    if(amtId){const a=document.getElementById(amtId);if(a&&(a.value===''||a.value==='0'))a.value='0';}
+  }
 }
 window.selectCat=selectCat;
 function setCat(ctx,val){
@@ -2352,24 +2352,12 @@ function setCat(ctx,val){
    HISTORY
 ══════════════════════════════════════════════ */
 function renderHistory(){
-  const tf=document.getElementById('hist-type').value;
-  const sq=(document.getElementById('hist-search')?.value||'').toLowerCase().trim();
-  let base=tf?history.filter(h=>h.action===tf):history;
-  if(sq){
-    base=base.filter(h=>{
-      const d=h.data||{};
-      const timeStr=h.timestamp?new Date(h.timestamp).toLocaleString('en-IN'):'';
-      return [h.action,h.label,timeStr,
-        d.category,d.name,d.note,d.reason,d.date,
-        d.from,d.to,String(d.amount||''),String(d.count||'')
-      ].some(v=>v&&String(v).toLowerCase().includes(sq));
-    });
-  }
-  const total=base.length;
+  const total=history.length;
   const tp=Math.ceil(total/HPG)||1;
   if(histPage>tp) histPage=1;
-  const items=base.slice((histPage-1)*HPG, histPage*HPG);
-  document.getElementById('hist-count-lbl').textContent=sq?`${total} match${total!==1?'es':''}`:(`${total} entries`);
+  const items=history.slice((histPage-1)*HPG, histPage*HPG);
+  const lbl=document.getElementById('hist-count-lbl');
+  if(lbl) lbl.textContent=`${total} entries`;
   if(!items.length){document.getElementById('hist-list').innerHTML=`<div class="es"><div class="ei">📭</div><p>No history.</p></div>`;renderHistPag(tp,total);return;}
   document.getElementById('hist-list').innerHTML=items.map(h=>{
     const d=h.data||{};
@@ -2416,17 +2404,9 @@ function renderHistPag(tp,total){
     ${btns}<button class="pb" onclick="goHistPage(${histPage+1})" ${histPage===tp?'disabled':''}>▶</button></div></div>`;
 }
 window.goHistPage=function(p){
-  const tf=document.getElementById('hist-type').value;
-  const sq=(document.getElementById('hist-search')?.value||'').toLowerCase().trim();
-  let base=tf?history.filter(h=>h.action===tf):history;
-  if(sq) base=base.filter(h=>{
-    const d=h.data||{};
-    return [h.action,h.label,d.category,d.name,d.note,d.reason,d.date,d.from,d.to,String(d.amount||'')]
-      .some(v=>v&&String(v).toLowerCase().includes(sq));
-  });
-  const tp=Math.ceil(base.length/HPG)||1;
+  const tp=Math.ceil(history.length/HPG)||1;
   if(p<1||p>tp) return;
-  histPage=p;renderHistory();
+  histPage=p; renderHistory();
 };
 window.clearHistory=async function(){
   if(!confirm('Clear all history from Firebase?')) return;
@@ -2536,63 +2516,33 @@ window.printSummary=function(){
 };
 
 /* ══════════════════════════════════════════════
-   EMAIL BACKUP (mailto: — opens mail client)
+   EMAIL BACKUP — download JSON + open mail app
 ══════════════════════════════════════════════ */
 window.sendEmailBackup=function(){
   if(!expenses.length){toast('No data to backup.','error');return;}
   const catNames=categories.map(c=>c.name);
-  const payload=JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2);
-  // Download the JSON first (email clients can't attach programmatically)
   const dateStr=localDateStr();
+  const payload=JSON.stringify({expenses,categories:catNames,exportedAt:new Date().toISOString()},null,2);
+  const totalAmt=expenses.reduce((s,e)=>s+e.amount,0);
+  // 1. Download the JSON file
   download(`expense-backup-${dateStr}.json`,payload,'application/json');
-  // Open mail client with instructions
+  // 2. Open mail app pre-filled
   const subject=encodeURIComponent(`💰 Expense Tracker Backup — ${dateStr}`);
-  const body=encodeURIComponent(`Hi,\n\nPlease find the attached expense backup for ${dateStr}.\n\nFile: expense-backup-${dateStr}.json\n(Attach the downloaded file to this email)\n\nTotal records: ${expenses.length}\nCategories: ${catNames.length}\n\n— Expense Tracker`);
-  window.location.href=`mailto:${BACKUP_EMAIL}?subject=${subject}&body=${body}`;
+  const body=encodeURIComponent(
+`Expense Tracker Backup — ${dateStr}
+Records: ${expenses.length} | Categories: ${catNames.length} | Total: ₹${totalAmt.toLocaleString('en-IN',{minimumFractionDigits:2})}
+
+Please attach the downloaded file: expense-backup-${dateStr}.json
+
+— Expense Tracker`);
+  setTimeout(()=>{ window.location.href=`mailto:${BACKUP_EMAIL}?subject=${subject}&body=${body}`; },600);
   localStorage.setItem('et_last_backup',dateStr);
-  updateBackupStatus();
   logHistory(ACT.EXPORT,{expenses:expenses.length,categories:catNames.length,via:'email'});
-  toast('📧 JSON downloaded — attach it to the email that just opened!','success');
+  toast('📥 JSON downloaded — attach it to the email that just opened!','success');
 };
 
-function updateBackupStatus(){
-  const el=document.getElementById('auto-backup-status');
-  if(!el) return;
-  const last=localStorage.getItem('et_last_backup');
-  el.textContent=last?`Last backup sent: ${last}`:'No backup sent yet from this device.';
-}
-
 /* ══════════════════════════════════════════════
-   AUTO BACKUP — checks on login if backup is due
-══════════════════════════════════════════════ */
-function checkAutoBackup(){
-  const now=new Date();
-  const day=now.getDate();
-  const lastDay=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-  const isBackupDay=day===7||day===14||day===21||day===lastDay;
-  if(!isBackupDay) return;
-  const todayStr=localDateStr();
-  const lastBackup=localStorage.getItem('et_last_backup');
-  if(lastBackup===todayStr) return; // already backed up today
-  // Notify user
-  const dot=document.getElementById('notif-dot');
-  const list=document.getElementById('notif-list');
-  if(dot) dot.classList.add('show');
-  if(list){
-    const existing=list.querySelector('.notif-backup');
-    if(!existing){
-      const item=document.createElement('div');
-      item.className='notif-item notif-backup';
-      item.innerHTML=`📦 <strong>Weekly backup due today!</strong> Send your data to ${BACKUP_EMAIL}
-        <div class="ni-act"><button class="btn bp bxs" onclick="sendEmailBackup();document.getElementById('notif-panel').classList.remove('open')">📧 Send Backup Now</button></div>`;
-      list.insertBefore(item,list.firstChild);
-    }
-  }
-  updateBackupStatus();
-}
-
-/* ══════════════════════════════════════════════
-   START APP  ← THE CRITICAL FIX
+   START APP
 ══════════════════════════════════════════════ */
 /* App starts only after successful login (see attemptLogin) */
 
